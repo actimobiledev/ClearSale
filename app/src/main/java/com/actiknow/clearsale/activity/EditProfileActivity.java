@@ -19,12 +19,10 @@ import android.widget.CheckBox;
 import android.widget.CompoundButton;
 import android.widget.EditText;
 import android.widget.LinearLayout;
-import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.actiknow.clearsale.R;
-import com.actiknow.clearsale.model.Faq;
 import com.actiknow.clearsale.utils.AppConfigTags;
 import com.actiknow.clearsale.utils.AppConfigURL;
 import com.actiknow.clearsale.utils.Constants;
@@ -90,11 +88,11 @@ public class EditProfileActivity extends AppCompatActivity {
         initData();
         initListener();
         getStateListFromServer();
-      //  getPreferencesData(CheckBox[] checkBox);
+        getPreferencesData();
 
     }
 
-    private void getPreferencesData(CheckBox[] checkBox) {
+    private void getPreferencesData() {
         String fullName[] = userDetailsPref.getStringPref(EditProfileActivity.this, UserDetailsPref.USER_NAME).trim().split("\\s+");
         etFirstName.setText(fullName[0]);
         etLastName.setText(fullName[1]);
@@ -102,23 +100,6 @@ public class EditProfileActivity extends AppCompatActivity {
         etPhone.setText(userDetailsPref.getStringPref(EditProfileActivity.this, UserDetailsPref.USER_MOBILE));
 
         String stateName[] = userDetailsPref.getStringPref(EditProfileActivity.this, UserDetailsPref.STATE_TYPE).trim().split(",");
-
-      //  if (checkBox[i].getText().toString().equalsIgnoreCase(stateName[0]))
-      //      checkBox[0].setChecked(true);
-      //  else
-       //     checkBox[1].setChecked(true);
-
-
-
-
-        // for (int i=0;i<stateName.length;i++) {
-
-        // }
-
-
-
-
-
 
 
         if (userDetailsPref.getStringPref(EditProfileActivity.this, UserDetailsPref.HOME_TYPE).equalsIgnoreCase(spinnerItems[1]))
@@ -162,8 +143,6 @@ public class EditProfileActivity extends AppCompatActivity {
         ArrayAdapter<String> spinnerArrayAdapter = new ArrayAdapter<String>(this, R.layout.spinner, spinnerItems);
         spinnerArrayAdapter.setDropDownViewResource(R.layout.spinner);
         spinner.setAdapter(spinnerArrayAdapter);
-
-
 
 
     }
@@ -463,7 +442,7 @@ public class EditProfileActivity extends AppCompatActivity {
                                     if (!error) {
                                         JSONArray jsonArray = jsonObj.getJSONArray(AppConfigTags.STATE_LIST);
                                         int size = jsonArray.length();
-                                        checkBox=new CheckBox[size];
+                                        checkBox = new CheckBox[size];
                                         for (int i = 0; i < jsonArray.length(); i++) {
                                             JSONObject jsonObject = jsonArray.getJSONObject(i);
                                             LinearLayoutCompat.LayoutParams lparams = new LinearLayoutCompat.LayoutParams(
@@ -474,8 +453,6 @@ public class EditProfileActivity extends AppCompatActivity {
                                             lparams.weight = 1f;
                                             checkBox[i].setLayoutParams(lparams);
                                             llState.addView(checkBox[i]);
-
-
 
 
                                             checkBox[i].setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
@@ -495,9 +472,6 @@ public class EditProfileActivity extends AppCompatActivity {
                                             });
 
 
-
-
-                                            getPreferencesData(checkBox);
                                         }
 
 
