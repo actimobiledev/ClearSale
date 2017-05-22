@@ -1,0 +1,108 @@
+<resources>
+    <string name="app_name">ClearSale</string>
+
+
+    <string name="please_enter_name">Please enter Username</string>
+    <string name="please_enter_first_name">Please enter First Name</string>
+    <string name="please_enter_last_name">Please enter Last Name</string>
+    <string name="please_enter_email">Please enter Email</string>
+    <string name="please_enter_mobile">Please enter Mobile</string>
+    <string name="please_enter_valid_email">Please enter valid Email</string>
+    <string name="please_enter_message">Please enter message</string>
+    <string name="please_enter_password">Please enter password</string>
+    <string name="please_enter_valid_mobile">Please enter valid Mobile</string>
+    <string name="please_select_visitor_type">Please select visitor type</string>
+    <string name="please_select_state_type">Please select state type</string>
+    <string name="please_select_home_type">Please select home type</string>
+    <string name="otp_didnt_match">OTP didn\'t match</string>
+
+
+    <string name="activity_contact_hint_full_name">Full Name</string>
+    <string name="activity_contact_hint_email">Email Address</string>
+    <string name="activity_contact_hint_mobile">Mobile Number</string>
+    <string name="activity_contact_hint_message">Message</string>
+    <string name="activity_contact_button_submit">SUBMIT</string>
+
+
+    <string name="activity_sign_up_hint_full_name">Full Name</string>
+    <string name="activity_sign_up_email">Email Address</string>
+    <string name="activity_sign_up_mobile">Mobile Number</string>
+    <string name="activity_sign_up_button_submit">SIGN UP</string>
+
+
+
+    <string name="activity_sign_in_hint_email">Email Address</string>
+    <string name="activity_sign_in_hint_password">Password</string>
+    <string name="activity_sign_in_button_submit">SIGN IN</string>
+    <string name="activity_sign_in_text_forgot_password">Forgot Password ? </string>
+    <string name="activity_sign_in_text_signup">Sign Up ? </string>
+
+
+
+    <string name="activity_forgot_password_hint_email">Email Address</string>
+    <string name="activity_forgot_password_text_submit">SUBMIT</string>
+    <string name="activity_forgot_password_title">Forgot Password</string>
+
+
+
+    <string name="dialog_forgot_password_content">Enter the Email Address</string>
+    <string name="dialog_forgot_password_submit">Submit</string>
+    <string name="dialog_forgot_password_cancel">Cancel</string>
+
+
+
+    <string name="activity_edit_profile_title">Edit Profile</string>
+    <string name="activity_edit_profile_hint_first_name">First Name</string>
+    <string name="activity_edit_profile_hint_last_name">Last Name</string>
+    <string name="activity_edit_profile_hint_email">Email Address</string>
+    <string name="activity_edit_profile_hint_mobile">Mobile Number</string>
+    <string name="activity_edit_profile_ques1">Do you want to buy in Colorado or Seattle or both? State:</string>
+    <string name="activity_edit_profile_cb_text_co">CO</string>
+    <string name="activity_edit_profile_cb_text_wa">WA</string>
+    <string name="activity_edit_profile_ques2">I will buy properties in this price range(s). Pick all that apply:</string>
+
+
+    <string name="activity_faq_title">Frequently Asked Questions</string>
+
+
+
+
+
+
+
+    <string name="activity_contact_us_title">CONTACT US</string>
+
+    <string name="facebook_app_id">431008303943529</string>
+
+
+
+    <string name="progress_dialog_text_loading">Loading&#8230;</string>
+    <string name="progress_dialog_text_generating_survey">Generating Survey&#8230;</string>
+    <string name="progress_dialog_text_logging_out">Logging Out&#8230;</string>
+    <string name="progress_dialog_text_logging_in">Logging In&#8230;</string>
+    <string name="progress_dialog_text_please_wait">Please wait&#8230;</string>
+    <string name="progress_dialog_text_sending_request">Sending Request&#8230;</string>
+    <string name="progress_dialog_text_submitting_responses">Submitting Responses&#8230;</string>
+    <string name="progress_dialog_text_initializing">Initializing Application&#8230;</string>
+
+    <string name="snackbar_text_no_internet_connection_available">No Internet Connection available
+    </string>
+    <string name="snackbar_text_error_occurred">Error Occurred</string>
+    <string name="snackbar_text_exception_occurred">Exception Occurred</string>
+    <string name="snackbar_text_invalid_access_pin">Invalid Access PIN</string>
+
+    <string name="snackbar_action_go_to_settings">GO TO SETTINGS</string>
+    <string name="snackbar_action_dismiss">DISMISS</string>
+    <string name="snackbar_action_retry">RETRY</string>
+
+    <string name="snackbar_action_undo">UNDO</string>
+
+
+    <string name="dialog_text_new_version_available">New version of the application is available.Please update</string>
+
+
+
+
+
+
+</resources>

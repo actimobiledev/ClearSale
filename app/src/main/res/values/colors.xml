@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="colorPrimary">#ffbb42</color>
+    <color name="colorPrimaryDark">#ef9f11</color>
+
+    <color name="colorAccent">#000000</color>
+
+    <color name="primary">#b50404</color>
+
+    <color name="accent">#cccccc</color>
+    <color name="primary_text">#fff</color>
+    <color name="secondary_text">#fff</color>
+    <color name="tab_text_color">#fff</color>
+    <color name="tab_text_color_selected">#7CCD7C</color>
+    <color name="tab_indicator">#7CCD7C</color>
+    <color name="text_color_white">#ffffff</color>
+    <color name="text_color_offwhite">#e0e0e0</color>
+    <color name="hint_color_white">#88ffffff</color>
+    <color name="text_color_black">#000000</color>
+    <color name="text_color_silver">#c0c0c0</color>
+    <color name="text_color_grey_light">#bebebe</color>
+    <color name="text_color_grey_light2">#e0e0da</color>
+    <color name="text_color_grey_dark">#858585</color>
+    <color name="text_color_grey_dark2">#4b4b4b</color>
+    <color name="text_color_blue">#311b92</color>
+    <color name="pressed_color">#bebebe</color>
+    <color name="default_color">#eeeeee</color>
+    <color name="text_color_orange">#f57f17</color>
+    <color name="text_color_red">#d70d17</color>
+    <color name="text_color_yellow">#ffc107</color>
+    <color name="progress_dialog_background">#f0bfbfbf</color>
+    <color name="color_divider">#c4c4c4</color>
+    <color name="mb_green">#ff99cc00</color>
+    <color name="mb_green_dark">#ff6d9b00</color>
+    <color name="mb_red">#ffff4444</color>
+
+    <color name="fab_request">#199494</color>
+    <color name="fab_request_pressed">#137474</color>
+    <color name="fab_donate">#9e1b1b</color>
+    <color name="fab_donate_pressed">#8a0808</color>
+
+    <color name="ripple_color">#44ffffff</color>
+
+    <color name="app_background_color">#ffffff</color>
+
+    <color name="toolbar_background_transparent">#a7ffffff</color>
+
+    <color name="app_text_color_default">#4f4f4f</color>
+    <color name="detail_card_background">#aaffffff</color>
+
+    <color name="snackbar_background">#8a0808</color>
+
+    <color name="map_polyline_color">#4597FF</color>
+
+    <color name="grey_50">#fafafa</color>
+    <color name="grey_100">#f5f5f5</color>
+    <color name="grey_200">#eeeeee</color>
+    <color name="grey_300">#e0e0e0</color>
+    <color name="grey_400">#bdbdbd</color>
+
+    <color name="bg_screen1">#f64c73</color>
+    <color name="bg_screen2">#20d2bb</color>
+    <color name="bg_screen3">#3395ff</color>
+    <color name="bg_screen4">#c873f4</color>
+
+    <color name="app_text_color_dark">#000000</color>
+    <color name="app_text_color_light">#616161</color>
+    <color name="divider_color">#4b4b4b</color>
+
+    <color name="progress_dialog_background_color">#ffffff</color>
+</resources>

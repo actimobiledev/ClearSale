@@ -1,0 +1,40 @@
+<menu
+    xmlns:android="http://schemas.android.com/apk/res/android"
+      xmlns:app="http://schemas.android.com/apk/res-auto"
+      xmlns:tools="http://schemas.android.com/tools"
+      tools:context=".activity.MainActivity">
+
+
+    <item android:id="@+id/action_bag"
+          android:icon="@drawable/ic_shopping_bag"
+          android:orderInCategory="1"
+          android:title="Bag"
+          app:showAsAction="always"/>
+
+    <!--
+        <item android:id="@+id/action_search"
+              android:icon="@drawable/ic_search"
+              android:orderInCategory="1"
+              android:title="Search Main"
+              app:actionViewClass="android.support.v7.widget.SearchView"
+              app:showAsAction="always"/>
+    -->
+    <!--
+
+              app:showAsAction="always"
+
+    android:title="@string/action_search"
+        android:icon="@drawable/abc_ic_search_api_mtrl_alpha"
+        pawesome:showAsAction="ifRoom|collapseActionView"
+        pawesome:actionViewClass="android.support.v7.widget.SearchView"
+
+
+        <item
+            android:id="@+id/action_logout"
+            android:orderInCategory="3"
+            android:title="LOGOUT"
+            app:showAsAction="always"
+
+        />
+        -->
+</menu>

@@ -1,0 +1,55 @@
+{
+  "project_info": {
+    "project_number": "811716384591",
+    "firebase_url": "https://clearsale-ceb09.firebaseio.com",
+    "project_id": "clearsale-ceb09",
+    "storage_bucket": "clearsale-ceb09.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:811716384591:android:a12b7e4fd2d7910b",
+        "android_client_info": {
+          "package_name": "com.actiknow.clearsale"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "811716384591-g9ld284sbbdvmaeqaelhsrdo5s8ioe4r.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.actiknow.clearsale",
+            "certificate_hash": "c6985ec8dd43e2d6c6a8609fa8084bc9fd515870"
+          }
+        },
+        {
+          "client_id": "811716384591-qgqqj9mprise3s1es3clha516j0tftjv.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCDJ2c4YS9rkodkmAhWCZM8AofrmGNls0U"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 2,
+          "other_platform_oauth_client": [
+            {
+              "client_id": "811716384591-qgqqj9mprise3s1es3clha516j0tftjv.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

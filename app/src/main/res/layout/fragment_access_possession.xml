@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<android.support.v4.widget.NestedScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    app:layout_behavior="@string/appbar_scrolling_view_behavior">
+
+
+    <android.support.v7.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="10dp">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:padding="12dp">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text=" This access is for the one named person on the signup, extra people and people without an appointment will not be allowed inside.  Please sign up when you can confirm."
+                android:textColor="@color/text_color_black"
+                android:textSize="15sp" />
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="1. If the property is as we have represented you are ready to buy."
+                android:textColor="@color/text_color_black"
+                android:textSize="15sp"
+                android:layout_marginTop="30dp"/>
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="2. The close timeline matches your funding capacity."
+                android:textColor="@color/text_color_black"
+                android:textSize="15sp"
+                android:layout_marginTop="5dp"/>
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="3. The possession is matched to your needs.  If there is a tenant staying, that is ok with you.  If it is being delivered after close, that is ok with you.  Please read our details to confirm possession is as you expect."
+                android:textColor="@color/text_color_black"
+                android:textSize="15sp"
+                android:layout_marginTop="5dp"/>
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="4. You understand this is a 10-15 min opportunity to walk the property, you won't talk during the access, you won't ask questions or discuss what you would do to the house."
+                android:textColor="@color/text_color_black"
+                android:textSize="15sp"
+                android:layout_marginTop="5dp"/>
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="5. You will not enter until the HomeTrust representative has invited you inside."
+                android:textColor="@color/text_color_black"
+                android:textSize="15sp"
+                android:layout_marginTop="5dp"/>
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="6. You will be careful of wet or dirty shoes, and will offer to take them off when safe to do so."
+                android:textColor="@color/text_color_black"
+                android:textSize="15sp"
+                android:layout_marginTop="5dp"/>
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="7. You will sign up ONE person for each access and will email us if you request to add a second person.  This signup is not for a group, it is for one person.  Sometimes we may be able to allow another person to join you, but do not assume they can get in."
+                android:textColor="@color/text_color_black"
+                android:textSize="15sp"
+                android:layout_marginTop="5dp"/>
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Access by appointment only.  Signup Here"
+                android:textColor="@color/text_color_black"
+                android:textSize="18sp"
+                android:textStyle="bold"/>
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text=" "
+                android:textColor="@color/text_color_black"
+                android:textSize="15sp" />
+
+
+        </LinearLayout>
+
+    </android.support.v7.widget.CardView>
+
+
+</android.support.v4.widget.NestedScrollView>
