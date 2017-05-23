@@ -2,14 +2,12 @@ package com.actiknow.clearsale.activity;
 
 import android.content.Context;
 import android.content.Intent;
-import android.graphics.Color;
 import android.graphics.drawable.Drawable;
 import android.net.Uri;
-import android.support.annotation.NonNull;
+import android.os.Bundle;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.StaggeredGridLayoutManager;
 import android.support.v7.widget.Toolbar;
@@ -17,9 +15,7 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.EditText;
 import android.widget.ImageView;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import com.actiknow.clearsale.R;
@@ -27,19 +23,13 @@ import com.actiknow.clearsale.adapter.AllPropertyListAdapter;
 import com.actiknow.clearsale.model.AllProperty;
 import com.actiknow.clearsale.utils.UserDetailsPref;
 import com.actiknow.clearsale.utils.Utils;
-
-import com.afollestad.materialdialogs.MaterialDialog;
-import com.afollestad.materialdialogs.Theme;
 import com.bumptech.glide.Glide;
 import com.mikepenz.fontawesome_typeface_library.FontAwesome;
 import com.mikepenz.iconics.IconicsDrawable;
 import com.mikepenz.materialdrawer.AccountHeader;
-import com.mikepenz.materialdrawer.AccountHeaderBuilder;
 import com.mikepenz.materialdrawer.Drawer;
 import com.mikepenz.materialdrawer.DrawerBuilder;
-import com.mikepenz.materialdrawer.model.DividerDrawerItem;
 import com.mikepenz.materialdrawer.model.PrimaryDrawerItem;
-import com.mikepenz.materialdrawer.model.ProfileDrawerItem;
 import com.mikepenz.materialdrawer.model.SecondaryDrawerItem;
 import com.mikepenz.materialdrawer.model.interfaces.IDrawerItem;
 import com.mikepenz.materialdrawer.util.AbstractDrawerImageLoader;
@@ -52,18 +42,15 @@ import java.util.List;
 public class MainActivity extends AppCompatActivity {
 
     Bundle savedInstanceState;
-    private AccountHeader headerResult = null;
-    private Drawer result = null;
     ImageView ivNavigation;
     Toolbar toolbar;
-
     RecyclerView rvPropertyList;
     SwipeRefreshLayout swipeRefreshLayout;
     AllPropertyListAdapter allPropertyListAdapter;
-
     List<AllProperty> allPropertyList = new ArrayList<>();
-
     UserDetailsPref userDetailsPref;
+    private AccountHeader headerResult = null;
+    private Drawer result = null;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -75,13 +62,13 @@ public class MainActivity extends AppCompatActivity {
         initDrawer();
         setUpNavigationDrawer();
         getAllProducts();
-        isLogin ();
+        isLogin();
         this.savedInstanceState = savedInstanceState;
 
     }
 
     private void isLogin() {
-        if (userDetailsPref.getIntPref (MainActivity.this, UserDetailsPref.USER_ID) == 0) {
+        if (userDetailsPref.getIntPref(MainActivity.this, UserDetailsPref.USER_ID) == 0) {
             Intent myIntent = new Intent(this, LoginActivity.class);
             startActivity(myIntent);
         }
@@ -96,7 +83,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void initData() {
-        userDetailsPref = UserDetailsPref.getInstance ();
+        userDetailsPref = UserDetailsPref.getInstance();
 
 
         swipeRefreshLayout.setRefreshing(true);
@@ -140,7 +127,7 @@ public class MainActivity extends AppCompatActivity {
         DrawerImageLoader.init(new AbstractDrawerImageLoader() {
             @Override
             public void set(ImageView imageView, Uri uri, Drawable placeholder) {
-              //  Glide.with(imageView.getContext()).load(uri).placeholder(placeholder).into(imageView);
+                //  Glide.with(imageView.getContext()).load(uri).placeholder(placeholder).into(imageView);
             }
 
             @Override
@@ -223,21 +210,21 @@ public class MainActivity extends AppCompatActivity {
                                 break;
 
                             case 4:
-                                Intent intent4 = new Intent(MainActivity.this,TestimonialActivity.class);
+                                Intent intent4 = new Intent(MainActivity.this, TestimonialActivity.class);
                                 startActivity(intent4);
                                 overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
                                 Utils.showLog(Log.ERROR, "position ", "" + position, true);
                                 break;
 
                             case 5:
-                                Intent intent5 = new Intent(MainActivity.this,ContactUsActivity.class);
+                                Intent intent5 = new Intent(MainActivity.this, ContactUsActivity.class);
                                 startActivity(intent5);
                                 overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
                                 Utils.showLog(Log.ERROR, "position ", "" + position, true);
                                 break;
 
                             case 6:
-                                Intent intent6 = new Intent(MainActivity.this,FaqActivity.class);
+                                Intent intent6 = new Intent(MainActivity.this, FaqActivity.class);
                                 startActivity(intent6);
                                 overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
                                 Utils.showLog(Log.ERROR, "position ", "" + position, true);
@@ -280,27 +267,28 @@ public class MainActivity extends AppCompatActivity {
                         Intent intent = new Intent(MainActivity.this, EditProfileActivity.class);
                         startActivity(intent);
                         overridePendingTransition(R.anim.slide_in_up, R.anim.slide_out_up);
-                        Toast.makeText(MainActivity.this, "Share", Toast.LENGTH_SHORT).show();
                         break;
                     case R.id.action_change_password:
-                        Toast.makeText(MainActivity.this, "Share", Toast.LENGTH_SHORT).show();
+                        Intent intent2 = new Intent(MainActivity.this, ChangePasswordActivity.class);
+                        startActivity(intent2);
+                        overridePendingTransition(R.anim.slide_in_up, R.anim.slide_out_up);
                         break;
                     case R.id.action_Signout:
                         Toast.makeText(MainActivity.this, "Share", Toast.LENGTH_SHORT).show();
                         break;
                     case R.id.action_search:
-                       Intent intent4 = new Intent(MainActivity.this, SearchFilterActivity.class);
+                        Intent intent4 = new Intent(MainActivity.this, SearchFilterActivity.class);
                         startActivity(intent4);
                         overridePendingTransition(R.anim.slide_in_up, R.anim.slide_out_up);
                         Toast.makeText(MainActivity.this, "Search", Toast.LENGTH_SHORT).show();
 
-                      //  boolean wrapInScrollView = true;
-                      //  new MaterialDialog.Builder(MainActivity.this)
+                        //  boolean wrapInScrollView = true;
+                        //  new MaterialDialog.Builder(MainActivity.this)
 
-                      //          .customView(R.layout.dialog_search_filter, wrapInScrollView)
+                        //          .customView(R.layout.dialog_search_filter, wrapInScrollView)
                         //        .positiveText("Search")
                         //        .show();
-                      //  break;
+                        //  break;
 
 
                 }

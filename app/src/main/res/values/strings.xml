@@ -10,6 +10,10 @@
     <string name="please_enter_valid_email">Please enter valid Email</string>
     <string name="please_enter_message">Please enter message</string>
     <string name="please_enter_password">Please enter password</string>
+    <string name="please_enter_old_password">Please enter old password</string>
+    <string name="please_enter_confirm_password">Please enter confirm password</string>
+    <string name="please_enter_new_password">Please enter new confirm password</string>
+    <string name="password_did_not_match">Password did\'nt match</string>
     <string name="please_enter_valid_mobile">Please enter valid Mobile</string>
     <string name="please_select_visitor_type">Please select visitor type</string>
     <string name="please_select_state_type">Please select state type</string>
@@ -43,6 +47,12 @@
     <string name="activity_forgot_password_text_submit">SUBMIT</string>
     <string name="activity_forgot_password_title">Forgot Password</string>
 
+
+    <string name="activity_change_password_title">Change Password</string>
+    <string name="activity_change_password_hint_old_password">Old Password</string>
+    <string name="activity_change_password_hint_new_password">New Password</string>
+    <string name="activity_change_password_hint_confirm_password">Confirm Password</string>
+    <string name="activity_change_password_text_update_password">Update Password</string>
 
 
     <string name="dialog_forgot_password_content">Enter the Email Address</string>

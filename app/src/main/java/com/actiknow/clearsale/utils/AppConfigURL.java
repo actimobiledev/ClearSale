@@ -12,6 +12,7 @@ public class AppConfigURL {
     public static String URL_FACEBOOK_SIGN_IN = "https://project-clearsale-cammy92.c9users.io/csv2_new_buyer/buyers/fbloginapp";
     public static String URL_FORGOT_PASSWORD = "https://project-clearsale-cammy92.c9users.io/csv2_new_buyer/buyers/forgotpasswordapp";
     public static String URL_EDIT_PROFILE = "https://project-clearsale-cammy92.c9users.io/api/contact.php";
+    public static String URL_CHANGE_PASSWORD = "https://project-clearsale-cammy92.c9users.io/api/contact.php";
 
 
     public static String URL_STATE = "https://project-clearsale-cammy92.c9users.io/api/contact.php";

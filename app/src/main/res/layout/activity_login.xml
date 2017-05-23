@@ -89,21 +89,24 @@
                 <LinearLayout
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:orientation="horizontal"
                     android:layout_marginLeft="@dimen/activity_margin"
-                    android:layout_marginRight="@dimen/activity_margin">
+                    android:layout_marginRight="@dimen/activity_margin"
+                    android:orientation="vertical">
                 <com.facebook.login.widget.LoginButton
                     android:id="@+id/login_button"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_gravity="center"/>
+                    android:layout_gravity="center"
+                    android:paddingBottom="@dimen/edittext_padding"
+                    android:paddingTop="@dimen/edittext_padding" />
 
                 <Button
                     android:id="@+id/linkdin_login_button"
-                    android:layout_width="wrap_content"
-                    android:layout_height="35dp"
+                    android:layout_width="match_parent"
+                    android:layout_height="45dp"
                     android:background="@drawable/linkedin"
-                    android:layout_marginLeft="5dp" />
+                    android:paddingBottom="@dimen/edittext_padding"
+                    android:paddingTop="@dimen/edittext_padding" />
                 </LinearLayout>
 
 
