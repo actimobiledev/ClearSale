@@ -94,8 +94,16 @@ public class EditProfileActivity extends AppCompatActivity {
 
     private void getPreferencesData() {
         String fullName[] = userDetailsPref.getStringPref(EditProfileActivity.this, UserDetailsPref.USER_NAME).trim().split("\\s+");
-        etFirstName.setText(fullName[0]);
-        etLastName.setText(fullName[1]);
+        for (int i = 0; i < fullName.length; i++) {
+            if (i == 0) {
+                etFirstName.setText(fullName[0]);
+            } else {
+                etLastName.setText(fullName[1]);
+            }
+        }
+
+
+//
         etEmail.setText(userDetailsPref.getStringPref(EditProfileActivity.this, UserDetailsPref.USER_EMAIL));
         etPhone.setText(userDetailsPref.getStringPref(EditProfileActivity.this, UserDetailsPref.USER_MOBILE));
 

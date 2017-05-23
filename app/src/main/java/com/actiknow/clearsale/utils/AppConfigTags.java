@@ -82,7 +82,7 @@ public class AppConfigTags {
     public static String FAQ_LIST = "faqlist";
 
 
-    public static String PASSWORD = "old_password";
+    public static String PASSWORD = "password";
     public static String NEW_PASSWORD = "new_password";
 
 

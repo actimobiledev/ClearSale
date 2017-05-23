@@ -112,7 +112,7 @@ public class ChangePasswordActivity extends AppCompatActivity {
                     etOldPassword.setError(s1);
                     etNewPassword.setError(s2);
                     etConfirmPassword.setError(s3);
-                } else if (etNewPassword.getText().toString().trim().equalsIgnoreCase(etConfirmPassword.getText().toString().trim())) {
+                } else if (!etNewPassword.getText().toString().trim().equalsIgnoreCase(etConfirmPassword.getText().toString().trim())) {
                     etConfirmPassword.setError(s4);
                 } else {
                     changePasswordSendToServer(etOldPassword.getText().toString().trim(), etNewPassword.getText().toString().trim());
@@ -233,7 +233,8 @@ public class ChangePasswordActivity extends AppCompatActivity {
                     Map<String, String> params = new Hashtable<String, String>();
                     params.put(AppConfigTags.PASSWORD, oldPassword);
                     params.put(AppConfigTags.NEW_PASSWORD, newPassword);
-                    params.put(AppConfigTags.USER_ID, String.valueOf(userDetailsPref.getIntPref(ChangePasswordActivity.this, UserDetailsPref.USER_ID)));
+                    params.put(AppConfigTags.EMAIL, userDetailsPref.getStringPref(ChangePasswordActivity.this, UserDetailsPref.USER_EMAIL));
+                    // params.put(AppConfigTags.USER_ID, String.valueOf(userDetailsPref.getIntPref(ChangePasswordActivity.this, UserDetailsPref.USER_ID)));
                     Utils.showLog(Log.INFO, AppConfigTags.PARAMETERS_SENT_TO_THE_SERVER, "" + params, true);
                     return params;
                 }
