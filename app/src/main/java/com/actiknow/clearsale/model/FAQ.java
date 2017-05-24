@@ -1,10 +1,10 @@
 package com.actiknow.clearsale.model;
 
-public class Faq {
+public class FAQ {
     int id;
     String  question , answer;
-
-    public Faq(int id, String question,String answer) {
+    
+    public FAQ (int id, String question, String answer) {
         this.id = id;
         this.question = question;
         this.answer = answer;

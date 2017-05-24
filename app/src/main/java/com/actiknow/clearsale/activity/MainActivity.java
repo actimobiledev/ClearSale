@@ -224,7 +224,7 @@ public class MainActivity extends AppCompatActivity {
                                 break;
 
                             case 6:
-                                Intent intent6 = new Intent(MainActivity.this, FaqActivity.class);
+                                Intent intent6 = new Intent (MainActivity.this, FAQActivity.class);
                                 startActivity(intent6);
                                 overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
                                 Utils.showLog(Log.ERROR, "position ", "" + position, true);
@@ -337,8 +337,8 @@ public class MainActivity extends AppCompatActivity {
                     }
                 }).build ();
         dialog.show ();
-
     }
+    
     */
 
     @Override

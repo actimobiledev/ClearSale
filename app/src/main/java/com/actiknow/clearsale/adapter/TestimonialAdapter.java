@@ -9,7 +9,6 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.actiknow.clearsale.R;
-import com.actiknow.clearsale.model.Faq;
 import com.actiknow.clearsale.model.Testimonial;
 import com.bumptech.glide.Glide;
 

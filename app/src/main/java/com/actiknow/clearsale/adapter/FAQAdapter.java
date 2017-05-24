@@ -1,7 +1,6 @@
 package com.actiknow.clearsale.adapter;
 
 import android.app.Activity;
-import android.content.Intent;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -9,21 +8,20 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.actiknow.clearsale.R;
-import com.actiknow.clearsale.activity.PropertyDetailActivity;
-import com.actiknow.clearsale.model.Faq;
+import com.actiknow.clearsale.model.FAQ;
 
 import java.util.ArrayList;
 import java.util.List;
 
 
-public class FaqAdapter extends RecyclerView.Adapter<FaqAdapter.ViewHolder> {
+public class FAQAdapter extends RecyclerView.Adapter<FAQAdapter.ViewHolder> {
     OnItemClickListener mItemClickListener;
     private Activity activity;
-    private List<Faq> faqList = new ArrayList<Faq>();
-
-    public FaqAdapter(Activity activity, List<Faq> faqList) {
+    private List<FAQ> FAQList = new ArrayList<FAQ> ();
+    
+    public FAQAdapter (Activity activity, List<FAQ> FAQList) {
         this.activity = activity;
-        this.faqList = faqList;
+        this.FAQList = FAQList;
     }
 
     @Override
@@ -35,11 +33,11 @@ public class FaqAdapter extends RecyclerView.Adapter<FaqAdapter.ViewHolder> {
 
     @Override
     public void onBindViewHolder(ViewHolder holder, int position) {//        runEnterAnimation (holder.itemView);
-        final Faq faq = faqList.get(position);
-
-
-        holder.tvQuestion.setText(faq.getQuestion());
-        holder.tvAnswer.setText(faq.getAnswer());
+        final FAQ FAQ = FAQList.get (position);
+    
+    
+        holder.tvQuestion.setText (FAQ.getQuestion ());
+        holder.tvAnswer.setText (FAQ.getAnswer ());
         final ViewHolder tempholder = holder;
 
 
@@ -47,7 +45,7 @@ public class FaqAdapter extends RecyclerView.Adapter<FaqAdapter.ViewHolder> {
 
     @Override
     public int getItemCount() {
-        return faqList.size();
+        return FAQList.size ();
     }
 
     public void SetOnItemClickListener(final OnItemClickListener mItemClickListener) {
@@ -73,7 +71,7 @@ public class FaqAdapter extends RecyclerView.Adapter<FaqAdapter.ViewHolder> {
 
         @Override
         public void onClick(View v) {
-            Faq faq = faqList.get(getLayoutPosition());
+            FAQ FAQ = FAQList.get (getLayoutPosition ());
             //Intent intent=new Intent(activity, PropertyDetailActivity.class);
             // activity.startActivity(intent);
 

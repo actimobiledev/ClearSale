@@ -2,7 +2,7 @@
     <string name="app_name">ClearSale</string>
 
 
-    <string name="please_enter_name">Please enter Username</string>
+    <string name="please_enter_name">Please enter Name</string>
     <string name="please_enter_first_name">Please enter First Name</string>
     <string name="please_enter_last_name">Please enter Last Name</string>
     <string name="please_enter_email">Please enter Email</string>
@@ -73,7 +73,6 @@
     <string name="activity_edit_profile_ques2">I will buy properties in this price range(s). Pick all that apply:</string>
 
 
-    <string name="activity_faq_title">Frequently Asked Questions</string>
 
 
 
@@ -81,7 +80,6 @@
 
 
 
-    <string name="activity_contact_us_title">CONTACT US</string>
 
     <string name="facebook_app_id">431008303943529</string>
 
@@ -112,8 +110,61 @@
     <string name="dialog_text_new_version_available">New version of the application is available.Please update</string>
 
 
+    <!-- Karman -->
+    <string name="activity_about_us_back_button">Home</string>
+    <string name="activity_about_us_title">About Us</string>
+    <string name="activity_about_us_text_1" formatted="false">ClearSale\'s parent company,
+        HomeTrust, was founded in 2001 as a locally owned and operated real estate investment
+        business run by a husband/wife team. And 14 years later that’s still what we are. Although
+        we have now done over 300 buy/renovate/sell projects (what we call fix &amp;flips), have a
+        multi-million dollar single family rental portfolio that is growing quickly,and a wholesale
+        business, we are at our core a small family run business that strives to create fantastic
+        value for our customers every day. The BBB likes us too: Check out our A+ Rating from the
+        Denver Better Business Bureau. Click here to view.
+    </string>
+    <string name="activity_about_us_text_2" formatted="false">We do tens of thousands of dollars of
+        marketing each and every month, utilizing leading edge techniques, just to bring you the
+        best wholesale deals in Metro Denver &amp; Northern Colorado.To get our full list of
+        wholesale priced investment properties…
+    </string>
+    <string name="activity_about_us_text_3" formatted="false">Click here to join our Preferred
+        Buyers List
+    </string>
+    <string name="activity_about_us_text_4" formatted="false">Once you register you’ll be taken to
+        our Metro Denver &amp; Northern Colorado investment properties page. Whenever we get new
+        properties in we’ll put them up on that page and notify you by email.
+    </string>
+    <string name="activity_about_us_text_5" formatted="false">Why Should You Work With Us?</string>
+    <string name="activity_about_us_text_6" formatted="false">We\'ve already done the work and made
+        the investments to generate a consistent stream of deeply discounted deals. Because we come
+        across so many great deals (30% – 50% below market value) we simply can’t buy and keep all
+        of these properties ourselves
+    </string>
+    <string name="activity_about_us_text_7" formatted="false">Real Estate Investors Looking For
+        Rentals or Rehabs
+    </string>
+    <string name="activity_about_us_text_8" formatted="false">If you\'re a real estate investor and
+        are looking for great rental properties that will cash flow or distressed properties to
+        rehab and resell… have us find those properties for you. Just tell us what your buying
+        criteria is, and we’ll custom search for properties for you that fit your criteria. The
+        beauty of it is you never pay for our service… we make our money by adding on a modest fee
+        once you close on one of our properties.
+    </string>
+    <string name="activity_about_us_text_9" formatted="false">in the end, we\'ve gotten to where we
+        are today because we’ve focused on becoming really good at finding great deals, marketing,
+        and passing those deals off to people like you at a huge discount. That’s all we do. You can
+        rest assured that we are a great company to work with… and we’re just real people just like
+        you.
+    </string>
+    <string name="activity_about_us_text_10" formatted="false">The Acquisitions Team,</string>
+    <string name="activity_about_us_text_11" formatted="false">ClearSale &amp; HomeTrust</string>
+    <string name="activity_about_us_text_12" formatted="false">Call Us Today! 303-816-3170</string>
 
 
+    <string name="activity_contact_us_back_button">Home</string>
+    <string name="activity_contact_us_title">Contact Us</string>
 
+    <string name="activity_faq_back_button">Home</string>
+    <string name="activity_faq_title">FAQs</string>
 
 </resources>
