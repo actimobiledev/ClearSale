@@ -19,6 +19,7 @@
     <string name="please_select_state_type">Please select state type</string>
     <string name="please_select_home_type">Please select home type</string>
     <string name="otp_didnt_match">OTP didn\'t match</string>
+    <string name="activity_login_text_i_agree">You agree to our Term and Condition and Privacy Policy</string>
 
 
     <string name="activity_contact_hint_full_name">Full Name</string>

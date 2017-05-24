@@ -1,11 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.design.widget.CoordinatorLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<android.support.design.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/clMain"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/colorPrimary"
+
     app:layout_behavior="@string/appbar_scrolling_view_behavior">
 
     <RelativeLayout
@@ -69,8 +68,8 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:layout_gravity="center"
-                android:gravity="center"
+                android:layout_gravity="top"
+                android:gravity="top"
                 android:orientation="vertical">
 
                 <ImageView
@@ -84,26 +83,28 @@
                     android:layout_height="100dp"
                     android:scaleType="center"
                     android:src="@drawable/logoicon"
-                    android:visibility="visible" />
+                    android:visibility="gone" />
 
                 <LinearLayout
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="@dimen/activity_margin"
                     android:layout_marginRight="@dimen/activity_margin"
-                    android:orientation="horizontal">
-                <com.facebook.login.widget.LoginButton
-                    android:id="@+id/login_button"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center" />
+                    android:orientation="horizontal"
+                    android:visibility="gone">
 
-                <Button
-                    android:id="@+id/linkdin_login_button"
-                    android:layout_width="wrap_content"
-                    android:layout_height="35dp"
-                    android:layout_marginLeft="5dp"
-                    android:background="@drawable/linkedin" />
+                    <com.facebook.login.widget.LoginButton
+                        android:id="@+id/login_button"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center" />
+
+                    <Button
+                        android:id="@+id/linkdin_login_button"
+                        android:layout_width="wrap_content"
+                        android:layout_height="35dp"
+                        android:layout_marginLeft="5dp"
+                        android:background="@drawable/linkedin" />
                 </LinearLayout>
 
 
@@ -117,7 +118,7 @@
                     android:drawablePadding="@dimen/edittext_padding"
                     android:hint="@string/activity_sign_in_hint_email"
                     android:inputType="text"
-                    android:padding="@dimen/edittext_padding"
+                    android:padding="@dimen/edittext_padding_small"
                     android:paddingRight="@dimen/edittext_padding"
                     android:textColorHint="@color/text_color_grey_light"
                     android:textSize="@dimen/text_size_medium" />
@@ -134,7 +135,7 @@
                     android:drawablePadding="@dimen/edittext_padding"
                     android:hint="@string/activity_sign_in_hint_password"
                     android:inputType="textPassword"
-                    android:padding="@dimen/edittext_padding"
+                    android:padding="@dimen/edittext_padding_small"
                     android:textColorHint="@color/text_color_grey_light"
                     android:textSize="@dimen/text_size_medium" />
 
@@ -146,11 +147,11 @@
                     android:layout_marginLeft="@dimen/activity_margin"
                     android:layout_marginRight="@dimen/activity_margin"
                     android:layout_marginTop="@dimen/activity_margin_extra_large"
-                    android:background="@drawable/edit_text_background"
+                    android:background="@drawable/rounded_button"
                     android:gravity="center"
                     android:padding="@dimen/edittext_padding"
                     android:text="@string/activity_sign_in_button_submit"
-                    android:textColor="@color/colorPrimary"
+                    android:textColor="@color/text_color_white"
                     android:textSize="@dimen/text_size_large"
                     android:textStyle="bold" />
 
@@ -167,16 +168,18 @@
                     android:text="@string/activity_sign_in_text_signup"
                     android:textColor="@color/text_color_white"
                     android:textSize="@dimen/text_size_medium"
-                    android:textStyle="bold" />
+                    android:textStyle="bold"
+                    android:visibility="gone" />
 
 
                 <TextView
                     android:id="@+id/tvForgotPassword"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/activity_margin"
                     android:gravity="center"
                     android:text="@string/activity_sign_in_text_forgot_password"
-                    android:textColor="@color/text_color_white"
+                    android:textColor="@color/text_color_grey_dark2"
                     android:textSize="@dimen/text_size_medium"
                     android:textStyle="bold" />
 

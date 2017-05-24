@@ -18,6 +18,7 @@ import android.widget.ArrayAdapter;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -77,6 +78,7 @@ public class EditProfileActivity extends AppCompatActivity {
     String stateResponse;
     String budget;
     String[] spinnerItems;
+    ImageView ivBack;
 
 
     @Override
@@ -101,9 +103,6 @@ public class EditProfileActivity extends AppCompatActivity {
                 etLastName.setText(fullName[1]);
             }
         }
-
-
-//
         etEmail.setText(userDetailsPref.getStringPref(EditProfileActivity.this, UserDetailsPref.USER_EMAIL));
         etPhone.setText(userDetailsPref.getStringPref(EditProfileActivity.this, UserDetailsPref.USER_MOBILE));
 
@@ -127,6 +126,7 @@ public class EditProfileActivity extends AppCompatActivity {
         etEmail = (EditText) findViewById(R.id.etEmail);
         etPhone = (EditText) findViewById(R.id.etPhone);
         tvSubmit = (TextView) findViewById(R.id.tvSubmit);
+        ivBack = (ImageView) findViewById(R.id.ivBack);
         cb1 = (CheckBox) findViewById(R.id.cb1);
         cb2 = (CheckBox) findViewById(R.id.cb2);
         cb3 = (CheckBox) findViewById(R.id.cb3);
@@ -156,7 +156,13 @@ public class EditProfileActivity extends AppCompatActivity {
     }
 
     private void initListener() {
-
+        ivBack.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                finish();
+                overridePendingTransition(R.anim.slide_in_left, R.anim.slide_out_right);
+            }
+        });
         cb1.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
@@ -536,11 +542,14 @@ public class EditProfileActivity extends AppCompatActivity {
         }
     }
 
+
     @Override
     public void onBackPressed() {
         finish();
         overridePendingTransition(R.anim.slide_in_left, R.anim.slide_out_right);
     }
+
+
 }
 
 
