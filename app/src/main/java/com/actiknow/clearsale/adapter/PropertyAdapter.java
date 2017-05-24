@@ -146,9 +146,9 @@ public class PropertyAdapter extends RecyclerView.Adapter<PropertyAdapter.ViewHo
         
             @Override
             public void onPageScrollStateChanged (int state) {
+                final Handler handler = new Handler ();
                 switch (state) {
                     case 0:
-                        final Handler handler = new Handler ();
                         handler.postDelayed (new Runnable () {
                             @Override
                             public void run () {
@@ -158,6 +158,7 @@ public class PropertyAdapter extends RecyclerView.Adapter<PropertyAdapter.ViewHo
                         }, 500);
                         break;
                     case 1:
+    
                         holder.rlFooter.setVisibility (View.GONE);
                         holder.rlSliderIndicator.setVisibility (View.VISIBLE);
                         break;
