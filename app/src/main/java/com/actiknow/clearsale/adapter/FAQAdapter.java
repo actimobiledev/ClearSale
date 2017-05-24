@@ -33,14 +33,14 @@ public class FAQAdapter extends RecyclerView.Adapter<FAQAdapter.ViewHolder> {
 
     @Override
     public void onBindViewHolder(ViewHolder holder, int position) {//        runEnterAnimation (holder.itemView);
-        final FAQ FAQ = FAQList.get (position);
+        final FAQ faq = FAQList.get (position);
     
     
-        holder.tvQuestion.setText (FAQ.getQuestion ());
-        holder.tvAnswer.setText (FAQ.getAnswer ());
+        holder.tvQuestion.setText (faq.getQuestion ());
+        holder.tvAnswer.setText (faq.getAnswer ());
+        
+        
         final ViewHolder tempholder = holder;
-
-
     }
 
     @Override
@@ -65,17 +65,12 @@ public class FAQAdapter extends RecyclerView.Adapter<FAQAdapter.ViewHolder> {
             super(view);
             tvQuestion = (TextView) view.findViewById(R.id.tvQuestion);
             tvAnswer = (TextView) view.findViewById(R.id.tvAnswers);
-
             view.setOnClickListener(this);
         }
 
         @Override
         public void onClick(View v) {
-            FAQ FAQ = FAQList.get (getLayoutPosition ());
-            //Intent intent=new Intent(activity, PropertyDetailActivity.class);
-            // activity.startActivity(intent);
-
-            activity.overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
+//            FAQ FAQ = FAQList.get (getLayoutPosition ());
         }
     }
 }
