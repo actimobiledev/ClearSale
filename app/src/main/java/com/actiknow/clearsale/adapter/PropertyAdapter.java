@@ -48,7 +48,7 @@ public class PropertyAdapter extends RecyclerView.Adapter<PropertyAdapter.ViewHo
     }
 
     @Override
-    public void onBindViewHolder(ViewHolder holder, int position) {//        runEnterAnimation (holder.itemView);
+    public void onBindViewHolder (final ViewHolder holder, int position) {//        runEnterAnimation (holder.itemView);
         final Property property = propertyList.get (position);
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
             holder.ivImage.setClipToOutline(true);
@@ -57,19 +57,21 @@ public class PropertyAdapter extends RecyclerView.Adapter<PropertyAdapter.ViewHo
     
         switch (property.getStatus ()) {
             case 0:
-                Drawable img = activity.getResources ().getDrawable (R.drawable.property_available_bg);
-                img.setBounds (0, 0, 60, 60);  // set the image size
+                Drawable img = activity.getResources ().getDrawable (R.drawable.circle_red);
+                img.setBounds (0, 0, 30, 30);
                 holder.tvStatus.setCompoundDrawables (img, null, null, null);
-
-//                holder.tvStatus.setCompoundDrawablesWithIntrinsicBounds (R.drawable.property_sold_bg, 0, 0, 0);
                 holder.tvStatus.setText ("Sold");
                 break;
             case 1:
-                holder.tvStatus.setCompoundDrawablesWithIntrinsicBounds (R.drawable.property_available_bg, 0, 0, 0);
+                Drawable img2 = activity.getResources ().getDrawable (R.drawable.circle_green);
+                img2.setBounds (0, 0, 30, 30);
+                holder.tvStatus.setCompoundDrawables (img2, null, null, null);
                 holder.tvStatus.setText ("Available");
                 break;
             case 2:
-                holder.tvStatus.setCompoundDrawablesWithIntrinsicBounds (R.drawable.property_pending_bg, 0, 0, 0);
+                Drawable img3 = activity.getResources ().getDrawable (R.drawable.circle_yellow);
+                img3.setBounds (0, 0, 30, 30);
+                holder.tvStatus.setCompoundDrawables (img3, null, null, null);
                 holder.tvStatus.setText ("Pending");
                 break;
         }
@@ -128,12 +130,13 @@ public class PropertyAdapter extends RecyclerView.Adapter<PropertyAdapter.ViewHo
         holder.slider.addOnPageChangeListener (new ViewPagerEx.OnPageChangeListener () {
             @Override
             public void onPageScrolled (int position, float positionOffset, int positionOffsetPixels) {
-                Log.e ("karman page " + property.getId (), "state " + position);
+//                Log.e ("karman page " + property.getId (), "state " + position);
+                holder.rlSliderIndicator.setVisibility (View.VISIBLE);
             }
         
             @Override
             public void onPageSelected (int position) {
-            
+    
             }
         
             @Override
@@ -191,13 +194,14 @@ public class PropertyAdapter extends RecyclerView.Adapter<PropertyAdapter.ViewHo
         TextView tvBaths;
         TextView tvSqFeet;
         ImageView ivFavourite;
-
+    
         ImageView ivImage;
         ProgressBar progressBar;
     
         SliderLayout slider;
         RelativeLayout rlHeader;
         RelativeLayout rlSliderIndicator;
+        TextView tvSliderPosition;
     
         TextView tv1;
         TextView tv2;
@@ -207,6 +211,7 @@ public class PropertyAdapter extends RecyclerView.Adapter<PropertyAdapter.ViewHo
         public ViewHolder(View view) {
             super(view);
             rlSliderIndicator = (RelativeLayout) view.findViewById (R.id.rlSliderIndicator);
+            tvSliderPosition = (TextView) view.findViewById (R.id.tvSliderPosition);
             rlHeader = (RelativeLayout) view.findViewById (R.id.rlHeader);
             slider = (SliderLayout) view.findViewById (R.id.slider);
             tvStatus = (TextView) view.findViewById (R.id.tvStatus);
@@ -235,7 +240,6 @@ public class PropertyAdapter extends RecyclerView.Adapter<PropertyAdapter.ViewHo
             Property property = propertyList.get (getLayoutPosition ());
             Intent intent = new Intent (activity, PropertyDetailActivity.class);
             activity.startActivity(intent);
-
             activity.overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
         }
     }

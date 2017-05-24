@@ -85,6 +85,7 @@
             android:visibility="gone">
 
             <TextView
+                android:id="@+id/tvSliderPosition"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:padding="@dimen/activity_margin_extra_small"
