@@ -10,7 +10,8 @@
 
     <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        android:animateLayoutChanges="true">
         <com.daimajia.slider.library.SliderLayout
             android:id="@+id/slider"
             xmlns:app="http://schemas.android.com/tools"
@@ -77,9 +78,8 @@
             android:id="@+id/rlSliderIndicator"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_above="@+id/rlFooter"
-            android:layout_alignParentEnd="true"
-            android:layout_alignParentRight="true"
+            android:layout_alignBottom="@+id/rlFooter"
+            android:layout_centerHorizontal="true"
             android:layout_margin="@dimen/activity_margin_small"
             android:background="@drawable/property_slider_indicator_bg"
             android:visibility="gone">

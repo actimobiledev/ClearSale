@@ -5,8 +5,8 @@ import android.content.Intent;
 import android.graphics.drawable.Drawable;
 import android.os.Build;
 import android.os.Bundle;
+import android.os.Handler;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -19,6 +19,7 @@ import com.actiknow.clearsale.R;
 import com.actiknow.clearsale.activity.PropertyDetailActivity;
 import com.actiknow.clearsale.model.Property;
 import com.actiknow.clearsale.utils.SetTypeFace;
+import com.actiknow.clearsale.utils.Utils;
 import com.daimajia.slider.library.Animations.DescriptionAnimation;
 import com.daimajia.slider.library.Indicators.PagerIndicator;
 import com.daimajia.slider.library.SliderLayout;
@@ -94,6 +95,7 @@ public class PropertyAdapter extends RecyclerView.Adapter<PropertyAdapter.ViewHo
         holder.tv1.setTypeface (SetTypeFace.getTypeface (activity));
         holder.tv2.setTypeface (SetTypeFace.getTypeface (activity));
         holder.tv3.setTypeface (SetTypeFace.getTypeface (activity));
+        holder.tvSliderPosition.setTypeface (SetTypeFace.getTypeface (activity));
     
     
         holder.tvAddress1.setText (property.getAddress1 ());
@@ -107,8 +109,6 @@ public class PropertyAdapter extends RecyclerView.Adapter<PropertyAdapter.ViewHo
         holder.slider.removeAllSliders ();
         for (int i = 0; i < property.getImageList ().size (); i++) {
             String image = property.getImageList ().get (i);
-            // SpannableString s = new SpannableString (banner.getTitle ());
-            // s.setSpan (new TypefaceSpan(this, Constants.font_name), 0, s.length (), Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
             DefaultSliderView defaultSliderView = new DefaultSliderView (activity);
             defaultSliderView
                     .image (image)
@@ -116,6 +116,10 @@ public class PropertyAdapter extends RecyclerView.Adapter<PropertyAdapter.ViewHo
                     .setOnSliderClickListener (new BaseSliderView.OnSliderClickListener () {
                         @Override
                         public void onSliderClick (BaseSliderView slider) {
+                            Utils.showToast (activity, "Property id" + property.getId (), true);
+                            Intent intent = new Intent (activity, PropertyDetailActivity.class);
+                            activity.startActivity (intent);
+                            activity.overridePendingTransition (R.anim.slide_in_right, R.anim.slide_out_left);
                         }
                     });
         
@@ -131,17 +135,38 @@ public class PropertyAdapter extends RecyclerView.Adapter<PropertyAdapter.ViewHo
             @Override
             public void onPageScrolled (int position, float positionOffset, int positionOffsetPixels) {
 //                Log.e ("karman page " + property.getId (), "state " + position);
-                holder.rlSliderIndicator.setVisibility (View.VISIBLE);
+//                holder.rlSliderIndicator.setVisibility (View.VISIBLE);
+//                holder.tvSliderPosition.setText (position + " of " + property.getImageList ().size ());
             }
         
             @Override
             public void onPageSelected (int position) {
-    
+                holder.tvSliderPosition.setText ((position + 1) + " of " + property.getImageList ().size ());
             }
         
             @Override
             public void onPageScrollStateChanged (int state) {
-                Log.e ("karman " + property.getId (), "state " + state);
+                switch (state) {
+                    case 0:
+                        final Handler handler = new Handler ();
+                        handler.postDelayed (new Runnable () {
+                            @Override
+                            public void run () {
+                                holder.rlSliderIndicator.setVisibility (View.GONE);
+                                holder.rlFooter.setVisibility (View.VISIBLE);
+                            }
+                        }, 500);
+                        break;
+                    case 1:
+                        holder.rlFooter.setVisibility (View.GONE);
+                        holder.rlSliderIndicator.setVisibility (View.VISIBLE);
+                        break;
+                    case 2:
+                        break;
+                }
+//                if (property.getId () == 1){
+//                    Log.e ("karman " + property.getId (), "state " + state);
+//                }
             }
         });
 // holder.slider.setCustomIndicator((PagerIndicator) findViewById(R.id.custom_indicator));
@@ -200,6 +225,7 @@ public class PropertyAdapter extends RecyclerView.Adapter<PropertyAdapter.ViewHo
     
         SliderLayout slider;
         RelativeLayout rlHeader;
+        RelativeLayout rlFooter;
         RelativeLayout rlSliderIndicator;
         TextView tvSliderPosition;
     
@@ -213,6 +239,7 @@ public class PropertyAdapter extends RecyclerView.Adapter<PropertyAdapter.ViewHo
             rlSliderIndicator = (RelativeLayout) view.findViewById (R.id.rlSliderIndicator);
             tvSliderPosition = (TextView) view.findViewById (R.id.tvSliderPosition);
             rlHeader = (RelativeLayout) view.findViewById (R.id.rlHeader);
+            rlFooter = (RelativeLayout) view.findViewById (R.id.rlFooter);
             slider = (SliderLayout) view.findViewById (R.id.slider);
             tvStatus = (TextView) view.findViewById (R.id.tvStatus);
             tvAcceptingOffer = (TextView) view.findViewById(R.id.tvAcceptingOffer);

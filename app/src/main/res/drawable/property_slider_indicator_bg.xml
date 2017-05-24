@@ -3,5 +3,6 @@
     <solid
         android:color="#cc000000"
     />
-
+    <corners
+        android:radius="@dimen/cardview_default_radius"/>
 </shape>
