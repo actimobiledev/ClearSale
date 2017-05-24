@@ -1,5 +1,4 @@
 package com.actiknow.clearsale.activity;
-
 import android.content.Intent;
 import android.os.Bundle;
 import android.provider.Settings;
@@ -12,6 +11,7 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.View;
+import android.widget.RelativeLayout;
 
 import com.actiknow.clearsale.R;
 import com.actiknow.clearsale.adapter.FAQAdapter;
@@ -20,7 +20,6 @@ import com.actiknow.clearsale.utils.AppConfigTags;
 import com.actiknow.clearsale.utils.AppConfigURL;
 import com.actiknow.clearsale.utils.Constants;
 import com.actiknow.clearsale.utils.NetworkConnection;
-import com.actiknow.clearsale.utils.SimpleDividerItemDecoration;
 import com.actiknow.clearsale.utils.Utils;
 import com.android.volley.AuthFailureError;
 import com.android.volley.Request;
@@ -36,15 +35,14 @@ import java.util.Hashtable;
 import java.util.List;
 import java.util.Map;
 
-
 public class FAQActivity extends AppCompatActivity {
     RecyclerView rvFAQs;
     List<FAQ> FAQList = new ArrayList<> ();
     FAQAdapter faqAdapter;
     CoordinatorLayout clMain;
     SwipeRefreshLayout swipeRefreshLayout;
-
-
+    RelativeLayout rlBack;
+    
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -59,6 +57,7 @@ public class FAQActivity extends AppCompatActivity {
         rvFAQs = (RecyclerView) findViewById (R.id.rvFAQs);
         clMain = (CoordinatorLayout) findViewById(R.id.clMain);
         swipeRefreshLayout = (SwipeRefreshLayout) findViewById(R.id.swipe_refresh_layout);
+        rlBack = (RelativeLayout) findViewById (R.id.rlBack);
     }
 
     private void initData() {
@@ -74,16 +73,23 @@ public class FAQActivity extends AppCompatActivity {
         rvFAQs.setAdapter (faqAdapter);
         rvFAQs.setHasFixedSize (true);
         rvFAQs.setLayoutManager (new LinearLayoutManager (this, LinearLayoutManager.VERTICAL, false));
-        rvFAQs.addItemDecoration (new SimpleDividerItemDecoration (this));
         rvFAQs.setItemAnimator (new DefaultItemAnimator ());
+        Utils.setTypefaceToAllViews (this, rlBack);
     }
-
+    
     private void initListener() {
         swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {
                 swipeRefreshLayout.setRefreshing(true);
                 getFAQList ();
+            }
+        });
+        rlBack.setOnClickListener (new View.OnClickListener () {
+            @Override
+            public void onClick (View v) {
+                finish ();
+                overridePendingTransition (R.anim.slide_in_left, R.anim.slide_out_right);
             }
         });
     }

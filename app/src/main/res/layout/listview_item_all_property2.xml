@@ -26,10 +26,10 @@
         <ImageView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:src="@drawable/ic_like"
             android:layout_alignParentRight="true"
             android:layout_marginRight="10dp"
-            android:layout_marginTop="3dp"/>
+            android:layout_marginTop="3dp"
+            android:src="@drawable/ic_like"/>
 
         <TextView
             android:id="@+id/tvAddress2"
@@ -79,7 +79,7 @@
                 android:visibility="visible" />
 
             <TextView
-                android:id="@+id/tvAvailable"
+                android:id="@+id/tvStatus"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_alignParentEnd="true"

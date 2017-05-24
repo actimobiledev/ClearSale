@@ -4,7 +4,7 @@
     xmlns:card_view="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:layout_margin="@dimen/activity_margin_extra_small"
+    android:layout_margin="@dimen/activity_margin_small"
     card_view:cardCornerRadius="@dimen/cardview_default_radius"
     card_view:cardElevation="@dimen/cardview_elevation">
     <RelativeLayout
@@ -34,6 +34,5 @@
             android:text="Deposits are non-refundable. The only circumstance that will result in a deposit refund is if we are not able to deliver clear title."
             android:textColor="@color/app_text_color_light"
             android:textSize="@dimen/text_size_small"/>
-
     </RelativeLayout>
 </android.support.v7.widget.CardView>

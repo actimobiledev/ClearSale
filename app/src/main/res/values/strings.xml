@@ -161,10 +161,21 @@
     <string name="activity_about_us_text_12" formatted="false">Call Us Today! 303-816-3170</string>
 
 
+    <string name="activity_testimonial_text_1">HAPPY INVESTORS</string>
+    <string name="activity_testimonial_text_2">Hear from people who have purchased deals from us.
+    </string>
+
+
     <string name="activity_contact_us_back_button">Home</string>
     <string name="activity_contact_us_title">Contact Us</string>
 
     <string name="activity_faq_back_button">Home</string>
     <string name="activity_faq_title">FAQs</string>
+
+    <string name="activity_testimonial_back_button">Home</string>
+    <string name="activity_testimonial_title">Testimonials</string>
+
+    <string name="activity_how_it_works_back_button">Home</string>
+    <string name="activity_how_it_works_title">How It Works</string>
 
 </resources>

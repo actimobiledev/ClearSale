@@ -2,8 +2,8 @@ package com.actiknow.clearsale.app;
 
 import android.app.Application;
 import android.content.Context;
+import android.support.multidex.MultiDex;
 import android.text.TextUtils;
-
 
 import com.actiknow.clearsale.utils.LruBitmapCache;
 import com.android.volley.Request;
@@ -26,8 +26,14 @@ public class AppController extends Application {
 	public static Context getAppContext () {
 		return AppController.context;
 	}
-
-	@Override
+    
+    @Override
+    protected void attachBaseContext (Context context) {
+        super.attachBaseContext (context);
+        MultiDex.install (this);
+    }
+    
+    @Override
 	public void onCreate() {
 		super.onCreate();
 		mInstance = this;

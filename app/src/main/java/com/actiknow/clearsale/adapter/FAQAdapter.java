@@ -9,6 +9,7 @@ import android.widget.TextView;
 
 import com.actiknow.clearsale.R;
 import com.actiknow.clearsale.model.FAQ;
+import com.actiknow.clearsale.utils.SetTypeFace;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -35,10 +36,11 @@ public class FAQAdapter extends RecyclerView.Adapter<FAQAdapter.ViewHolder> {
     public void onBindViewHolder(ViewHolder holder, int position) {//        runEnterAnimation (holder.itemView);
         final FAQ faq = FAQList.get (position);
     
+        holder.tvAnswer.setTypeface (SetTypeFace.getTypeface (activity));
+        holder.tvQuestion.setTypeface (SetTypeFace.getTypeface (activity));
     
         holder.tvQuestion.setText (faq.getQuestion ());
         holder.tvAnswer.setText (faq.getAnswer ());
-        
         
         final ViewHolder tempholder = holder;
     }

@@ -10,7 +10,7 @@ import android.widget.TextView;
 
 import com.actiknow.clearsale.R;
 import com.actiknow.clearsale.model.Testimonial;
-import com.bumptech.glide.Glide;
+import com.actiknow.clearsale.utils.SetTypeFace;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -36,16 +36,14 @@ public class TestimonialAdapter extends RecyclerView.Adapter<TestimonialAdapter.
     @Override
     public void onBindViewHolder(ViewHolder holder, int position) {//        runEnterAnimation (holder.itemView);
         final Testimonial testimonial = testimonials.get(position);
-
-
-        holder.tvDescription.setText(testimonial.getDescription());
+    
+        holder.tvText.setTypeface (SetTypeFace.getTypeface (activity));
+        holder.tvName.setTypeface (SetTypeFace.getTypeface (activity));
+    
+        holder.tvText.setText (testimonial.getDescription ());
         holder.tvName.setText(testimonial.getName());
 
-        Glide.with(activity).load("").placeholder(testimonial.getImage2()).into(holder.ivPlayVedio);
-
-        final ViewHolder tempholder = holder;
-
-
+//        Glide.with(activity).load("").placeholder(testimonial.getImage2()).into(holder.ivVideo);
     }
 
     @Override
@@ -62,28 +60,21 @@ public class TestimonialAdapter extends RecyclerView.Adapter<TestimonialAdapter.
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
-        TextView tvDescription;
+        TextView tvText;
         TextView tvName;
-        ImageView ivPlayVedio;
-
-
-
+        ImageView ivVideo;
+        
         public ViewHolder(View view) {
             super(view);
-            tvDescription = (TextView) view.findViewById(R.id.tvDescription);
+            tvText = (TextView) view.findViewById (R.id.tvText);
             tvName = (TextView) view.findViewById(R.id.tvName);
-            ivPlayVedio=(ImageView)view.findViewById(R.id.ivPlayVedio);
-
+            ivVideo = (ImageView) view.findViewById (R.id.ivVideo);
             view.setOnClickListener(this);
         }
 
         @Override
         public void onClick(View v) {
             Testimonial testimonial = testimonials.get(getLayoutPosition());
-            //Intent intent=new Intent(activity, PropertyDetailActivity.class);
-            // activity.startActivity(intent);
-
-            activity.overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
         }
     }
 }

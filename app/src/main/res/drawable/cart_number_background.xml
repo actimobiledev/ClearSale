@@ -5,6 +5,6 @@
         android:color="@color/text_color_orange"/>
     <solid
         android:color="@color/text_color_orange"/>
-    <size android:height="19dp"
-          android:width="19dp"/>
+    <area android:width="19dp"
+          android:height="19dp"/>
 </shape>

@@ -1,15 +1,12 @@
-<android.support.design.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:id="@+id/clMain"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    app:layout_behavior="@string/appbar_scrolling_view_behavior">
-
+<android.support.design.widget.CoordinatorLayout android:id="@+id/clMain"
+                                                 xmlns:android="http://schemas.android.com/apk/res/android"
+                                                 xmlns:app="http://schemas.android.com/apk/res-auto"
+                                                 android:layout_width="match_parent"
+                                                 android:layout_height="match_parent"
+                                                 app:layout_behavior="@string/appbar_scrolling_view_behavior">
     <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="10dp">
-
+        android:layout_height="wrap_content">
         <android.support.design.widget.AppBarLayout
             android:id="@+id/appBar"
             android:layout_width="match_parent"
@@ -17,102 +14,99 @@
             android:animateLayoutChanges="true"
             android:theme="@style/AppTheme.AppBarOverlay"
             android:visibility="visible">
-
-            <android.support.v7.widget.Toolbar xmlns:android="http://schemas.android.com/apk/res/android"
-                android:id="@+id/toolbar1"
+            <android.support.v7.widget.Toolbar
+                android:id="@+id/toolbar"
                 style="@style/Widget.MyApp.ActionBar"
+                xmlns:android="http://schemas.android.com/apk/res/android"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_height="?attr/actionBarSize"
                 android:animateLayoutChanges="true"
-                android:background="@color/colorPrimary">
-
+                android:background="@android:color/transparent"
+                android:contentInsetEnd="0dp"
+                android:contentInsetLeft="0dp"
+                android:contentInsetRight="0dp"
+                android:contentInsetStart="0dp"
+                android:visibility="visible"
+                app:contentInsetEnd="0dp"
+                app:contentInsetLeft="0dp"
+                app:contentInsetRight="0dp"
+                app:contentInsetStart="0dp"
+                app:layout_collapseMode="pin">
                 <RelativeLayout
                     android:id="@+id/toolbar_layout"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content">
-
-                    <ImageView
-                        android:id="@+id/ivBack"
+                    android:layout_height="match_parent">
+                    <RelativeLayout
+                        android:id="@+id/rlBack"
                         android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_alignParentLeft="true"
-                        android:layout_alignParentStart="true"
-                        android:layout_centerVertical="true"
-                        android:src="@drawable/ic_back3"
-                        android:visibility="visible" />
-
+                        android:layout_height="match_parent">
+                        <ImageView
+                            android:id="@+id/ivBack"
+                            android:layout_width="wrap_content"
+                            android:layout_height="match_parent"
+                            android:layout_alignParentLeft="true"
+                            android:layout_alignParentStart="true"
+                            android:layout_centerVertical="true"
+                            android:src="@drawable/ic_back3"
+                            android:visibility="visible"/>
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="match_parent"
+                            android:layout_toEndOf="@+id/ivBack"
+                            android:layout_toRightOf="@+id/ivBack"
+                            android:gravity="center_vertical"
+                            android:text="@string/activity_testimonial_back_button"
+                            android:textColor="@color/text_color_white"
+                            android:textSize="@dimen/text_size_small"/>
+                    </RelativeLayout>
                     <TextView
                         android:layout_width="wrap_content"
-                        android:layout_height="30dp"
+                        android:layout_height="wrap_content"
                         android:layout_centerInParent="true"
                         android:gravity="center"
-                        android:text="TESTIMONIALS"
+                        android:text="@string/activity_testimonial_title"
                         android:textColor="@color/text_color_white"
-                        android:textSize="20sp"
-                        android:textStyle="bold" />
-
-
+                        android:textSize="@dimen/text_size_title"
+                        android:textStyle="bold"/>
                 </RelativeLayout>
             </android.support.v7.widget.Toolbar>
-
-
         </android.support.design.widget.AppBarLayout>
-
-
         <RelativeLayout
+            android:id="@+id/rlHeading"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_below="@+id/appBar"
-            android:id="@+id/rlHeading">
-
-
+            android:layout_below="@+id/appBar">
             <TextView
                 android:id="@+id/tvHeading"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:gravity="center"
-                android:padding="10dp"
-                android:text="HAPPY INVESTORS"
-                android:textSize="20sp"
+                android:padding="@dimen/activity_margin_small"
+                android:text="@string/activity_testimonial_text_1"
+                android:textSize="@dimen/text_size_extra_large"
                 android:textStyle="bold" />
-
             <TextView
                 android:id="@+id/tvSubHeading"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_below="@+id/tvHeading"
                 android:gravity="center"
-                android:padding="5dp"
-                android:text="Hear from people who have purchased deals from us."
-                android:textSize="15sp"
+                android:padding="@dimen/activity_margin_extra_small"
+                android:text="@string/activity_testimonial_text_2"
+                android:textSize="@dimen/text_size_small"
                 android:textStyle="bold" />
-
-
         </RelativeLayout>
-
-
-
-
         <android.support.v4.widget.SwipeRefreshLayout
             android:id="@+id/swipe_refresh_layout"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_below="@+id/rlHeading">
-
             <android.support.v7.widget.RecyclerView
+                android:id="@+id/rvTestimonials"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/activity_margin"
-                android:id="@+id/rvTestimonialList">
+                android:layout_marginTop="@dimen/activity_margin">
             </android.support.v7.widget.RecyclerView>
         </android.support.v4.widget.SwipeRefreshLayout>
-
-
-
-
-
-
-
-
     </RelativeLayout>
 </android.support.design.widget.CoordinatorLayout>

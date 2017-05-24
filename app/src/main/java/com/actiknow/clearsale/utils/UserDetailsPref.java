@@ -12,7 +12,6 @@ public class UserDetailsPref {
     public static String USER_ID = "user_id";
     public static String USER_FIREBASE_ID = "user_firebase_id";
     public static String USER_ACCESS_TOKEN = "user_firebase_id";
-    public static String USER_LANGUAGE = "user_language";
     public static String HOME_TYPE = "home_type";
     public static String STATE_TYPE = "state_type";
     public static String HOME_BUDGET = "home_budget";
