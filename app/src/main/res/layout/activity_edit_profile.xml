@@ -1,7 +1,7 @@
 <android.support.design.widget.CoordinatorLayout
+    android:id="@+id/clMain"
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:id="@+id/clMain"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     app:layout_behavior="@string/appbar_scrolling_view_behavior">
@@ -19,13 +19,13 @@
             android:theme="@style/AppTheme.AppBarOverlay"
             android:visibility="visible">
 
-            <android.support.v7.widget.Toolbar xmlns:android="http://schemas.android.com/apk/res/android"
-                android:id="@+id/toolbar1"
-                style="@style/Widget.MyApp.ActionBar"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:animateLayoutChanges="true"
-                android:background="@color/colorPrimary">
+            <android.support.v7.widget.Toolbar android:id="@+id/toolbar1"
+                                               style="@style/Widget.MyApp.ActionBar"
+                                               xmlns:android="http://schemas.android.com/apk/res/android"
+                                               android:layout_width="match_parent"
+                                               android:layout_height="wrap_content"
+                                               android:animateLayoutChanges="true"
+                                               android:background="@color/colorPrimary">
 
                 <RelativeLayout
                     android:id="@+id/toolbar_layout"
@@ -39,7 +39,7 @@
                         android:layout_alignParentLeft="true"
                         android:layout_alignParentStart="true"
                         android:layout_centerVertical="true"
-                        android:src="@drawable/ic_back3"
+                        android:src="@drawable/ic_back"
                         android:visibility="visible" />
 
                     <TextView
@@ -162,11 +162,11 @@
 
 
                         <LinearLayout
+                            android:id="@+id/llState"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:orientation="horizontal"
-                            android:weightSum="2"
-                            android:id="@+id/llState">
+                            android:weightSum="2">
 
 
                             <CheckBox

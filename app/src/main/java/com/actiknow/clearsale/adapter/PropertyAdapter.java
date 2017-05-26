@@ -55,7 +55,6 @@ public class PropertyAdapter extends RecyclerView.Adapter<PropertyAdapter.ViewHo
             holder.ivImage.setClipToOutline(true);
         }
     
-    
         switch (property.getStatus ()) {
             case 0:
                 Drawable img = activity.getResources ().getDrawable (R.drawable.circle_red);
@@ -96,7 +95,6 @@ public class PropertyAdapter extends RecyclerView.Adapter<PropertyAdapter.ViewHo
         holder.tv2.setTypeface (SetTypeFace.getTypeface (activity));
         holder.tv3.setTypeface (SetTypeFace.getTypeface (activity));
         holder.tvSliderPosition.setTypeface (SetTypeFace.getTypeface (activity));
-    
     
         holder.tvAddress1.setText (property.getAddress1 ());
         holder.tvAddress2.setText (property.getAddress2 ());
@@ -147,18 +145,19 @@ public class PropertyAdapter extends RecyclerView.Adapter<PropertyAdapter.ViewHo
             @Override
             public void onPageScrollStateChanged (int state) {
                 final Handler handler = new Handler ();
+                Runnable finalizer = null;
                 switch (state) {
                     case 0:
-                        handler.postDelayed (new Runnable () {
-                            @Override
+                        finalizer = new Runnable () {
                             public void run () {
                                 holder.rlSliderIndicator.setVisibility (View.GONE);
                                 holder.rlFooter.setVisibility (View.VISIBLE);
                             }
-                        }, 500);
+                        };
+                        handler.postDelayed (finalizer, 1500);
                         break;
                     case 1:
-    
+//                        handler.removeCallbacks (finalizer);
                         holder.rlFooter.setVisibility (View.GONE);
                         holder.rlSliderIndicator.setVisibility (View.VISIBLE);
                         break;

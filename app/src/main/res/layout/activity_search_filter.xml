@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.design.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:custom="http://schemas.android.com/tools"
+<android.support.design.widget.CoordinatorLayout
     android:id="@+id/clMain"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     app:layout_behavior="@string/appbar_scrolling_view_behavior">
@@ -19,14 +19,14 @@
             android:theme="@style/AppTheme.AppBarOverlay"
             android:visibility="visible">
 
-            <android.support.v7.widget.Toolbar xmlns:android="http://schemas.android.com/apk/res/android"
-                android:id="@+id/toolbar1"
-                style="@style/Widget.MyApp.ActionBar"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:animateLayoutChanges="true"
-                android:background="@color/colorPrimary"
-                android:visibility="visible">
+            <android.support.v7.widget.Toolbar android:id="@+id/toolbar1"
+                                               style="@style/Widget.MyApp.ActionBar"
+                                               xmlns:android="http://schemas.android.com/apk/res/android"
+                                               android:layout_width="match_parent"
+                                               android:layout_height="wrap_content"
+                                               android:animateLayoutChanges="true"
+                                               android:background="@color/colorPrimary"
+                                               android:visibility="visible">
 
                 <RelativeLayout
                     android:id="@+id/toolbar_layout"
@@ -40,7 +40,7 @@
                         android:layout_alignParentLeft="true"
                         android:layout_alignParentStart="true"
                         android:layout_centerVertical="true"
-                        android:src="@drawable/ic_back3"
+                        android:src="@drawable/ic_back"
                         android:visibility="visible" />
 
                     <TextView
@@ -83,16 +83,16 @@
                     android:textSize="15sp"
                     android:textStyle="bold" />
 
-                <me.bendik.simplerangeview.SimpleRangeView xmlns:app="http://schemas.android.com/apk/res-auto"
-                    android:id="@+id/rangeview_location"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    app:count="5"
-                    app:end="4"
-                    app:endFixed="4"
-                    app:showFixedLine="true"
-                    app:start="0"
-                    app:startFixed="0" />
+                <me.bendik.simplerangeview.SimpleRangeView android:id="@+id/rangeview_location"
+                                                           xmlns:app="http://schemas.android.com/apk/res-auto"
+                                                           android:layout_width="match_parent"
+                                                           android:layout_height="wrap_content"
+                                                           app:count="5"
+                                                           app:end="4"
+                                                           app:endFixed="4"
+                                                           app:showFixedLine="true"
+                                                           app:start="0"
+                                                           app:startFixed="0" />
 
                 <TextView
                     android:layout_width="match_parent"
@@ -102,16 +102,16 @@
                     android:textSize="15sp"
                     android:textStyle="bold" />
 
-                <me.bendik.simplerangeview.SimpleRangeView xmlns:app="http://schemas.android.com/apk/res-auto"
-                    android:id="@+id/fixed_rangeview"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    app:count="6"
-                    app:end="5"
-                    app:endFixed="5"
-                    app:showFixedLine="true"
-                    app:start="0"
-                    app:startFixed="0" />
+                <me.bendik.simplerangeview.SimpleRangeView android:id="@+id/fixed_rangeview"
+                                                           xmlns:app="http://schemas.android.com/apk/res-auto"
+                                                           android:layout_width="match_parent"
+                                                           android:layout_height="wrap_content"
+                                                           app:count="6"
+                                                           app:end="5"
+                                                           app:endFixed="5"
+                                                           app:showFixedLine="true"
+                                                           app:start="0"
+                                                           app:startFixed="0" />
 
 
                 <TextView

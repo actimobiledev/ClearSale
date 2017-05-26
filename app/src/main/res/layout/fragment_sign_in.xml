@@ -1,70 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.design.widget.CoordinatorLayout android:id="@+id/clMain"
-                                                 xmlns:android="http://schemas.android.com/apk/res/android"
-                                                 xmlns:app="http://schemas.android.com/apk/res-auto"
-                                                 android:layout_width="match_parent"
-                                                 android:layout_height="match_parent"
-
-                                                 app:layout_behavior="@string/appbar_scrolling_view_behavior">
-
+<android.support.design.widget.CoordinatorLayout
+    android:id="@+id/clMain"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
-
-        <android.support.design.widget.AppBarLayout
-            android:id="@+id/appBar"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:animateLayoutChanges="true"
-            android:theme="@style/AppTheme.AppBarOverlay"
-            android:visibility="visible">
-
-            <android.support.v7.widget.Toolbar android:id="@+id/toolbar1"
-                                               style="@style/Widget.MyApp.ActionBar"
-                                               xmlns:android="http://schemas.android.com/apk/res/android"
-                                               android:layout_width="match_parent"
-                                               android:layout_height="wrap_content"
-                                               android:animateLayoutChanges="true"
-                                               android:background="@color/colorPrimary"
-                                               android:visibility="gone">
-
-                <RelativeLayout
-                    android:id="@+id/toolbar_layout"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content">
-
-                    <ImageView
-                        android:id="@+id/ivBack"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_alignParentLeft="true"
-                        android:layout_alignParentStart="true"
-                        android:layout_centerVertical="true"
-                        android:src="@drawable/ic_back3"
-                        android:visibility="visible" />
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="30dp"
-                        android:layout_centerInParent="true"
-                        android:gravity="center"
-                        android:text="SIGN UP"
-                        android:textColor="@color/text_color_white"
-                        android:textSize="20sp"
-                        android:textStyle="bold" />
-
-
-                </RelativeLayout>
-            </android.support.v7.widget.Toolbar>
-
-
-        </android.support.design.widget.AppBarLayout>
-
-
         <ScrollView
             android:layout_width="match_parent"
             android:layout_height="match_parent">
-
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
@@ -72,58 +17,21 @@
                 android:gravity="top"
                 android:orientation="vertical">
 
-                <ImageView
-                    android:layout_width="wrap_content"
-                    android:layout_height="100dp"
-                    android:src="@drawable/clearsale3"
-                    android:visibility="gone" />
-
-                <ImageView
-                    android:layout_width="match_parent"
-                    android:layout_height="100dp"
-                    android:scaleType="center"
-                    android:src="@drawable/logoicon"
-                    android:visibility="gone" />
-
-                <LinearLayout
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginLeft="@dimen/activity_margin"
-                    android:layout_marginRight="@dimen/activity_margin"
-                    android:orientation="horizontal"
-                    android:visibility="gone">
-
-                    <com.facebook.login.widget.LoginButton
-                        android:id="@+id/login_button"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_gravity="center" />
-
-                    <Button
-                        android:id="@+id/linkdin_login_button"
-                        android:layout_width="wrap_content"
-                        android:layout_height="35dp"
-                        android:layout_marginLeft="5dp"
-                        android:background="@drawable/linkedin" />
-                </LinearLayout>
-
-
                 <EditText
                     android:id="@+id/etEmail"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_margin="@dimen/activity_margin"
                     android:background="@drawable/edit_text_background"
-                    android:drawableLeft="@drawable/ic_user_name"
-                    android:drawablePadding="@dimen/edittext_padding"
+                    android:drawableLeft="@drawable/ic_email"
+                    android:drawablePadding="@dimen/activity_margin_small"
+                    android:drawableStart="@drawable/ic_email"
                     android:hint="@string/activity_sign_in_hint_email"
-                    android:inputType="text"
+                    android:inputType="textEmailAddress"
+                    android:lines="1"
                     android:padding="@dimen/edittext_padding"
-                    android:paddingRight="@dimen/edittext_padding"
-                    android:textColorHint="@color/text_color_grey_light"
-                    android:textSize="@dimen/text_size_medium" />
-
-
+                    android:textColorHint="@color/hint_text_color"
+                    android:textSize="@dimen/text_size_medium"/>
                 <EditText
                     android:id="@+id/etPassword"
                     android:layout_width="match_parent"
@@ -131,57 +39,44 @@
                     android:layout_marginLeft="@dimen/activity_margin"
                     android:layout_marginRight="@dimen/activity_margin"
                     android:background="@drawable/edit_text_background"
-                    android:drawableLeft="@drawable/ic_password"
-                    android:drawablePadding="@dimen/edittext_padding"
+                    android:drawableLeft="@drawable/ic_user_name"
+                    android:drawablePadding="@dimen/activity_margin_small"
+                    android:drawableStart="@drawable/ic_user_name"
                     android:hint="@string/activity_sign_in_hint_password"
                     android:inputType="textPassword"
+                    android:lines="1"
                     android:padding="@dimen/edittext_padding"
-                    android:textColorHint="@color/text_color_grey_light"
-                    android:textSize="@dimen/text_size_medium" />
-
-
+                    android:textColorHint="@color/hint_text_color"
+                    android:textSize="@dimen/text_size_medium"/>
                 <TextView
                     android:id="@+id/tvSignIn"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="@dimen/activity_margin"
                     android:layout_marginRight="@dimen/activity_margin"
-                    android:layout_marginTop="@dimen/activity_margin_extra_large"
+                    android:layout_marginTop="@dimen/activity_margin"
                     android:background="@drawable/rounded_button"
+                    android:elevation="@dimen/button_elevation"
                     android:gravity="center"
-                    android:padding="@dimen/edittext_padding"
+                    android:padding="@dimen/button_padding"
                     android:text="@string/activity_sign_in_button_submit"
                     android:textColor="@color/text_color_white"
-                    android:textSize="@dimen/text_size_large"
-                    android:textStyle="bold" />
-
-
-                <TextView
-                    android:id="@+id/tvCreateAccount"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginLeft="@dimen/activity_margin"
-                    android:layout_marginRight="@dimen/activity_margin"
-                    android:layout_marginTop="@dimen/activity_margin"
-                    android:gravity="center"
-                    android:padding="@dimen/edittext_padding"
-                    android:text="@string/activity_sign_in_text_signup"
-                    android:textColor="@color/text_color_white"
-                    android:textSize="@dimen/text_size_medium"
-                    android:textStyle="bold"
-                    android:visibility="gone" />
-
+                    android:textSize="@dimen/text_size_extra_large"
+                    android:textStyle="bold"/>
 
                 <TextView
                     android:id="@+id/tvForgotPassword"
-                    android:layout_width="match_parent"
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="@dimen/activity_margin"
-                    android:gravity="center"
+                    android:layout_gravity="end"
+                    android:layout_marginLeft="@dimen/activity_margin"
+                    android:layout_marginRight="@dimen/activity_margin"
+                    android:layout_marginTop="@dimen/activity_margin_small"
+                    android:gravity="end"
+                    android:padding="@dimen/activity_margin_small"
                     android:text="@string/activity_sign_in_text_forgot_password"
-                    android:textColor="@color/text_color_grey_dark2"
-                    android:textSize="@dimen/text_size_medium"
-                    android:textStyle="bold" />
+                    android:textColor="@color/text_color_white"
+                    android:textSize="@dimen/text_size_medium"/>
 
             </LinearLayout>
         </ScrollView>

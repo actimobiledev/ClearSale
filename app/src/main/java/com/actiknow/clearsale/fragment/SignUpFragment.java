@@ -14,6 +14,7 @@ import android.text.Spanned;
 import android.text.TextWatcher;
 import android.text.method.LinkMovementMethod;
 import android.text.style.ClickableSpan;
+import android.text.style.ForegroundColorSpan;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -49,8 +50,6 @@ public class SignUpFragment extends Fragment {
     EditText etName;
     EditText etEmail;
     EditText etMobile;
-    EditText etPassword;
-    EditText etConfirmPassword;
     CoordinatorLayout clMain;
     ProgressDialog progressDialog;
     TextView tvTerm;
@@ -62,7 +61,6 @@ public class SignUpFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View rootView = inflater.inflate(R.layout.fragment_sign_up, container, false);
         initView(rootView);
-
         initData();
         initListener();
         return rootView;
@@ -73,24 +71,21 @@ public class SignUpFragment extends Fragment {
         etName = (EditText) rootView.findViewById(R.id.etUserName);
         etEmail = (EditText) rootView.findViewById(R.id.etEmail);
         etMobile = (EditText) rootView.findViewById(R.id.etPhone);
-        tvSignUp = (TextView) rootView.findViewById(R.id.tvSignup);
+        tvSignUp = (TextView) rootView.findViewById (R.id.tvSignUp);
         clMain = (CoordinatorLayout) rootView.findViewById(R.id.clMain);
         tvTerm = (TextView) rootView.findViewById(R.id.tvTermConditions);
         Utils.setTypefaceToAllViews(getActivity(), tvSignUp);
-
     }
 
     private void initData() {
         progressDialog = new ProgressDialog(getActivity());
-
-
         SpannableString ss = new SpannableString(getResources().getString(R.string.activity_login_text_i_agree));
         ss.setSpan(new myClickableSpan(1), 17, 35, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
         ss.setSpan(new myClickableSpan(2), 40, 54, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
-        // ss.setSpan(new ForegroundColorSpan(Color.RED), 17, 35, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
+        ss.setSpan (new ForegroundColorSpan (getResources ().getColor (R.color.colorPrimary)), 17, 35, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
+        ss.setSpan (new ForegroundColorSpan (getResources ().getColor (R.color.colorPrimary)), 40, 54, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
         tvTerm.setText(ss);
         tvTerm.setMovementMethod(LinkMovementMethod.getInstance());
-
     }
 
     private void initListener() {
@@ -109,8 +104,6 @@ public class SignUpFragment extends Fragment {
                 s5.setSpan(new TypefaceSpan(getActivity(), Constants.font_name), 0, s5.length(), Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
                 SpannableString s6 = new SpannableString(getResources().getString(R.string.please_enter_valid_email));
                 s6.setSpan(new TypefaceSpan(getActivity(), Constants.font_name), 0, s6.length(), Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
-
-
                 if (etName.getText().toString().trim().length() == 0 && etEmail.getText().toString().length() == 0 && etMobile.getText().toString().length() == 0) {
                     etName.setError(s);
                     etEmail.setError(s2);
@@ -125,14 +118,10 @@ public class SignUpFragment extends Fragment {
                     etMobile.setError(s3);
                 } else {
                     signUpDetailSendToServer(etName.getText().toString().trim(), etEmail.getText().toString().trim(), etMobile.getText().toString().trim());
-
-
                 }
             }
 
         });
-
-
         etName.addTextChangedListener(new TextWatcher() {
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
@@ -185,7 +174,6 @@ public class SignUpFragment extends Fragment {
     }
 
     private void signUpDetailSendToServer(final String name, final String email, final String number) {
-
         if (NetworkConnection.isNetworkAvailable(getActivity())) {
             Utils.showProgressDialog(progressDialog, getResources().getString(R.string.progress_dialog_text_please_wait), true);
             Utils.showLog(Log.INFO, "" + AppConfigTags.URL, AppConfigURL.URL_SIGN_UP, true);
@@ -193,18 +181,15 @@ public class SignUpFragment extends Fragment {
                     new com.android.volley.Response.Listener<String>() {
                         @Override
                         public void onResponse(String response) {
-                            Utils.showLog(Log.INFO, "rahul" + AppConfigTags.SERVER_RESPONSE, response, true);
+                            Utils.showLog (Log.INFO, AppConfigTags.SERVER_RESPONSE, response, true);
                             if (response != null) {
                                 try {
                                     JSONObject jsonObj = new JSONObject(response);
                                     boolean error = jsonObj.getBoolean(AppConfigTags.ERROR);
                                     String message = jsonObj.getString(AppConfigTags.MESSAGE);
                                     if (!error) {
-
-                                        Toast.makeText(getActivity(), message, Toast.LENGTH_LONG).show();
+//                                        Toast.makeText(getActivity(), message, Toast.LENGTH_LONG).show();
                                         getActivity().finish();
-
-
                                     } else {
                                         Utils.showSnackBar(getActivity(), clMain, message, Snackbar.LENGTH_LONG, null, null);
                                     }
@@ -260,12 +245,8 @@ public class SignUpFragment extends Fragment {
         }
 
     }
-
-
     public class myClickableSpan extends ClickableSpan {
-
         int pos;
-
         public myClickableSpan(int position) {
             this.pos = position;
         }
@@ -274,12 +255,5 @@ public class SignUpFragment extends Fragment {
         public void onClick(View widget) {
             Toast.makeText(getActivity(), "Position " + pos + " clicked!", Toast.LENGTH_LONG).show();
         }
-
     }
-
-
 }
-
-
-
-

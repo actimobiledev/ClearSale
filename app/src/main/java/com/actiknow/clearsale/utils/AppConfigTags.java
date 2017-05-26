@@ -93,6 +93,22 @@ public class AppConfigTags {
     public static String USER_LOGIN_KEY = "user_login_key";
 
     public static String USER_FIREBASE_ID = "firebase_id";
-
-
+    
+    
+    public static String PROPERTY_ID = "id";
+    public static String PROPERTY_ADDRESS = "property_address";
+    public static String PROPERTY_CITY_NAME = "city_name";
+    public static String PROPERTY_PRICE = "price";
+    public static String PROPERTY_BUILD_YEAR = "year_built";
+    public static String PROPERTY_BEDROOMS = "bedrooms";
+    public static String PROPERTY_STATUS = "status";
+    public static String PROPERTY_AREA_SQFT = "sqft";
+    public static String PROPERTY_BATHROOMS = "bathrooms";
+    public static String PROPERTY_IS_OFFER = "is_offer";
+    
+    public static String PROPERTY_IMAGES = "images";
+    public static String PROPERTY_IMAGES_NAME = "image_name";
+    public static String PROPERTIES = "property";
+    
+    
 }

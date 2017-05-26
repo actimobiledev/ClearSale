@@ -1,5 +1,6 @@
 package com.actiknow.clearsale.activity;
 
+
 import android.app.ProgressDialog;
 import android.content.Intent;
 import android.content.pm.PackageInfo;
@@ -16,6 +17,8 @@ import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.RelativeLayout;
+import android.widget.TextView;
 
 import com.actiknow.clearsale.R;
 import com.actiknow.clearsale.fragment.SignInFragment;
@@ -55,12 +58,6 @@ import java.util.Hashtable;
 import java.util.List;
 import java.util.Map;
 
-import static com.actiknow.clearsale.R.id.login_button;
-
-
-/**
- * Created by l on 24/02/2017.
- */
 
 public class LoginActivity extends AppCompatActivity {
     private static final String TAG = "facebook_login";
@@ -73,16 +70,19 @@ public class LoginActivity extends AppCompatActivity {
     PackageInfo info;
     PrefUtil prefUtil;
     String accessToken;
+    CallbackManager callbackManager;
     String id, name, email, gender, birthday;
+    RelativeLayout rlFbButton;
+    RelativeLayout rlLinkedInButton;
+    TextView tv1;
     private TabLayout tabLayout;
     private ViewPager viewPager;
-    private CallbackManager callbackManager;
     private LoginButton loginButton;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_register);
+        setContentView (R.layout.activity_login);
         initView();
         initData();
         initListener();
@@ -94,12 +94,13 @@ public class LoginActivity extends AppCompatActivity {
     private void initView() {
         tabLayout = (TabLayout) findViewById(R.id.tabs);
         viewPager = (ViewPager) findViewById(R.id.viewpager);
-        loginButton = (LoginButton) findViewById(login_button);
-        linked_in_login_button = (Button) findViewById(R.id.linkdin_login_button);
+        loginButton = (LoginButton) findViewById (R.id.login_button);
         clMain = (CoordinatorLayout) findViewById(R.id.clMain);
         List<String> permissionNeeds = Arrays.asList("user_photos", "email", "user_birthday", "public_profile", "AccessToken");
-
-
+    
+        tv1 = (TextView) findViewById (R.id.tv1);
+        rlFbButton = (RelativeLayout) findViewById (R.id.rlFbButton);
+        rlLinkedInButton = (RelativeLayout) findViewById (R.id.rlLinkedInButton);
     }
 
     private void initData() {
@@ -109,24 +110,43 @@ public class LoginActivity extends AppCompatActivity {
         callbackManager = CallbackManager.Factory.create();
         userDetailsPref = UserDetailsPref.getInstance();
         progressDialog = new ProgressDialog(LoginActivity.this);
-
+        Utils.setTypefaceToAllViews (this, clMain);
     }
 
     private void displayFirebaseRegId() {
         Utils.showLog(Log.ERROR, "Firebase Reg ID:", userDetailsPref.getStringPref(LoginActivity.this, UserDetailsPref.USER_FIREBASE_ID), true);
     }
-
-
+    
     private void setupViewPager(ViewPager viewPager) {
         ViewPagerAdapter adapter = new ViewPagerAdapter(getSupportFragmentManager());
-        adapter.addFragment(new SignInFragment(), "SIGN IN");
-        adapter.addFragment(new SignUpFragment(), "SIGN UP");
+        adapter.addFragment (new SignInFragment (), "SIGN IN");
+        adapter.addFragment (new SignUpFragment (), "SIGN UP");
         viewPager.setAdapter(adapter);
+        
+        viewPager.setOnPageChangeListener (new ViewPager.OnPageChangeListener () {
+            @Override
+            public void onPageScrolled (int position, float positionOffset, int positionOffsetPixels) {
+            }
+            
+            @Override
+            public void onPageSelected (int position) {
+                switch (position) {
+                    case 0:
+                        tv1.setText ("SIGN IN");
+                        break;
+                    case 1:
+                        tv1.setText ("SIGN UP");
+                        break;
+                }
+            }
+            
+            @Override
+            public void onPageScrollStateChanged (int state) {
+            }
+        });
     }
-
     private void initListener() {
-
-        loginButton.registerCallback(callbackManager, new FacebookCallback<LoginResult>() {
+        loginButton.registerCallback (callbackManager, new FacebookCallback<LoginResult> () {
             @Override
             public void onSuccess(LoginResult loginResult) {
                 // Toast.makeText(SignInFragment.this, "User ID: " + loginResult.getAccessToken().getUserId() + "\n" + "Auth Token: " + loginResult.getAccessToken().getToken(), Toast.LENGTH_LONG).show();
@@ -168,7 +188,6 @@ public class LoginActivity extends AppCompatActivity {
                 request.setParameters(parameters);
                 request.executeAsync();
                 loginWithFacebookDetailSendToServer(accessToken, name, email);
-
             }
 
             @Override
@@ -179,14 +198,9 @@ public class LoginActivity extends AppCompatActivity {
             public void onError(FacebookException e) {
                 e.printStackTrace();
                 Log.d(TAG, "Login attempt failed.");
-
-
             }
         });
-
-
     }
-
 
     private void loginWithFacebookDetailSendToServer(final String accessToken, final String name, final String email) {
 
@@ -239,7 +253,7 @@ public class LoginActivity extends AppCompatActivity {
                     }) {
                 @Override
                 protected Map<String, String> getParams() throws AuthFailureError {
-                    Map<String, String> params = new Hashtable<String, String>();
+                    Map<String, String> params = new Hashtable<String, String> ();
                     params.put(AppConfigTags.SIGN_IN_USER_EMAIL, email);
                     params.put(AppConfigTags.SIGN_IN_NAME, name);
                     params.put(AppConfigTags.SIGN_IN_ACCESS_TOKEN, accessToken);
@@ -250,7 +264,7 @@ public class LoginActivity extends AppCompatActivity {
 
                 @Override
                 public Map<String, String> getHeaders() throws AuthFailureError {
-                    Map<String, String> params = new HashMap<>();
+                    Map<String, String> params = new HashMap<> ();
                     params.put(AppConfigTags.HEADER_API_KEY, Constants.api_key);
                     Utils.showLog(Log.INFO, AppConfigTags.HEADERS_SENT_TO_THE_SERVER, "" + params, false);
                     return params;
@@ -274,7 +288,7 @@ public class LoginActivity extends AppCompatActivity {
     @Override
     public void onActivityResult(int requestCode, int responseCode, Intent data) {
         super.onActivityResult(requestCode, responseCode, data);
-        callbackManager.onActivityResult(requestCode, responseCode, data);
+//        callbackManager.onActivityResult(requestCode, responseCode, data);
     }
 
     private void deleteAccessToken() {
@@ -294,7 +308,7 @@ public class LoginActivity extends AppCompatActivity {
     }
 
     class ViewPagerAdapter extends FragmentPagerAdapter {
-        private final List<Fragment> mFragmentList = new ArrayList<>();
+        private final List<Fragment> mFragmentList = new ArrayList<> ();
         private final List<String> mFragmentTitleList = new ArrayList<>();
 
         public ViewPagerAdapter(FragmentManager manager) {
@@ -321,7 +335,6 @@ public class LoginActivity extends AppCompatActivity {
             return mFragmentTitleList.get(position);
         }
     }
-
 
 }
 

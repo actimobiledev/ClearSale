@@ -5,7 +5,10 @@ import android.content.Intent;
 import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.os.Bundle;
+import android.provider.Settings;
 import android.support.annotation.NonNull;
+import android.support.design.widget.CoordinatorLayout;
+import android.support.design.widget.Snackbar;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
@@ -22,11 +25,19 @@ import android.widget.Toast;
 import com.actiknow.clearsale.R;
 import com.actiknow.clearsale.adapter.PropertyAdapter;
 import com.actiknow.clearsale.model.Property;
+import com.actiknow.clearsale.utils.AppConfigTags;
+import com.actiknow.clearsale.utils.AppConfigURL;
+import com.actiknow.clearsale.utils.Constants;
+import com.actiknow.clearsale.utils.NetworkConnection;
 import com.actiknow.clearsale.utils.SetTypeFace;
 import com.actiknow.clearsale.utils.UserDetailsPref;
 import com.actiknow.clearsale.utils.Utils;
 import com.afollestad.materialdialogs.DialogAction;
 import com.afollestad.materialdialogs.MaterialDialog;
+import com.android.volley.AuthFailureError;
+import com.android.volley.Request;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.StringRequest;
 import com.bumptech.glide.Glide;
 import com.mikepenz.fontawesome_typeface_library.FontAwesome;
 import com.mikepenz.iconics.IconicsDrawable;
@@ -41,8 +52,14 @@ import com.mikepenz.materialdrawer.util.AbstractDrawerImageLoader;
 import com.mikepenz.materialdrawer.util.DrawerImageLoader;
 import com.mikepenz.materialdrawer.util.DrawerUIUtils;
 
+import org.json.JSONArray;
+import org.json.JSONObject;
+
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Hashtable;
 import java.util.List;
+import java.util.Map;
 
 public class MainActivity extends AppCompatActivity {
     Bundle savedInstanceState;
@@ -53,6 +70,7 @@ public class MainActivity extends AppCompatActivity {
     PropertyAdapter propertyAdapter;
     List<Property> propertyList = new ArrayList<> ();
     UserDetailsPref userDetailsPref;
+    CoordinatorLayout clMain;
     private AccountHeader headerResult = null;
     private Drawer result = null;
     
@@ -65,8 +83,9 @@ public class MainActivity extends AppCompatActivity {
         initListener ();
         initDrawer ();
         setUpNavigationDrawer ();
-        getAllProperties ();
+//        getAllProperties ();
         isLogin ();
+        getPropertyList ();
         this.savedInstanceState = savedInstanceState;
         
     }
@@ -81,6 +100,7 @@ public class MainActivity extends AppCompatActivity {
     private void initView () {
         rvPropertyList = (RecyclerView) findViewById (R.id.rvPropertyList);
         swipeRefreshLayout = (SwipeRefreshLayout) findViewById (R.id.swipe_refresh_layout);
+        clMain = (CoordinatorLayout) findViewById (R.id.clMain);
     }
     
     private void initData () {
@@ -122,18 +142,121 @@ public class MainActivity extends AppCompatActivity {
 //        imagesList.add ("http://clearsale.com/theme/theme1/seller_files/interior/property_327/b41719c7631a3d7bc0c2d246cd2fb5daIMG_5043.jpg");
 //        imagesList.add ("http://clearsale.com/theme/theme1/seller_files/interior/property_327/1ee4363f712ced227c0b154029e5cfb8IMG_5048.jpg");
 //        imagesList.add ("http://clearsale.com/theme/theme1/seller_files/interior/property_327/3fd6c0348b2f1443715d0ee4139632c8IMG_5053.jpg");
-        
-        
-        propertyList.add (new Property (1, 0, imagesList, "9300", "3", "3", "1828", "1947", "7919 Lowell Boulevard", "West Minster", true));
-        propertyList.add (new Property (2, 1, imagesList, "9300", "4", "2", "2448", "1925", "1137 Colorado Boulevard", "Denver", true));
-        propertyList.add (new Property (3, 1, imagesList, "9300", "3", "2", "1828", "1975", "268 South Newark Circle Lowell", "Aurora", true));
-        propertyList.add (new Property (4, 1, imagesList, "9300", "4", "2", "1762", "1954", "1541 Syracuse Street", "Denver", true));
-        propertyList.add (new Property (5, 2, imagesList, "9300", "3", "1", "1008", "1900", "625 East 11 Street", "Loveland", false));
-        propertyList.add (new Property (6, 2, imagesList, "9300", "3", "2", "1485", "1962", "6121 South Lvy Street", "Centennial", false));
-        propertyList.add (new Property (7, 2, imagesList, "9300", "3", "1", "1067", "1954", "1521 Syracuse Street", "Denver", false));
-        propertyList.add (new Property (8, 0, imagesList, "9300", "2", "1", "1680", "1936", "4131 South Elati Street", "Englewood", false));
-        propertyList.add (new Property (9, 0, imagesList, "9300", "2", "2", "8500", "1964", "11404 Claude Court", "Northglenn", false));
+
+
+//        propertyList.add (new Property (1, 0, imagesList, "9300", "3", "3", "1828", "1947", "7919 Lowell Boulevard", "West Minster", true));
+//        propertyList.add (new Property (2, 1, imagesList, "9300", "4", "2", "2448", "1925", "1137 Colorado Boulevard", "Denver", true));
+//        propertyList.add (new Property (3, 1, imagesList, "9300", "3", "2", "1828", "1975", "268 South Newark Circle Lowell", "Aurora", true));
+//        propertyList.add (new Property (4, 1, imagesList, "9300", "4", "2", "1762", "1954", "1541 Syracuse Street", "Denver", true));
+//        propertyList.add (new Property (5, 2, imagesList, "9300", "3", "1", "1008", "1900", "625 East 11 Street", "Loveland", false));
+//        propertyList.add (new Property (6, 2, imagesList, "9300", "3", "2", "1485", "1962", "6121 South Lvy Street", "Centennial", false));
+//        propertyList.add (new Property (7, 2, imagesList, "9300", "3", "1", "1067", "1954", "1521 Syracuse Street", "Denver", false));
+//        propertyList.add (new Property (8, 0, imagesList, "9300", "2", "1", "1680", "1936", "4131 South Elati Street", "Englewood", false));
+//        propertyList.add (new Property (9, 0, imagesList, "9300", "2", "2", "8500", "1964", "11404 Claude Court", "Northglenn", false));
         swipeRefreshLayout.setRefreshing (false);
+    }
+    
+    private void getPropertyList () {
+        if (NetworkConnection.isNetworkAvailable (MainActivity.this)) {
+            Utils.showLog (Log.INFO, "" + AppConfigTags.URL, AppConfigURL.URL_PROPERTY_LIST, true);
+            StringRequest strRequest1 = new StringRequest (Request.Method.POST, AppConfigURL.URL_PROPERTY_LIST,
+                    new com.android.volley.Response.Listener<String> () {
+                        @Override
+                        public void onResponse (String response) {
+                            propertyList.clear ();
+                            Utils.showLog (Log.INFO, AppConfigTags.SERVER_RESPONSE, response, true);
+                            if (response != null) {
+                                try {
+                                    JSONObject jsonObj = new JSONObject (response);
+                                    boolean error = jsonObj.getBoolean (AppConfigTags.ERROR);
+                                    String message = jsonObj.getString (AppConfigTags.MESSAGE);
+                                    if (! error) {
+                                        JSONArray jsonArrayProperty = jsonObj.getJSONArray (AppConfigTags.PROPERTIES);
+                                        for (int i = 0; i < jsonArrayProperty.length (); i++) {
+                                            JSONObject jsonObjectProperty = jsonArrayProperty.getJSONObject (i);
+                                            Property property = new Property (
+                                                    jsonObjectProperty.getInt (AppConfigTags.PROPERTY_ID),
+                                                    jsonObjectProperty.getInt (AppConfigTags.PROPERTY_STATUS),
+                                                    jsonObjectProperty.getString (AppConfigTags.PROPERTY_PRICE),
+                                                    jsonObjectProperty.getString (AppConfigTags.PROPERTY_BEDROOMS),
+                                                    jsonObjectProperty.getString (AppConfigTags.PROPERTY_BATHROOMS),
+                                                    jsonObjectProperty.getString (AppConfigTags.PROPERTY_AREA_SQFT),
+                                                    jsonObjectProperty.getString (AppConfigTags.PROPERTY_BUILD_YEAR),
+                                                    jsonObjectProperty.getString (AppConfigTags.PROPERTY_ADDRESS),
+                                                    jsonObjectProperty.getString (AppConfigTags.PROPERTY_CITY_NAME),
+                                                    jsonObjectProperty.getBoolean (AppConfigTags.PROPERTY_IS_OFFER));
+                                            
+                                            
+                                            JSONArray jsonArrayPropertyImages = jsonObjectProperty.getJSONArray (AppConfigTags.PROPERTY_IMAGES);
+                                            ArrayList<String> propertyImages = new ArrayList<> ();
+                                            
+                                            for (int j = 0; j < jsonArrayPropertyImages.length (); j++) {
+                                                JSONObject jsonObjectImages = jsonArrayPropertyImages.getJSONObject (j);
+                                                propertyImages.add (jsonObjectImages.getString (AppConfigTags.PROPERTY_IMAGES_NAME));
+                                                property.setImageList (propertyImages);
+                                            }
+                                            propertyList.add (i, property);
+                                            
+                                            //  propertyList.add(property);
+                                            
+                                            
+                                        }
+                                        
+                                        propertyAdapter.notifyDataSetChanged ();
+                                        if (jsonArrayProperty.length () > 0) {
+                                            swipeRefreshLayout.setRefreshing (false);
+                                        }
+                                        
+                                    } else {
+                                        Utils.showSnackBar (MainActivity.this, clMain, message, Snackbar.LENGTH_LONG, null, null);
+                                    }
+                                } catch (Exception e) {
+                                    Utils.showSnackBar (MainActivity.this, clMain, getResources ().getString (R.string.snackbar_text_exception_occurred), Snackbar.LENGTH_LONG, getResources ().getString (R.string.snackbar_action_dismiss), null);
+                                    e.printStackTrace ();
+                                }
+                            } else {
+                                Utils.showSnackBar (MainActivity.this, clMain, getResources ().getString (R.string.snackbar_text_error_occurred), Snackbar.LENGTH_LONG, getResources ().getString (R.string.snackbar_action_dismiss), null);
+                                Utils.showLog (Log.WARN, AppConfigTags.SERVER_RESPONSE, AppConfigTags.DIDNT_RECEIVE_ANY_DATA_FROM_SERVER, true);
+                            }
+                            swipeRefreshLayout.setRefreshing (false);
+                        }
+                    },
+                    new com.android.volley.Response.ErrorListener () {
+                        @Override
+                        public void onErrorResponse (VolleyError error) {
+                            swipeRefreshLayout.setRefreshing (false);
+                            Utils.showLog (Log.ERROR, AppConfigTags.VOLLEY_ERROR, error.toString (), true);
+                            Utils.showSnackBar (MainActivity.this, clMain, getResources ().getString (R.string.snackbar_text_error_occurred), Snackbar.LENGTH_LONG, getResources ().getString (R.string.snackbar_action_dismiss), null);
+                        }
+                    }) {
+                @Override
+                protected Map<String, String> getParams () throws AuthFailureError {
+                    Map<String, String> params = new Hashtable<String, String> ();
+                    params.put (AppConfigTags.TYPE, "property");
+                    Utils.showLog (Log.INFO, AppConfigTags.PARAMETERS_SENT_TO_THE_SERVER, "" + params, true);
+                    return params;
+                }
+                
+                @Override
+                public Map<String, String> getHeaders () throws AuthFailureError {
+                    Map<String, String> params = new HashMap<> ();
+                    params.put (AppConfigTags.HEADER_API_KEY, Constants.api_key);
+                    Utils.showLog (Log.INFO, AppConfigTags.HEADERS_SENT_TO_THE_SERVER, "" + params, false);
+                    return params;
+                }
+            };
+            Utils.sendRequest (strRequest1, 60);
+        } else {
+            swipeRefreshLayout.setRefreshing (false);
+            Utils.showSnackBar (this, clMain, getResources ().getString (R.string.snackbar_text_no_internet_connection_available), Snackbar.LENGTH_LONG, getResources ().getString (R.string.snackbar_action_go_to_settings), new View.OnClickListener () {
+                @Override
+                public void onClick (View v) {
+                    Intent dialogIntent = new Intent (Settings.ACTION_SETTINGS);
+                    dialogIntent.addFlags (Intent.FLAG_ACTIVITY_NEW_TASK);
+                    startActivity (dialogIntent);
+                }
+            });
+        }
     }
     
     private void initDrawer () {
