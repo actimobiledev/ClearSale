@@ -32,7 +32,6 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
-
 import com.actiknow.clearsale.R;
 import com.actiknow.clearsale.app.AppController;
 import com.android.volley.DefaultRetryPolicy;
@@ -49,7 +48,6 @@ import java.net.URL;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.text.ParseException;
-import java.text.ParsePosition;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
@@ -150,8 +148,8 @@ public class Utils {
         sbView.setBackgroundColor (activity.getResources ().getColor (R.color.snackbar_background));
         TextView textView = (TextView) sbView.findViewById (android.support.design.R.id.snackbar_text);
         TextView textView2 = (TextView) sbView.findViewById (android.support.design.R.id.snackbar_action);
-        textView.setTextColor (activity.getResources ().getColor (R.color.text_color_white));
-        textView2.setTextColor (activity.getResources ().getColor (R.color.text_color_white));
+        textView.setTextColor (activity.getResources ().getColor (R.color.app_text_color_dark));
+        textView2.setTextColor (activity.getResources ().getColor (R.color.app_text_color_dark));
         textView.setTypeface (SetTypeFace.getTypeface (activity));
         textView2.setTypeface (SetTypeFace.getTypeface (activity));
         snackbar.show ();

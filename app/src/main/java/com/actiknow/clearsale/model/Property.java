@@ -11,9 +11,9 @@ public class Property {
     int id, status;
     ArrayList<String> imageList = new ArrayList<String> ();
     String price, bedroom, bathroom, area, year_built, address1, address2;
-    boolean is_offer;
+    boolean is_offer, is_favourite;
     
-    public Property (int id, int status, ArrayList<String> imageList, String price, String bedroom, String bathroom, String area, String year_built, String address1, String address2, boolean is_offer) {
+    public Property (int id, int status, ArrayList<String> imageList, String price, String bedroom, String bathroom, String area, String year_built, String address1, String address2, boolean is_offer, boolean is_favourite) {
         this.id = id;
         this.status = status;
         this.imageList = imageList;
@@ -25,6 +25,7 @@ public class Property {
         this.address1 = address1;
         this.address2 = address2;
         this.is_offer = is_offer;
+        this.is_favourite = is_favourite;
     }
     
     public Property (int id, int status, String price, String bedroom, String bathroom, String area, String year_built, String address1, String address2, boolean is_offer) {
@@ -126,5 +127,13 @@ public class Property {
     
     public void setIs_offer (boolean is_offer) {
         this.is_offer = is_offer;
+    }
+    
+    public boolean is_favourite () {
+        return is_favourite;
+    }
+    
+    public void setIs_favourite (boolean is_favourite) {
+        this.is_favourite = is_favourite;
     }
 }

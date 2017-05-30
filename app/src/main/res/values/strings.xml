@@ -3,8 +3,7 @@
 
 
     <string name="please_enter_name">Please enter Name</string>
-    <string name="please_enter_first_name">Please enter First Name</string>
-    <string name="please_enter_last_name">Please enter Last Name</string>
+    <string name="please_enter_full_name">Please enter Name</string>
     <string name="please_enter_email">Please enter Email</string>
     <string name="please_enter_mobile">Please enter Mobile</string>
     <string name="please_enter_valid_email">Please enter valid Email</string>
@@ -49,7 +48,6 @@
     <string name="activity_forgot_password_title">Forgot Password</string>
 
 
-    <string name="activity_change_password_title">Change Password</string>
     <string name="activity_change_password_hint_old_password">Old Password</string>
     <string name="activity_change_password_hint_new_password">New Password</string>
     <string name="activity_change_password_hint_confirm_password">Confirm Password</string>
@@ -62,7 +60,6 @@
 
 
 
-    <string name="activity_edit_profile_title">Edit Profile</string>
     <string name="activity_edit_profile_hint_first_name">First Name</string>
     <string name="activity_edit_profile_hint_last_name">Last Name</string>
     <string name="activity_edit_profile_hint_email">Email Address</string>
@@ -166,6 +163,9 @@
     </string>
 
 
+    <string name="activity_edit_profile_ques3">I Will Do This Fix (Pick one):</string>
+
+
     <string name="activity_contact_us_back_button">Home</string>
     <string name="activity_contact_us_title">Contact Us</string>
 
@@ -177,5 +177,21 @@
 
     <string name="activity_how_it_works_back_button">Home</string>
     <string name="activity_how_it_works_title">How It Works</string>
+
+    <string name="activity_my_favourite_back_button">Home</string>
+    <string name="activity_my_favourite_title">My Favourite</string>
+
+    <string name="activity_my_profile_back_button">Home</string>
+    <string name="activity_my_profile_title">My Profile</string>
+
+    <string name="activity_change_password_back_button">Home</string>
+    <string name="activity_change_password_title">Change Password</string>
+
+
+    <string name="activity_filter_back_button">Cancel</string>
+    <string name="activity_filter_title">Filters</string>
+
+    <string name="activity_main_title">ClearSale</string>
+
 
 </resources>

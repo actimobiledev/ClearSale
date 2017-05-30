@@ -109,13 +109,13 @@ public class FAQActivity extends AppCompatActivity {
                                     boolean error = jsonObj.getBoolean(AppConfigTags.ERROR);
                                     String message = jsonObj.getString(AppConfigTags.MESSAGE);
                                     if (!error) {
-                                        JSONArray jsonArrayFaq = jsonObj.getJSONArray(AppConfigTags.FAQ_LIST);
+                                        JSONArray jsonArrayFaq = jsonObj.getJSONArray (AppConfigTags.FAQS);
                                         for (int i = 0; i < jsonArrayFaq.length(); i++) {
                                             JSONObject jsonObjectFaq = jsonArrayFaq.getJSONObject(i);
                                             FAQList.add (new FAQ (
-                                                    jsonObjectFaq.getInt (AppConfigTags.QUESTION_ID),
-                                                    jsonObjectFaq.getString (AppConfigTags.QUESTION),
-                                                    jsonObjectFaq.getString (AppConfigTags.ANSWER)));
+                                                    jsonObjectFaq.getInt (AppConfigTags.FAQ_ID),
+                                                    jsonObjectFaq.getString (AppConfigTags.FAQ_QUESTION),
+                                                    jsonObjectFaq.getString (AppConfigTags.FAQ_ANSWER)));
                                         }
                                         if (jsonArrayFaq.length() > 0) {
                                             swipeRefreshLayout.setRefreshing(false);
@@ -146,7 +146,7 @@ public class FAQActivity extends AppCompatActivity {
                 @Override
                 protected Map<String, String> getParams() throws AuthFailureError {
                     Map<String, String> params = new Hashtable<String, String>();
-                    params.put(AppConfigTags.TYPE, "faqlist");
+                    params.put (AppConfigTags.TYPE, AppConfigTags.FAQS);
                     Utils.showLog(Log.INFO, AppConfigTags.PARAMETERS_SENT_TO_THE_SERVER, "" + params, true);
                     return params;
                 }
@@ -171,7 +171,12 @@ public class FAQActivity extends AppCompatActivity {
                 }
             });
         }
-
+    }
+    
+    @Override
+    public void onBackPressed () {
+        finish ();
+        overridePendingTransition (R.anim.slide_in_left, R.anim.slide_out_right);
     }
 }
 

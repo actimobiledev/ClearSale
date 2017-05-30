@@ -1,9 +1,11 @@
-<android.support.design.widget.CoordinatorLayout android:id="@+id/clMain"
-                                                 xmlns:android="http://schemas.android.com/apk/res/android"
-                                                 xmlns:app="http://schemas.android.com/apk/res-auto"
-                                                 android:layout_width="match_parent"
-                                                 android:layout_height="match_parent"
-                                                 app:layout_behavior="@string/appbar_scrolling_view_behavior">
+<android.support.design.widget.CoordinatorLayout
+    android:id="@+id/clMain"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/app_background_color"
+    app:layout_behavior="@string/appbar_scrolling_view_behavior">
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
@@ -84,7 +86,7 @@
                 android:padding="@dimen/activity_margin_small"
                 android:text="@string/activity_testimonial_text_1"
                 android:textSize="@dimen/text_size_extra_large"
-                android:textStyle="bold" />
+                android:textStyle="bold"/>
             <TextView
                 android:id="@+id/tvSubHeading"
                 android:layout_width="match_parent"
@@ -94,7 +96,7 @@
                 android:padding="@dimen/activity_margin_extra_small"
                 android:text="@string/activity_testimonial_text_2"
                 android:textSize="@dimen/text_size_small"
-                android:textStyle="bold" />
+                android:textStyle="bold"/>
         </RelativeLayout>
         <android.support.v4.widget.SwipeRefreshLayout
             android:id="@+id/swipe_refresh_layout"

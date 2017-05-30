@@ -1,29 +1,18 @@
-<menu xmlns:android="http://schemas.android.com/apk/res/android"
+<menu
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:context=".activity.MainActivity">
 
-
-    <item android:id="@+id/action_search"
-        android:icon="@drawable/ic_filter"
-        android:orderInCategory="1"
-        android:title="Search"
-        app:showAsAction="always"/>
-
-
     <item android:id="@+id/action_edit_profile"
-        android:title="Edit Profile"
-        android:showAsAction="ifRoom" />
+          android:showAsAction="never"
+          android:title="Edit Profile"
+    />
 
     <item android:id="@+id/action_change_password"
-        android:title="Change Password"
-        android:orderInCategory="100" />
+          android:orderInCategory="100"
+          android:title="Change Password"/>
 
-    <item android:id="@+id/action_Signout"
-        android:title="Sign Out"
-        android:orderInCategory="100" />
-
-
-
-
+    <item android:id="@+id/action_sign_out"
+          android:orderInCategory="100"
+          android:title="Sign Out"/>
 </menu>

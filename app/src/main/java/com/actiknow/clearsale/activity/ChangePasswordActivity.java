@@ -4,13 +4,11 @@ package com.actiknow.clearsale.activity;
 import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Handler;
 import android.provider.Settings;
-import android.support.design.widget.AppBarLayout;
 import android.support.design.widget.CoordinatorLayout;
 import android.support.design.widget.Snackbar;
-import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.Toolbar;
 import android.text.Editable;
 import android.text.Spannable;
 import android.text.SpannableString;
@@ -18,17 +16,16 @@ import android.text.TextWatcher;
 import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
-import android.widget.ImageView;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.actiknow.clearsale.R;
 import com.actiknow.clearsale.utils.AppConfigTags;
 import com.actiknow.clearsale.utils.AppConfigURL;
+import com.actiknow.clearsale.utils.BuyerDetailsPref;
 import com.actiknow.clearsale.utils.Constants;
 import com.actiknow.clearsale.utils.NetworkConnection;
 import com.actiknow.clearsale.utils.TypefaceSpan;
-import com.actiknow.clearsale.utils.UserDetailsPref;
 import com.actiknow.clearsale.utils.Utils;
 import com.android.volley.AuthFailureError;
 import com.android.volley.Request;
@@ -46,18 +43,16 @@ import java.util.Map;
  */
 
 public class ChangePasswordActivity extends AppCompatActivity {
-    Toolbar toolbar;
-    AppBarLayout appBar;
     EditText etOldPassword;
     EditText etNewPassword;
     EditText etConfirmPassword;
-
-    TextView tvUpdate;
-    ImageView ivBack;
+    
+    TextView tvSave;
+    RelativeLayout rlBack;
 
     CoordinatorLayout clMain;
     ProgressDialog progressDialog;
-    UserDetailsPref userDetailsPref;
+    BuyerDetailsPref buyerDetailsPref;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -66,38 +61,27 @@ public class ChangePasswordActivity extends AppCompatActivity {
         initView();
         initData();
         initListener();
-
     }
 
     private void initView() {
-        appBar = (AppBarLayout) findViewById(R.id.appbar);
-        toolbar = (Toolbar) findViewById(R.id.toolbar);
         etOldPassword = (EditText) findViewById(R.id.etOldPassword);
         etNewPassword = (EditText) findViewById(R.id.etNewPassword);
         etConfirmPassword = (EditText) findViewById(R.id.etConfirmPassword);
-        tvUpdate = (TextView) findViewById(R.id.tvSubmit);
+        tvSave = (TextView) findViewById (R.id.tvSave);
         clMain = (CoordinatorLayout) findViewById(R.id.clMain);
-        ivBack = (ImageView) findViewById(R.id.ivBack);
-        Utils.setTypefaceToAllViews(this, tvUpdate);
-
+        rlBack = (RelativeLayout) findViewById (R.id.rlBack);
+        Utils.setTypefaceToAllViews (this, tvSave);
     }
 
     private void initData() {
-        userDetailsPref = UserDetailsPref.getInstance();
-        setSupportActionBar(toolbar);
-        ActionBar actionBar = getSupportActionBar();
-        progressDialog = new ProgressDialog(ChangePasswordActivity.this);
-        //   actionBar.setDisplayHomeAsUpEnabled(true);
-
-        appBar.setExpanded(true);
-
+        progressDialog = new ProgressDialog (this);
+        buyerDetailsPref = BuyerDetailsPref.getInstance ();
     }
 
     private void initListener() {
-        tvUpdate.setOnClickListener(new View.OnClickListener() {
+        tvSave.setOnClickListener (new View.OnClickListener () {
             @Override
             public void onClick(View view) {
-
                 SpannableString s1 = new SpannableString(getResources().getString(R.string.please_enter_old_password));
                 s1.setSpan(new TypefaceSpan(ChangePasswordActivity.this, Constants.font_name), 0, s1.length(), Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
                 SpannableString s2 = new SpannableString(getResources().getString(R.string.please_enter_new_password));
@@ -106,8 +90,6 @@ public class ChangePasswordActivity extends AppCompatActivity {
                 s3.setSpan(new TypefaceSpan(ChangePasswordActivity.this, Constants.font_name), 0, s3.length(), Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
                 SpannableString s4 = new SpannableString(getResources().getString(R.string.password_did_not_match));
                 s4.setSpan(new TypefaceSpan(ChangePasswordActivity.this, Constants.font_name), 0, s4.length(), Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
-
-
                 if (etOldPassword.getText().toString().trim().length() == 0 && etNewPassword.getText().toString().trim().length() == 0 && etConfirmPassword.getText().toString().trim().length() == 0) {
                     etOldPassword.setError(s1);
                     etNewPassword.setError(s2);
@@ -115,13 +97,11 @@ public class ChangePasswordActivity extends AppCompatActivity {
                 } else if (!etNewPassword.getText().toString().trim().equalsIgnoreCase(etConfirmPassword.getText().toString().trim())) {
                     etConfirmPassword.setError(s4);
                 } else {
-                    changePasswordSendToServer(etOldPassword.getText().toString().trim(), etNewPassword.getText().toString().trim());
+                    sendPasswordChangeDetailsToServer (etOldPassword.getText ().toString ().trim (), etNewPassword.getText ().toString ().trim ());
                 }
             }
 
         });
-
-
         etOldPassword.addTextChangedListener(new TextWatcher() {
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
@@ -138,7 +118,6 @@ public class ChangePasswordActivity extends AppCompatActivity {
             public void afterTextChanged(Editable s) {
             }
         });
-
         etNewPassword.addTextChangedListener(new TextWatcher() {
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
@@ -155,7 +134,6 @@ public class ChangePasswordActivity extends AppCompatActivity {
             public void afterTextChanged(Editable s) {
             }
         });
-
         etConfirmPassword.addTextChangedListener(new TextWatcher() {
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
@@ -172,9 +150,7 @@ public class ChangePasswordActivity extends AppCompatActivity {
             public void afterTextChanged(Editable s) {
             }
         });
-
-
-        ivBack.setOnClickListener(new View.OnClickListener() {
+        rlBack.setOnClickListener (new View.OnClickListener () {
             @Override
             public void onClick(View v) {
                 finish();
@@ -182,9 +158,8 @@ public class ChangePasswordActivity extends AppCompatActivity {
             }
         });
     }
-
-
-    private void changePasswordSendToServer(final String oldPassword, final String newPassword) {
+    
+    private void sendPasswordChangeDetailsToServer (final String oldPassword, final String newPassword) {
         if (NetworkConnection.isNetworkAvailable(ChangePasswordActivity.this)) {
             Utils.showProgressDialog(progressDialog, getResources().getString(R.string.progress_dialog_text_please_wait), true);
             Utils.showLog(Log.INFO, "" + AppConfigTags.URL, AppConfigURL.URL_CHANGE_PASSWORD, true);
@@ -192,17 +167,21 @@ public class ChangePasswordActivity extends AppCompatActivity {
                     new com.android.volley.Response.Listener<String>() {
                         @Override
                         public void onResponse(String response) {
-                            Utils.showLog(Log.INFO, "rahul" + AppConfigTags.SERVER_RESPONSE, response, true);
+                            Utils.showLog (Log.INFO, AppConfigTags.SERVER_RESPONSE, response, true);
                             if (response != null) {
                                 try {
                                     JSONObject jsonObj = new JSONObject(response);
                                     boolean error = jsonObj.getBoolean(AppConfigTags.ERROR);
                                     String message = jsonObj.getString(AppConfigTags.MESSAGE);
                                     if (!error) {
-
-                                        Toast.makeText(ChangePasswordActivity.this, message, Toast.LENGTH_LONG).show();
-                                        finish();
-
+                                        Utils.showSnackBar (ChangePasswordActivity.this, clMain, message, Snackbar.LENGTH_LONG, null, null);
+                                        final Handler handler = new Handler ();
+                                        handler.postDelayed (new Runnable () {
+                                            @Override
+                                            public void run () {
+                                                finish ();
+                                            }
+                                        }, 1000);
 
                                     } else {
                                         Utils.showSnackBar(ChangePasswordActivity.this, clMain, message, Snackbar.LENGTH_LONG, null, null);
@@ -231,10 +210,9 @@ public class ChangePasswordActivity extends AppCompatActivity {
                 @Override
                 protected Map<String, String> getParams() throws AuthFailureError {
                     Map<String, String> params = new Hashtable<String, String>();
-                    params.put(AppConfigTags.PASSWORD, oldPassword);
+                    params.put (AppConfigTags.OLD_PASSWORD, oldPassword);
                     params.put(AppConfigTags.NEW_PASSWORD, newPassword);
-                    params.put(AppConfigTags.EMAIL, userDetailsPref.getStringPref(ChangePasswordActivity.this, UserDetailsPref.USER_EMAIL));
-                    // params.put(AppConfigTags.USER_ID, String.valueOf(userDetailsPref.getIntPref(ChangePasswordActivity.this, UserDetailsPref.USER_ID)));
+                    params.put (AppConfigTags.BUYER_EMAIL, buyerDetailsPref.getStringPref (ChangePasswordActivity.this, BuyerDetailsPref.BUYER_EMAIL));
                     Utils.showLog(Log.INFO, AppConfigTags.PARAMETERS_SENT_TO_THE_SERVER, "" + params, true);
                     return params;
                 }
@@ -258,10 +236,13 @@ public class ChangePasswordActivity extends AppCompatActivity {
                 }
             });
         }
-
     }
-
-
+    
+    @Override
+    public void onBackPressed () {
+        finish ();
+        overridePendingTransition (R.anim.slide_in_left, R.anim.slide_out_right);
+    }
 }
 
 

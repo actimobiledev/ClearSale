@@ -1,0 +1,24 @@
+<menu
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:context=".activity.MainActivity">
+    <item
+        android:id="@+id/overflow"
+        android:icon="@drawable/ic_overflow_menu"
+        android:orderInCategory="100"
+        android:title=""
+        app:showAsAction="always">
+        <menu>
+            <item android:id="@+id/action_edit_profile"
+                  android:showAsAction="never"
+                  android:title="Edit Profile"/>
+            <item android:id="@+id/action_change_password"
+                  android:orderInCategory="100"
+                  android:title="Change Password"/>
+            <item android:id="@+id/action_sign_out"
+                  android:orderInCategory="100"
+                  android:title="Sign Out"/>
+        </menu>
+    </item>
+</menu>

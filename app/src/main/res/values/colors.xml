@@ -48,7 +48,7 @@
     <color name="app_text_color_default">#4f4f4f</color>
     <color name="detail_card_background">#aaffffff</color>
 
-    <color name="snackbar_background">#8a0808</color>
+    <color name="snackbar_background">#ef9f11</color>
 
     <color name="map_polyline_color">#4597FF</color>
 

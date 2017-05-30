@@ -24,8 +24,10 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.actiknow.clearsale.R;
+import com.actiknow.clearsale.activity.MainActivity;
 import com.actiknow.clearsale.utils.AppConfigTags;
 import com.actiknow.clearsale.utils.AppConfigURL;
+import com.actiknow.clearsale.utils.BuyerDetailsPref;
 import com.actiknow.clearsale.utils.Constants;
 import com.actiknow.clearsale.utils.NetworkConnection;
 import com.actiknow.clearsale.utils.TypefaceSpan;
@@ -55,8 +57,10 @@ public class SignUpFragment extends Fragment {
     TextView tvTerm;
 
     TextView tvSignUp;
-
-
+    
+    BuyerDetailsPref buyerDetailsPref;
+    
+    
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View rootView = inflater.inflate(R.layout.fragment_sign_up, container, false);
@@ -64,9 +68,8 @@ public class SignUpFragment extends Fragment {
         initData();
         initListener();
         return rootView;
-
     }
-
+    
     private void initView(View rootView) {
         etName = (EditText) rootView.findViewById(R.id.etUserName);
         etEmail = (EditText) rootView.findViewById(R.id.etEmail);
@@ -78,6 +81,7 @@ public class SignUpFragment extends Fragment {
     }
 
     private void initData() {
+        buyerDetailsPref = BuyerDetailsPref.getInstance ();
         progressDialog = new ProgressDialog(getActivity());
         SpannableString ss = new SpannableString(getResources().getString(R.string.activity_login_text_i_agree));
         ss.setSpan(new myClickableSpan(1), 17, 35, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
@@ -92,6 +96,7 @@ public class SignUpFragment extends Fragment {
         tvSignUp.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                Utils.hideSoftKeyboard (getActivity ());
                 SpannableString s = new SpannableString(getResources().getString(R.string.please_enter_name));
                 s.setSpan(new TypefaceSpan(getActivity(), Constants.font_name), 0, s.length(), Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
                 SpannableString s2 = new SpannableString(getResources().getString(R.string.please_enter_email));
@@ -117,7 +122,7 @@ public class SignUpFragment extends Fragment {
                 } else if (etMobile.getText().toString().trim().length() == 0) {
                     etMobile.setError(s3);
                 } else {
-                    signUpDetailSendToServer(etName.getText().toString().trim(), etEmail.getText().toString().trim(), etMobile.getText().toString().trim());
+                    sendSignUpDetailsToServer (etName.getText ().toString ().trim (), etEmail.getText ().toString ().trim (), etMobile.getText ().toString ().trim ());
                 }
             }
 
@@ -170,10 +175,9 @@ public class SignUpFragment extends Fragment {
             public void afterTextChanged(Editable s) {
             }
         });
-
     }
-
-    private void signUpDetailSendToServer(final String name, final String email, final String number) {
+    
+    private void sendSignUpDetailsToServer (final String name, final String email, final String number) {
         if (NetworkConnection.isNetworkAvailable(getActivity())) {
             Utils.showProgressDialog(progressDialog, getResources().getString(R.string.progress_dialog_text_please_wait), true);
             Utils.showLog(Log.INFO, "" + AppConfigTags.URL, AppConfigURL.URL_SIGN_UP, true);
@@ -188,8 +192,17 @@ public class SignUpFragment extends Fragment {
                                     boolean error = jsonObj.getBoolean(AppConfigTags.ERROR);
                                     String message = jsonObj.getString(AppConfigTags.MESSAGE);
                                     if (!error) {
-//                                        Toast.makeText(getActivity(), message, Toast.LENGTH_LONG).show();
-                                        getActivity().finish();
+                                        buyerDetailsPref.putIntPref (getActivity (), BuyerDetailsPref.BUYER_ID, jsonObj.getInt (AppConfigTags.BUYER_ID));
+                                        buyerDetailsPref.putStringPref (getActivity (), BuyerDetailsPref.BUYER_NAME, jsonObj.getString (AppConfigTags.BUYER_NAME));
+                                        buyerDetailsPref.putStringPref (getActivity (), BuyerDetailsPref.BUYER_EMAIL, jsonObj.getString (AppConfigTags.BUYER_EMAIL));
+                                        buyerDetailsPref.putStringPref (getActivity (), BuyerDetailsPref.BUYER_MOBILE, jsonObj.getString (AppConfigTags.BUYER_MOBILE));
+                                        buyerDetailsPref.putIntPref (getActivity (), BuyerDetailsPref.PROFILE_STATUS, jsonObj.getInt (AppConfigTags.PROFILE_STATUS));
+    
+    
+                                        Intent intent = new Intent (getActivity (), MainActivity.class);
+                                        intent.setFlags (Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+                                        startActivity (intent);
+                                        getActivity ().overridePendingTransition (R.anim.slide_in_right, R.anim.slide_out_left);
                                     } else {
                                         Utils.showSnackBar(getActivity(), clMain, message, Snackbar.LENGTH_LONG, null, null);
                                     }
@@ -217,9 +230,9 @@ public class SignUpFragment extends Fragment {
                 @Override
                 protected Map<String, String> getParams() throws AuthFailureError {
                     Map<String, String> params = new Hashtable<String, String>();
-                    params.put(AppConfigTags.SIGN_UP_NAME, name);
-                    params.put(AppConfigTags.SIGN_UP_EMAIL, email);
-                    params.put(AppConfigTags.SIGN_UP_NUMBER, number);
+                    params.put (AppConfigTags.BUYER_NAME, name);
+                    params.put (AppConfigTags.BUYER_EMAIL, email);
+                    params.put (AppConfigTags.BUYER_MOBILE, number);
                     Utils.showLog(Log.INFO, AppConfigTags.PARAMETERS_SENT_TO_THE_SERVER, "" + params, true);
                     return params;
                 }
@@ -243,8 +256,8 @@ public class SignUpFragment extends Fragment {
                 }
             });
         }
-
     }
+    
     public class myClickableSpan extends ClickableSpan {
         int pos;
         public myClickableSpan(int position) {

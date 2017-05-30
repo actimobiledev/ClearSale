@@ -4,6 +4,7 @@ package com.actiknow.clearsale.activity;
 import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Handler;
 import android.provider.Settings;
 import android.support.design.widget.CoordinatorLayout;
 import android.support.design.widget.Snackbar;
@@ -198,8 +199,14 @@ public class ContactUsActivity extends AppCompatActivity {
                                     boolean error = jsonObj.getBoolean(AppConfigTags.ERROR);
                                     String message = jsonObj.getString(AppConfigTags.MESSAGE);
                                     if (!error) {
-                                        Utils.showToast (ContactUsActivity.this, message, true);
-                                        finish();
+                                        Utils.showSnackBar (ContactUsActivity.this, clMain, message, Snackbar.LENGTH_LONG, null, null);
+                                        final Handler handler = new Handler ();
+                                        handler.postDelayed (new Runnable () {
+                                            @Override
+                                            public void run () {
+                                                finish ();
+                                            }
+                                        }, 1000);
                                     } else {
                                         Utils.showSnackBar(ContactUsActivity.this, clMain, message, Snackbar.LENGTH_LONG, null, null);
                                     }
@@ -227,11 +234,11 @@ public class ContactUsActivity extends AppCompatActivity {
                 @Override
                 protected Map<String, String> getParams() throws AuthFailureError {
                     Map<String, String> params = new Hashtable<String, String>();
-                    params.put(AppConfigTags.CONTACT_NAME, name);
-                    params.put(AppConfigTags.CONTACT_EMAIL, email);
-                    params.put(AppConfigTags.CONTACT_NUMBER, number);
-                    params.put(AppConfigTags.CONTACT_MESSAGE, message);
-                    params.put(AppConfigTags.TYPE, "contact");
+                    params.put (AppConfigTags.NAME, name);
+                    params.put (AppConfigTags.EMAIL, email);
+                    params.put (AppConfigTags.MOBILE, number);
+                    params.put (AppConfigTags.MESSAGE, message);
+                    params.put (AppConfigTags.TYPE, "contact_us");
                     Utils.showLog(Log.INFO, AppConfigTags.PARAMETERS_SENT_TO_THE_SERVER, "" + params, true);
                     return params;
                 }
@@ -256,8 +263,13 @@ public class ContactUsActivity extends AppCompatActivity {
             });
         }
     }
-
-
+    
+    @Override
+    public void onBackPressed () {
+        finish ();
+        overridePendingTransition (R.anim.slide_in_left, R.anim.slide_out_right);
+    }
+    
 }
 
 

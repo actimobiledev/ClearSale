@@ -5,9 +5,8 @@ import android.content.Intent;
 import android.support.v4.content.LocalBroadcastManager;
 import android.util.Log;
 
-
+import com.actiknow.clearsale.utils.BuyerDetailsPref;
 import com.actiknow.clearsale.utils.Constants;
-import com.actiknow.clearsale.utils.UserDetailsPref;
 import com.google.firebase.iid.FirebaseInstanceId;
 import com.google.firebase.iid.FirebaseInstanceIdService;
 
@@ -20,9 +19,9 @@ public class MyFirebaseInstanceIDService extends FirebaseInstanceIdService {
         super.onTokenRefresh ();
         String refreshedToken = FirebaseInstanceId.getInstance().getToken();
         Log.d(TAG, "Refreshed token: " + refreshedToken);
-
-        UserDetailsPref userDetailsPref=UserDetailsPref.getInstance();
-        userDetailsPref.putStringPref(getApplicationContext(),userDetailsPref.USER_FIREBASE_ID,refreshedToken);
+    
+        BuyerDetailsPref buyerDetailsPref = BuyerDetailsPref.getInstance ();
+        buyerDetailsPref.putStringPref (getApplicationContext (), buyerDetailsPref.BUYER_FIREBASE_ID, refreshedToken);
 
 
         // Saving reg id to shared preferences
@@ -41,9 +40,9 @@ public class MyFirebaseInstanceIDService extends FirebaseInstanceIdService {
     }
 
     private void storeRegIdInPref (String token) {
-        UserDetailsPref userDetailsPref = UserDetailsPref.getInstance ();
+        BuyerDetailsPref buyerDetailsPref = BuyerDetailsPref.getInstance ();
         Log.e (TAG, "SharedPreference: " + token);
-        userDetailsPref.putStringPref (getApplicationContext (), UserDetailsPref.USER_FIREBASE_ID, token);
+        buyerDetailsPref.putStringPref (getApplicationContext (), BuyerDetailsPref.BUYER_FIREBASE_ID, token);
     }
 }
 

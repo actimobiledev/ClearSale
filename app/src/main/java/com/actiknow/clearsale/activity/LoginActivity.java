@@ -25,10 +25,10 @@ import com.actiknow.clearsale.fragment.SignInFragment;
 import com.actiknow.clearsale.fragment.SignUpFragment;
 import com.actiknow.clearsale.utils.AppConfigTags;
 import com.actiknow.clearsale.utils.AppConfigURL;
+import com.actiknow.clearsale.utils.BuyerDetailsPref;
 import com.actiknow.clearsale.utils.Constants;
 import com.actiknow.clearsale.utils.NetworkConnection;
 import com.actiknow.clearsale.utils.PrefUtil;
-import com.actiknow.clearsale.utils.UserDetailsPref;
 import com.actiknow.clearsale.utils.Utils;
 import com.android.volley.AuthFailureError;
 import com.android.volley.Request;
@@ -66,7 +66,7 @@ public class LoginActivity extends AppCompatActivity {
     CoordinatorLayout clMain;
     ProgressDialog progressDialog;
     Button linked_in_login_button;
-    UserDetailsPref userDetailsPref;
+    BuyerDetailsPref buyerDetailsPref;
     PackageInfo info;
     PrefUtil prefUtil;
     String accessToken;
@@ -108,13 +108,13 @@ public class LoginActivity extends AppCompatActivity {
         setupViewPager(viewPager);
         FacebookSdk.sdkInitialize(getApplicationContext());
         callbackManager = CallbackManager.Factory.create();
-        userDetailsPref = UserDetailsPref.getInstance();
+        buyerDetailsPref = BuyerDetailsPref.getInstance ();
         progressDialog = new ProgressDialog(LoginActivity.this);
         Utils.setTypefaceToAllViews (this, clMain);
     }
 
     private void displayFirebaseRegId() {
-        Utils.showLog(Log.ERROR, "Firebase Reg ID:", userDetailsPref.getStringPref(LoginActivity.this, UserDetailsPref.USER_FIREBASE_ID), true);
+        Utils.showLog (Log.ERROR, "Firebase Reg ID:", buyerDetailsPref.getStringPref (LoginActivity.this, BuyerDetailsPref.BUYER_FIREBASE_ID), true);
     }
     
     private void setupViewPager(ViewPager viewPager) {
@@ -145,6 +145,7 @@ public class LoginActivity extends AppCompatActivity {
             }
         });
     }
+
     private void initListener() {
         loginButton.registerCallback (callbackManager, new FacebookCallback<LoginResult> () {
             @Override
@@ -218,10 +219,10 @@ public class LoginActivity extends AppCompatActivity {
                                     boolean error = jsonObj.getBoolean(AppConfigTags.ERROR);
                                     String message = jsonObj.getString(AppConfigTags.MESSAGE);
                                     if (!error) {
-                                        userDetailsPref.putIntPref(LoginActivity.this, UserDetailsPref.USER_ID, jsonObj.getInt(AppConfigTags.SIGN_IN_USER_ID));
-                                        userDetailsPref.putStringPref(LoginActivity.this, UserDetailsPref.USER_NAME, jsonObj.getString(AppConfigTags.SIGN_IN_USER_NAME));
-                                        userDetailsPref.putStringPref(LoginActivity.this, UserDetailsPref.USER_EMAIL, jsonObj.getString(AppConfigTags.SIGN_IN_USER_EMAIL));
-                                        userDetailsPref.putStringPref(LoginActivity.this, UserDetailsPref.USER_ACCESS_TOKEN, jsonObj.getString(AppConfigTags.SIGN_IN_ACCESS_TOKEN));
+                                        buyerDetailsPref.putIntPref (LoginActivity.this, BuyerDetailsPref.BUYER_ID, jsonObj.getInt (AppConfigTags.SIGN_IN_USER_ID));
+                                        buyerDetailsPref.putStringPref (LoginActivity.this, BuyerDetailsPref.BUYER_NAME, jsonObj.getString (AppConfigTags.SIGN_IN_USER_NAME));
+                                        buyerDetailsPref.putStringPref (LoginActivity.this, BuyerDetailsPref.BUYER_EMAIL, jsonObj.getString (AppConfigTags.SIGN_IN_USER_EMAIL));
+                                        buyerDetailsPref.putStringPref (LoginActivity.this, BuyerDetailsPref.BUYER_ACCESS_TOKEN, jsonObj.getString (AppConfigTags.SIGN_IN_ACCESS_TOKEN));
                                         Intent intent = new Intent(LoginActivity.this, MainActivity.class);
                                         intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
                                         startActivity(intent);
@@ -257,7 +258,7 @@ public class LoginActivity extends AppCompatActivity {
                     params.put(AppConfigTags.SIGN_IN_USER_EMAIL, email);
                     params.put(AppConfigTags.SIGN_IN_NAME, name);
                     params.put(AppConfigTags.SIGN_IN_ACCESS_TOKEN, accessToken);
-                    params.put(AppConfigTags.USER_FIREBASE_ID, userDetailsPref.getStringPref(LoginActivity.this, UserDetailsPref.USER_FIREBASE_ID));
+                    params.put (AppConfigTags.USER_FIREBASE_ID, buyerDetailsPref.getStringPref (LoginActivity.this, BuyerDetailsPref.BUYER_FIREBASE_ID));
                     Utils.showLog(Log.INFO, AppConfigTags.PARAMETERS_SENT_TO_THE_SERVER, "" + params, true);
                     return params;
                 }
@@ -306,7 +307,8 @@ public class LoginActivity extends AppCompatActivity {
             }
         };
     }
-
+    
+    
     class ViewPagerAdapter extends FragmentPagerAdapter {
         private final List<Fragment> mFragmentList = new ArrayList<> ();
         private final List<String> mFragmentTitleList = new ArrayList<>();
@@ -335,7 +337,6 @@ public class LoginActivity extends AppCompatActivity {
             return mFragmentTitleList.get(position);
         }
     }
-
 }
 
 

@@ -31,62 +31,45 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-
         <activity
             android:name=".activity.LoginActivity"
-            android:screenOrientation="portrait"></activity>
-
-
+            android:screenOrientation="portrait"/>
         <activity
-            android:name=".activity.EditProfileActivity"
-            android:screenOrientation="portrait"></activity>
-
+            android:name=".activity.MyProfileActivity"
+            android:screenOrientation="portrait"/>
         <activity
             android:name=".activity.PropertyDetailActivity"
-            android:screenOrientation="portrait"></activity>
-
+            android:screenOrientation="portrait"/>
         <activity
             android:name=".activity.HowItWorksActivity"
-            android:screenOrientation="portrait"></activity>
-
-
+            android:screenOrientation="portrait"/>
         <activity
             android:name=".activity.AboutUsActivity"
-            android:screenOrientation="portrait"></activity>
-
-
+            android:screenOrientation="portrait"/>
         <activity
-            android:name=".activity.SearchFilterActivity"
-            android:screenOrientation="portrait"></activity>
-
-
+            android:name=".activity.FilterActivity"
+            android:screenOrientation="portrait"/>
         <activity
             android:name=".activity.TestimonialActivity"
-            android:screenOrientation="portrait"></activity>
-
+            android:screenOrientation="portrait"/>
         <activity
             android:name=".activity.FAQActivity"
-            android:screenOrientation="portrait"></activity>
-
+            android:screenOrientation="portrait"/>
         <activity
             android:name=".activity.ContactUsActivity"
-            android:screenOrientation="portrait"></activity>
-
-
-        <activity
-            android:name=".activity.ForgotPasswordActivity"
-            android:screenOrientation="portrait"></activity>
-
+            android:screenOrientation="portrait"/>
         <activity
             android:name=".activity.ChangePasswordActivity"
-            android:screenOrientation="portrait"></activity>
+            android:screenOrientation="portrait"/>
+        <activity
+            android:name=".activity.MyFavouriteActivity"
+            android:screenOrientation="portrait"/>
 
         <service android:name="com.actiknow.clearsale.service.MyFirebaseMessagingService">
             <intent-filter>
                 <action android:name="com.google.firebase.MESSAGING_EVENT" />
             </intent-filter>
         </service>
-
 
         <service android:name="com.actiknow.clearsale.service.MyFirebaseInstanceIDService">
             <intent-filter>
@@ -100,10 +83,8 @@
             android:value="@string/facebook_app_id"/>
 
         <activity android:name="com.facebook.FacebookActivity"
-            android:configChanges=
-                "keyboard|keyboardHidden|screenLayout|screenSize|orientation"
-            android:label="@string/app_name" />
-
+                  android:configChanges="keyboard|keyboardHidden|screenLayout|screenSize|orientation"
+                  android:label="@string/app_name" />
 
         <meta-data
             android:name="com.google.android.gms.version"

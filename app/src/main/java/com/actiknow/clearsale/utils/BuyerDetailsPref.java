@@ -1,31 +1,31 @@
 package com.actiknow.clearsale.utils;
 
-
 import android.content.Context;
 import android.content.SharedPreferences;
 
-public class UserDetailsPref {
-    public static String USER_NAME = "user_name";
-    public static String USER_EMAIL = "user_email";
-    public static String USER_MOBILE = "user_mobile";
-    public static String USER_LOGIN_KEY = "user_login_key";
-    public static String USER_ID = "user_id";
-    public static String USER_FIREBASE_ID = "user_firebase_id";
-    public static String USER_ACCESS_TOKEN = "user_firebase_id";
-    public static String HOME_TYPE = "home_type";
-    public static String STATE_TYPE = "state_type";
-    public static String HOME_BUDGET = "home_budget";
-    private static UserDetailsPref userDetailsPref;
-    private String USER_DETAILS = "USER_DETAILS";
-
-    public static UserDetailsPref getInstance () {
-        if (userDetailsPref == null)
-            userDetailsPref = new UserDetailsPref ();
-        return userDetailsPref;
+public class BuyerDetailsPref {
+    public static String BUYER_NAME = "buyer_name";
+    public static String BUYER_EMAIL = "buyer_email";
+    public static String BUYER_MOBILE = "buyer_mobile";
+    public static String BUYER_LOGIN_KEY = "buyer_login_key";
+    public static String BUYER_ID = "buyer_id";
+    public static String BUYER_FIREBASE_ID = "buyer_firebase_id";
+    public static String BUYER_ACCESS_TOKEN = "buyer_access_token";
+    public static String PROFILE_STATUS = "profile_status";
+    public static String PROFILE_HOME_TYPE = "profile_home_type";
+    public static String PROFILE_STATE = "profile_state";
+    public static String PROFILE_HOME_BUDGET = "profile_home_budget";
+    private static BuyerDetailsPref buyerDetailsPref;
+    private String BUYER_DETAILS = "BUYER_DETAILS";
+    
+    public static BuyerDetailsPref getInstance () {
+        if (buyerDetailsPref == null)
+            buyerDetailsPref = new BuyerDetailsPref ();
+        return buyerDetailsPref;
     }
 
     private SharedPreferences getPref (Context context) {
-        return context.getSharedPreferences (USER_DETAILS, Context.MODE_PRIVATE);
+        return context.getSharedPreferences (BUYER_DETAILS, Context.MODE_PRIVATE);
     }
 
     public String getStringPref (Context context, String key) {

@@ -10,27 +10,25 @@ import android.support.annotation.NonNull;
 import android.support.design.widget.CoordinatorLayout;
 import android.support.design.widget.Snackbar;
 import android.support.v4.widget.SwipeRefreshLayout;
-import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.DefaultItemAnimator;
+import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.support.v7.widget.StaggeredGridLayoutManager;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.Menu;
-import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageView;
-import android.widget.Toast;
 
 import com.actiknow.clearsale.R;
 import com.actiknow.clearsale.adapter.PropertyAdapter;
 import com.actiknow.clearsale.model.Property;
 import com.actiknow.clearsale.utils.AppConfigTags;
 import com.actiknow.clearsale.utils.AppConfigURL;
+import com.actiknow.clearsale.utils.BuyerDetailsPref;
 import com.actiknow.clearsale.utils.Constants;
 import com.actiknow.clearsale.utils.NetworkConnection;
 import com.actiknow.clearsale.utils.SetTypeFace;
-import com.actiknow.clearsale.utils.UserDetailsPref;
 import com.actiknow.clearsale.utils.Utils;
 import com.afollestad.materialdialogs.DialogAction;
 import com.afollestad.materialdialogs.MaterialDialog;
@@ -63,14 +61,17 @@ import java.util.Map;
 
 public class MainActivity extends AppCompatActivity {
     Bundle savedInstanceState;
-    ImageView ivNavigation;
     Toolbar toolbar;
     RecyclerView rvPropertyList;
     SwipeRefreshLayout swipeRefreshLayout;
     PropertyAdapter propertyAdapter;
     List<Property> propertyList = new ArrayList<> ();
-    UserDetailsPref userDetailsPref;
+    BuyerDetailsPref buyerDetailsPref;
     CoordinatorLayout clMain;
+    ImageView ivFilter;
+    ImageView ivOverflow;
+    Menu menu2;
+    ImageView ivNavigation;
     private AccountHeader headerResult = null;
     private Drawer result = null;
     
@@ -82,37 +83,45 @@ public class MainActivity extends AppCompatActivity {
         initData ();
         initListener ();
         initDrawer ();
-        setUpNavigationDrawer ();
+//        setUpNavigationDrawer ();
 //        getAllProperties ();
         isLogin ();
-        getPropertyList ();
+        getAllProperties ();
         this.savedInstanceState = savedInstanceState;
-        
     }
     
     private void isLogin () {
-        if (userDetailsPref.getIntPref (MainActivity.this, UserDetailsPref.USER_ID) == 0) {
+        if (buyerDetailsPref.getIntPref (MainActivity.this, BuyerDetailsPref.BUYER_ID) == 0) {
             Intent myIntent = new Intent (this, LoginActivity.class);
             startActivity (myIntent);
+        } else if (buyerDetailsPref.getIntPref (MainActivity.this, BuyerDetailsPref.PROFILE_STATUS) == 0) {
+            Intent myIntent = new Intent (this, MyProfileActivity.class);
+            startActivity (myIntent);
         }
+        if (buyerDetailsPref.getIntPref (MainActivity.this, BuyerDetailsPref.BUYER_ID) == 0)
+            finish ();
     }
     
     private void initView () {
+        toolbar = (Toolbar) findViewById (R.id.toolbar);
         rvPropertyList = (RecyclerView) findViewById (R.id.rvPropertyList);
         swipeRefreshLayout = (SwipeRefreshLayout) findViewById (R.id.swipe_refresh_layout);
         clMain = (CoordinatorLayout) findViewById (R.id.clMain);
+        ivFilter = (ImageView) findViewById (R.id.ivFilter);
+        ivOverflow = (ImageView) findViewById (R.id.ivOverflow);
+        ivNavigation = (ImageView) findViewById (R.id.ivNavigation);
     }
     
     private void initData () {
-        userDetailsPref = UserDetailsPref.getInstance ();
-        
+        buyerDetailsPref = BuyerDetailsPref.getInstance ();
         swipeRefreshLayout.setRefreshing (true);
         propertyList.clear ();
         propertyAdapter = new PropertyAdapter (this, propertyList);
-        StaggeredGridLayoutManager layoutManager = new StaggeredGridLayoutManager (1, StaggeredGridLayoutManager.VERTICAL);
         rvPropertyList.setAdapter (propertyAdapter);
         rvPropertyList.setHasFixedSize (true);
-        rvPropertyList.setLayoutManager (layoutManager);
+        rvPropertyList.setLayoutManager (new LinearLayoutManager (this, LinearLayoutManager.VERTICAL, false));
+        rvPropertyList.setItemAnimator (new DefaultItemAnimator ());
+        Utils.setTypefaceToAllViews (this, clMain);
     }
     
     private void initListener () {
@@ -122,8 +131,39 @@ public class MainActivity extends AppCompatActivity {
                 getAllProperties ();
             }
         });
+        ivFilter.setOnClickListener (new View.OnClickListener () {
+            @Override
+            public void onClick (View v) {
+                Intent intent4 = new Intent (MainActivity.this, FilterActivity.class);
+                startActivity (intent4);
+                overridePendingTransition (R.anim.slide_in_up, R.anim.slide_out_up);
+            }
+        });
+        ivOverflow.setOnClickListener (new View.OnClickListener () {
+            @Override
+            public void onClick (View v) {
+//                findViewById (R.id.overflow).performClick ();
+//                onOptionsItemSelected (menu2.findItem (R.id.overflow));
+//                MenuItem menuItem = menu.findItem (R.id.overflow).setOnMenuItemClickListener (new MenuItem.OnMenuItemClickListener () {
+//                    @Override
+//                    public boolean onMenuItemClick (MenuItem item) {
+//                        Toast.makeText (MainActivity.this, "Karman 2", Toast.LENGTH_LONG).show ();
+//                        return false;
+//                    }
+//                });
+//                toolbar.getMenu ().getItem (1);
+//                toolbar.showOverflowMenu ();
+            }
+        });
+        ivNavigation.setOnClickListener (new View.OnClickListener () {
+            @Override
+            public void onClick (View view) {
+                result.openDrawer ();
+            }
+        });
     }
     
+    /*
     private void getAllProperties () {
         propertyList.clear ();
         
@@ -155,8 +195,8 @@ public class MainActivity extends AppCompatActivity {
 //        propertyList.add (new Property (9, 0, imagesList, "9300", "2", "2", "8500", "1964", "11404 Claude Court", "Northglenn", false));
         swipeRefreshLayout.setRefreshing (false);
     }
-    
-    private void getPropertyList () {
+    */
+    private void getAllProperties () {
         if (NetworkConnection.isNetworkAvailable (MainActivity.this)) {
             Utils.showLog (Log.INFO, "" + AppConfigTags.URL, AppConfigURL.URL_PROPERTY_LIST, true);
             StringRequest strRequest1 = new StringRequest (Request.Method.POST, AppConfigURL.URL_PROPERTY_LIST,
@@ -180,10 +220,10 @@ public class MainActivity extends AppCompatActivity {
                                                     jsonObjectProperty.getString (AppConfigTags.PROPERTY_PRICE),
                                                     jsonObjectProperty.getString (AppConfigTags.PROPERTY_BEDROOMS),
                                                     jsonObjectProperty.getString (AppConfigTags.PROPERTY_BATHROOMS),
-                                                    jsonObjectProperty.getString (AppConfigTags.PROPERTY_AREA_SQFT),
-                                                    jsonObjectProperty.getString (AppConfigTags.PROPERTY_BUILD_YEAR),
+                                                    jsonObjectProperty.getString (AppConfigTags.PROPERTY_AREA),
+                                                    jsonObjectProperty.getString (AppConfigTags.PROPERTY_BUILT_YEAR),
                                                     jsonObjectProperty.getString (AppConfigTags.PROPERTY_ADDRESS),
-                                                    jsonObjectProperty.getString (AppConfigTags.PROPERTY_CITY_NAME),
+                                                    jsonObjectProperty.getString (AppConfigTags.PROPERTY_CITY),
                                                     jsonObjectProperty.getBoolean (AppConfigTags.PROPERTY_IS_OFFER));
                                             
                                             
@@ -192,7 +232,7 @@ public class MainActivity extends AppCompatActivity {
                                             
                                             for (int j = 0; j < jsonArrayPropertyImages.length (); j++) {
                                                 JSONObject jsonObjectImages = jsonArrayPropertyImages.getJSONObject (j);
-                                                propertyImages.add (jsonObjectImages.getString (AppConfigTags.PROPERTY_IMAGES_NAME));
+                                                propertyImages.add (jsonObjectImages.getString (AppConfigTags.PROPERTY_IMAGE));
                                                 property.setImageList (propertyImages);
                                             }
                                             propertyList.add (i, property);
@@ -232,7 +272,7 @@ public class MainActivity extends AppCompatActivity {
                 @Override
                 protected Map<String, String> getParams () throws AuthFailureError {
                     Map<String, String> params = new Hashtable<String, String> ();
-                    params.put (AppConfigTags.TYPE, "property");
+                    params.put (AppConfigTags.TYPE, "property_list");
                     Utils.showLog (Log.INFO, AppConfigTags.PARAMETERS_SENT_TO_THE_SERVER, "" + params, true);
                     return params;
                 }
@@ -290,15 +330,14 @@ public class MainActivity extends AppCompatActivity {
                 return super.placeholder (ctx, tag);
             }
         });
-        
-        
         headerResult = new AccountHeaderBuilder ()
                 .withActivity (this)
                 .withCompactStyle (true)
                 .addProfiles (new ProfileDrawerItem ()
-                        .withName (userDetailsPref.getStringPref (MainActivity.this, UserDetailsPref.USER_NAME))
-                        .withEmail (userDetailsPref.getStringPref (MainActivity.this, UserDetailsPref.USER_EMAIL)))
+                        .withName (buyerDetailsPref.getStringPref (MainActivity.this, BuyerDetailsPref.BUYER_NAME))
+                        .withEmail (buyerDetailsPref.getStringPref (MainActivity.this, BuyerDetailsPref.BUYER_EMAIL)))
                 .withProfileImagesClickable (false)
+                .withTypeface (SetTypeFace.getTypeface (this))
                 .withPaddingBelowHeader (false)
                 .withSelectionListEnabledForSingleProfile (false)
                 .withHeaderBackground (R.color.colorPrimaryDark)
@@ -313,12 +352,15 @@ public class MainActivity extends AppCompatActivity {
 //                .withItemAnimator (new AlphaCrossFadeAnimator ())
                 .addDrawerItems (
                         new PrimaryDrawerItem ().withName ("Home").withIcon (FontAwesome.Icon.faw_home).withIdentifier (1),
-                        new PrimaryDrawerItem ().withName ("How It Works").withIcon (FontAwesome.Icon.faw_home).withIdentifier (2).withSelectable (false),
-                        new PrimaryDrawerItem ().withName ("About Us").withIcon (FontAwesome.Icon.faw_home).withIdentifier (3).withSelectable (false),
-                        new PrimaryDrawerItem ().withName ("Testimonials").withIcon (FontAwesome.Icon.faw_home).withIdentifier (4).withSelectable (false),
-                        new PrimaryDrawerItem ().withName ("Contact Us").withIcon (FontAwesome.Icon.faw_home).withIdentifier (5).withSelectable (false),
-                        new PrimaryDrawerItem ().withName ("FAQ").withIcon (FontAwesome.Icon.faw_home).withIdentifier (6).withSelectable (false),
-                        new PrimaryDrawerItem ().withName ("Sign Out").withIcon (FontAwesome.Icon.faw_home).withIdentifier (7).withSelectable (false)
+                        new PrimaryDrawerItem ().withName ("My Favourites").withIcon (FontAwesome.Icon.faw_home).withIdentifier (2),
+                        new PrimaryDrawerItem ().withName ("How It Works").withIcon (FontAwesome.Icon.faw_home).withIdentifier (3).withSelectable (false),
+                        new PrimaryDrawerItem ().withName ("About Us").withIcon (FontAwesome.Icon.faw_home).withIdentifier (4).withSelectable (false),
+                        new PrimaryDrawerItem ().withName ("Testimonials").withIcon (FontAwesome.Icon.faw_home).withIdentifier (5).withSelectable (false),
+                        new PrimaryDrawerItem ().withName ("Contact Us").withIcon (FontAwesome.Icon.faw_home).withIdentifier (6).withSelectable (false),
+                        new PrimaryDrawerItem ().withName ("FAQ").withIcon (FontAwesome.Icon.faw_home).withIdentifier (7).withSelectable (false),
+                        new PrimaryDrawerItem ().withName ("My Profile").withIcon (FontAwesome.Icon.faw_home).withIdentifier (8).withSelectable (false),
+                        new PrimaryDrawerItem ().withName ("Change Password").withIcon (FontAwesome.Icon.faw_home).withIdentifier (9).withSelectable (false),
+                        new PrimaryDrawerItem ().withName ("Sign Out").withIcon (FontAwesome.Icon.faw_home).withIdentifier (10).withSelectable (false)
                 )
                 .withSavedInstance (savedInstanceState)
                 .withOnDrawerItemClickListener (new Drawer.OnDrawerItemClickListener () {
@@ -326,38 +368,47 @@ public class MainActivity extends AppCompatActivity {
                     public boolean onItemClick (View view, int position, IDrawerItem drawerItem) {
                         switch ((int) drawerItem.getIdentifier ()) {
                             case 2:
-                                Intent intent = new Intent (MainActivity.this, HowItWorksActivity.class);
+                                Intent intent = new Intent (MainActivity.this, MyFavouriteActivity.class);
                                 startActivity (intent);
                                 overridePendingTransition (R.anim.slide_in_right, R.anim.slide_out_left);
-                                Utils.showLog (Log.ERROR, "position ", "" + position, true);
                                 break;
-        
                             case 3:
+                                Intent intent2 = new Intent (MainActivity.this, HowItWorksActivity.class);
+                                startActivity (intent2);
+                                overridePendingTransition (R.anim.slide_in_right, R.anim.slide_out_left);
+                                break;
+                            case 4:
                                 Intent intent3 = new Intent (MainActivity.this, AboutUsActivity.class);
                                 startActivity (intent3);
                                 overridePendingTransition (R.anim.slide_in_right, R.anim.slide_out_left);
-                                Utils.showLog (Log.ERROR, "position ", "" + position, true);
                                 break;
-        
-                            case 4:
+                            case 5:
                                 Intent intent4 = new Intent (MainActivity.this, TestimonialActivity.class);
                                 startActivity (intent4);
                                 overridePendingTransition (R.anim.slide_in_right, R.anim.slide_out_left);
-                                Utils.showLog (Log.ERROR, "position ", "" + position, true);
                                 break;
-        
-                            case 5:
+                            case 6:
                                 Intent intent5 = new Intent (MainActivity.this, ContactUsActivity.class);
                                 startActivity (intent5);
                                 overridePendingTransition (R.anim.slide_in_right, R.anim.slide_out_left);
-                                Utils.showLog (Log.ERROR, "position ", "" + position, true);
                                 break;
-        
-                            case 6:
+                            case 7:
                                 Intent intent6 = new Intent (MainActivity.this, FAQActivity.class);
                                 startActivity (intent6);
                                 overridePendingTransition (R.anim.slide_in_right, R.anim.slide_out_left);
-                                Utils.showLog (Log.ERROR, "position ", "" + position, true);
+                                break;
+                            case 8:
+                                Intent intent7 = new Intent (MainActivity.this, MyProfileActivity.class);
+                                startActivity (intent7);
+                                overridePendingTransition (R.anim.slide_in_up, R.anim.slide_out_up);
+                                break;
+                            case 9:
+                                Intent intent8 = new Intent (MainActivity.this, ChangePasswordActivity.class);
+                                startActivity (intent8);
+                                overridePendingTransition (R.anim.slide_in_up, R.anim.slide_out_up);
+                                break;
+                            case 10:
+                                showLogOutDialog ();
                                 break;
                         }
                         return false;
@@ -365,85 +416,6 @@ public class MainActivity extends AppCompatActivity {
                 })
                 .build ();
 //        result.getActionBarDrawerToggle ().setDrawerIndicatorEnabled (false);
-        
-        
-    }
-    
-    @Override
-    public void onBackPressed () {
-        //handle the back press :D close the drawer first and if the drawer is closed close the activity
-        if (result != null && result.isDrawerOpen ()) {
-            result.closeDrawer ();
-        } else {
-            super.onBackPressed ();
-        }
-    }
-    
-    private void setUpNavigationDrawer () {
-        toolbar = (Toolbar) findViewById (R.id.toolbar1);
-        setSupportActionBar (toolbar);
-        ActionBar actionBar = getSupportActionBar ();
-        ImageView ivNavigation = (ImageView) findViewById (R.id.ivNavigation);
-        toolbar.inflateMenu (R.menu.toolbar_menu);
-        
-        
-        toolbar.setOnMenuItemClickListener (new Toolbar.OnMenuItemClickListener () {
-            @Override
-            public boolean onMenuItemClick (MenuItem menuItem) {
-    
-                switch (menuItem.getItemId ()) {
-                    case R.id.action_edit_profile:
-                        Intent intent = new Intent (MainActivity.this, EditProfileActivity.class);
-                        startActivity (intent);
-                        overridePendingTransition (R.anim.slide_in_up, R.anim.slide_out_up);
-                        break;
-                    case R.id.action_change_password:
-                        Intent intent2 = new Intent (MainActivity.this, ChangePasswordActivity.class);
-                        startActivity (intent2);
-                        overridePendingTransition (R.anim.slide_in_up, R.anim.slide_out_up);
-                        break;
-                    case R.id.action_Signout:
-                        Toast.makeText (MainActivity.this, "Share", Toast.LENGTH_SHORT).show ();
-                        break;
-                    case R.id.action_search:
-                        Intent intent4 = new Intent (MainActivity.this, SearchFilterActivity.class);
-                        startActivity (intent4);
-                        overridePendingTransition (R.anim.slide_in_up, R.anim.slide_out_up);
-                        Toast.makeText (MainActivity.this, "Search", Toast.LENGTH_SHORT).show ();
-                        
-                        //  boolean wrapInScrollView = true;
-                        //  new MaterialDialog.Builder(MainActivity.this)
-    
-                        //          .customView(R.layout.dialog_search_filter, wrapInScrollView)
-                        //        .positiveText("Search")
-                        //        .show();
-                        //  break;
-        
-        
-                }
-    
-                return false;
-            }
-        });
-        
-        
-        ivNavigation.setOnClickListener (new View.OnClickListener () {
-            @Override
-            public void onClick (View view) {
-                result.openDrawer ();
-//                Listview.smoothScrollToPosition (0);
-//                toggleMenu ();
-            }
-        });
-        
-        
-        try {
-            assert actionBar != null;
-            actionBar.setDisplayHomeAsUpEnabled (false);
-            actionBar.setHomeButtonEnabled (false);
-            actionBar.setDisplayShowTitleEnabled (false);
-        } catch (Exception ignored) {
-        }
     }
     
     private void showLogOutDialog () {
@@ -457,7 +429,15 @@ public class MainActivity extends AppCompatActivity {
                     @Override
                     public void onClick (@NonNull MaterialDialog dialog, @NonNull DialogAction which) {
 //                        dialog.dismiss ();
-                        userDetailsPref.putStringPref (MainActivity.this, UserDetailsPref.USER_NAME, "");
+                        buyerDetailsPref.putStringPref (MainActivity.this, BuyerDetailsPref.BUYER_NAME, "");
+                        buyerDetailsPref.putStringPref (MainActivity.this, BuyerDetailsPref.BUYER_EMAIL, "");
+                        buyerDetailsPref.putStringPref (MainActivity.this, BuyerDetailsPref.BUYER_MOBILE, "");
+                        buyerDetailsPref.putStringPref (MainActivity.this, BuyerDetailsPref.BUYER_LOGIN_KEY, "");
+                        buyerDetailsPref.putIntPref (MainActivity.this, BuyerDetailsPref.BUYER_ID, 0);
+                        buyerDetailsPref.putStringPref (MainActivity.this, BuyerDetailsPref.BUYER_ACCESS_TOKEN, "");
+                        buyerDetailsPref.putStringPref (MainActivity.this, BuyerDetailsPref.PROFILE_HOME_TYPE, "");
+                        buyerDetailsPref.putStringPref (MainActivity.this, BuyerDetailsPref.PROFILE_STATE, "");
+                        buyerDetailsPref.putStringPref (MainActivity.this, BuyerDetailsPref.PROFILE_HOME_BUDGET, "");
                         Intent intent = new Intent (MainActivity.this, LoginActivity.class);
                         intent.setFlags (Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
                         startActivity (intent);
@@ -468,9 +448,13 @@ public class MainActivity extends AppCompatActivity {
     }
     
     @Override
-    public boolean onCreateOptionsMenu (Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater ().inflate (R.menu.toolbar_menu, menu);
-        return true;
+    public void onBackPressed () {
+        if (result != null && result.isDrawerOpen ()) {
+            result.closeDrawer ();
+        } else {
+            super.onBackPressed ();
+            finish ();
+            overridePendingTransition (R.anim.slide_in_left, R.anim.slide_out_right);
+        }
     }
 }

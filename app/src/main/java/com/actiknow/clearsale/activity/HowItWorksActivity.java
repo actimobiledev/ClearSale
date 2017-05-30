@@ -142,7 +142,7 @@ public class HowItWorksActivity extends AppCompatActivity {
     @Override
     public void onBackPressed () {
         finish ();
-        overridePendingTransition (R.anim.fade_in, R.anim.fade_out);
+        overridePendingTransition (R.anim.slide_in_left, R.anim.slide_out_right);
     }
     
     public class MyViewPagerAdapter extends PagerAdapter {
