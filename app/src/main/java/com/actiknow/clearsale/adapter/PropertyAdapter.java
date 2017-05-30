@@ -71,24 +71,38 @@ public class PropertyAdapter extends RecyclerView.Adapter<PropertyAdapter.ViewHo
     
         switch (property.getStatus ()) {
             case 1:
-                Drawable img = activity.getResources ().getDrawable (R.drawable.circle_red);
+                Drawable img = activity.getResources ().getDrawable (R.drawable.circle_green);
                 img.setBounds (0, 0, 30, 30);
                 holder.tvStatus.setCompoundDrawables (img, null, null, null);
-                holder.tvStatus.setText ("Sold");
-                holder.tvAcceptingOffer.setVisibility (View.GONE);
-                break;
-            case 3:
-                Drawable img2 = activity.getResources ().getDrawable (R.drawable.circle_green);
-                img2.setBounds (0, 0, 30, 30);
-                holder.tvStatus.setCompoundDrawables (img2, null, null, null);
                 holder.tvStatus.setText ("Available");
                 holder.tvAcceptingOffer.setVisibility (View.VISIBLE);
                 break;
-            case 9:
-                Drawable img3 = activity.getResources ().getDrawable (R.drawable.circle_yellow);
+            case 2:
+                Drawable img2 = activity.getResources ().getDrawable (R.drawable.circle_yellow);
+                img2.setBounds (0, 0, 30, 30);
+                holder.tvStatus.setCompoundDrawables (img2, null, null, null);
+                holder.tvStatus.setText ("Pending");
+                holder.tvAcceptingOffer.setVisibility (View.GONE);
+                break;
+            case 3:
+                Drawable img3 = activity.getResources ().getDrawable (R.drawable.circle_red);
                 img3.setBounds (0, 0, 30, 30);
                 holder.tvStatus.setCompoundDrawables (img3, null, null, null);
-                holder.tvStatus.setText ("Pending");
+                holder.tvStatus.setText ("Sold");
+                holder.tvAcceptingOffer.setVisibility (View.GONE);
+                break;
+            case 4:
+                Drawable img4 = activity.getResources ().getDrawable (R.drawable.circle_red);
+                img4.setBounds (0, 0, 30, 30);
+                holder.tvStatus.setCompoundDrawables (img4, null, null, null);
+                holder.tvStatus.setText ("Closed");
+                holder.tvAcceptingOffer.setVisibility (View.GONE);
+                break;
+            case 9:
+                Drawable img9 = activity.getResources ().getDrawable (R.drawable.circle_red);
+                img9.setBounds (0, 0, 30, 30);
+                holder.tvStatus.setCompoundDrawables (img9, null, null, null);
+                holder.tvStatus.setText ("Offer Window Closing");
                 holder.tvAcceptingOffer.setVisibility (View.GONE);
                 break;
         }

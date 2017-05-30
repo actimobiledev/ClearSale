@@ -3,7 +3,6 @@ package com.actiknow.clearsale.activity;
 import android.app.ProgressDialog;
 import android.os.Bundle;
 import android.support.design.widget.CoordinatorLayout;
-import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.LinearLayout;
@@ -11,8 +10,6 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.actiknow.clearsale.R;
-import com.actiknow.clearsale.utils.BuyerDetailsPref;
-import com.actiknow.clearsale.utils.Constants;
 import com.actiknow.clearsale.utils.Utils;
 import com.jaredrummler.materialspinner.MaterialSpinner;
 
@@ -66,19 +63,15 @@ public class FilterActivity extends AppCompatActivity {
         spinner = (MaterialSpinner) findViewById (R.id.spinner);
         spinnerBed = (MaterialSpinner) findViewById (R.id.spinnerBed);
         spinnerBath = (MaterialSpinner) findViewById (R.id.spinnerBath);
-        
     }
     
     private void initData () {
-        
-        
         rangeView.setActiveLineColor (getResources ().getColor (R.color.colorPrimary));
         rangeView.setActiveThumbColor (getResources ().getColor (R.color.colorPrimary));
         rangeView.setActiveLabelColor (getResources ().getColor (R.color.colorPrimary));
         rangeView.setActiveThumbLabelColor (getResources ().getColor (R.color.colorPrimary));
         rangeView.setActiveFocusThumbColor (getResources ().getColor (R.color.colorPrimary));
         rangeView.setActiveFocusThumbAlpha (0.26f);
-        
         
         rangeViewLocation.setActiveLineColor (getResources ().getColor (R.color.colorPrimary));
         rangeViewLocation.setActiveThumbColor (getResources ().getColor (R.color.colorPrimary));
@@ -87,10 +80,7 @@ public class FilterActivity extends AppCompatActivity {
         rangeViewLocation.setActiveFocusThumbColor (getResources ().getColor (R.color.colorPrimary));
         rangeViewLocation.setActiveFocusThumbAlpha (0.26f);
         
-        
         Utils.setTypefaceToAllViews (this, rlBack);
-        
-        
     }
     
     private void initListener () {
@@ -99,27 +89,25 @@ public class FilterActivity extends AppCompatActivity {
             
             @Override
             public void onItemSelected (MaterialSpinner view, int position, long id, String item) {
-                Snackbar.make (view, "Clicked " + item, Snackbar.LENGTH_LONG).show ();
+//                Snackbar.make (view, "Clicked " + item, Snackbar.LENGTH_LONG).show ();
             }
         });
-        
         
         spinnerBed.setItems (BedRoom);
         spinnerBed.setOnItemSelectedListener (new MaterialSpinner.OnItemSelectedListener<String> () {
             
             @Override
             public void onItemSelected (MaterialSpinner view, int position, long id, String item) {
-                Snackbar.make (view, "Clicked " + item, Snackbar.LENGTH_LONG).show ();
+//                Snackbar.make (view, "Clicked " + item, Snackbar.LENGTH_LONG).show ();
             }
         });
-        
         
         spinnerBath.setItems (Bath);
         spinnerBath.setOnItemSelectedListener (new MaterialSpinner.OnItemSelectedListener<String> () {
             
             @Override
             public void onItemSelected (MaterialSpinner view, int position, long id, String item) {
-                Snackbar.make (view, "Clicked " + item, Snackbar.LENGTH_LONG).show ();
+//                Snackbar.make (view, "Clicked " + item, Snackbar.LENGTH_LONG).show ();
             }
         });
         
@@ -170,21 +158,18 @@ public class FilterActivity extends AppCompatActivity {
                 overridePendingTransition (R.anim.stay, R.anim.slide_out_down);
             }
         });
+        tvApply.setOnClickListener (new View.OnClickListener () {
+            @Override
+            public void onClick (View v) {
+                finish ();
+                overridePendingTransition (R.anim.stay, R.anim.slide_out_down);
+            }
+        });
     }
-    
     
     @Override
     public void onBackPressed () {
         finish ();
         overridePendingTransition (R.anim.stay, R.anim.slide_out_down);
     }
-    
-    private void setPreferences () {
-        BuyerDetailsPref loginDetailsPref = BuyerDetailsPref.getInstance ();
-        loginDetailsPref.putStringPref (FilterActivity.this, loginDetailsPref.BUYER_EMAIL, Constants.user_mail);
-        loginDetailsPref.putIntPref (FilterActivity.this, loginDetailsPref.BUYER_ID, Constants.user_id);
-        
-    }
-    
-    
 }

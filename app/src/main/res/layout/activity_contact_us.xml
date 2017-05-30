@@ -91,7 +91,8 @@
                     android:layout_height="wrap_content"
                     android:layout_margin="@dimen/activity_margin"
                     android:scaleType="center"
-                    android:src="@drawable/logoicon"/>
+                    android:src="@drawable/logoicon"
+                    android:visibility="gone"/>
 
                 <EditText
                     android:id="@+id/etUserName"

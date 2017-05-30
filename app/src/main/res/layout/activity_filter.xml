@@ -163,23 +163,22 @@
                     android:id="@+id/spinnerBath"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="5dp"
+                    android:layout_marginTop="@dimen/activity_margin_extra_small"
                     android:background="@drawable/edit_text_background"/>
 
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:paddingLeft="5dp"
-                    android:paddingTop="10dp"
+                    android:padding="@dimen/activity_margin_small"
                     android:text="Status"
-                    android:textSize="15sp"
+                    android:textSize="@dimen/text_size_medium"
                     android:textStyle="bold"/>
 
                 <com.jaredrummler.materialspinner.MaterialSpinner
                     android:id="@+id/spinner"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="5dp"
+                    android:layout_marginTop="@dimen/activity_margin_extra_small"
                     android:background="@drawable/edit_text_background"/>
             </LinearLayout>
         </ScrollView>

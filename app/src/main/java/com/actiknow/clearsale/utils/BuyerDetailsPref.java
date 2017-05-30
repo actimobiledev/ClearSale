@@ -10,11 +10,11 @@ public class BuyerDetailsPref {
     public static String BUYER_LOGIN_KEY = "buyer_login_key";
     public static String BUYER_ID = "buyer_id";
     public static String BUYER_FIREBASE_ID = "buyer_firebase_id";
-    public static String BUYER_ACCESS_TOKEN = "buyer_access_token";
+    public static String BUYER_FACEBOOK_ID = "buyer_facebook_id";
     public static String PROFILE_STATUS = "profile_status";
     public static String PROFILE_HOME_TYPE = "profile_home_type";
     public static String PROFILE_STATE = "profile_state";
-    public static String PROFILE_HOME_BUDGET = "profile_home_budget";
+    public static String PROFILE_PRICE_RANGE = "profile_price_range";
     private static BuyerDetailsPref buyerDetailsPref;
     private String BUYER_DETAILS = "BUYER_DETAILS";
     

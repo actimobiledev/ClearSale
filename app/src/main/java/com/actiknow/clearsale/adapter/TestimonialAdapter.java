@@ -63,7 +63,8 @@ public class TestimonialAdapter extends RecyclerView.Adapter<TestimonialAdapter.
         TextView tvText;
         TextView tvName;
         ImageView ivVideo;
-        
+    
+    
         public ViewHolder(View view) {
             super(view);
             tvText = (TextView) view.findViewById (R.id.tvText);

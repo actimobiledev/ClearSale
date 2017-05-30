@@ -94,10 +94,10 @@ public class MainActivity extends AppCompatActivity {
         if (buyerDetailsPref.getIntPref (MainActivity.this, BuyerDetailsPref.BUYER_ID) == 0) {
             Intent myIntent = new Intent (this, LoginActivity.class);
             startActivity (myIntent);
-        } else if (buyerDetailsPref.getIntPref (MainActivity.this, BuyerDetailsPref.PROFILE_STATUS) == 0) {
-            Intent myIntent = new Intent (this, MyProfileActivity.class);
-            startActivity (myIntent);
-        }
+        }// else if (buyerDetailsPref.getIntPref (MainActivity.this, BuyerDetailsPref.PROFILE_STATUS) == 0) {
+//            Intent myIntent = new Intent (this, MyProfileActivity.class);
+//            startActivity (myIntent);
+//        }
         if (buyerDetailsPref.getIntPref (MainActivity.this, BuyerDetailsPref.BUYER_ID) == 0)
             finish ();
     }
@@ -352,7 +352,7 @@ public class MainActivity extends AppCompatActivity {
 //                .withItemAnimator (new AlphaCrossFadeAnimator ())
                 .addDrawerItems (
                         new PrimaryDrawerItem ().withName ("Home").withIcon (FontAwesome.Icon.faw_home).withIdentifier (1),
-                        new PrimaryDrawerItem ().withName ("My Favourites").withIcon (FontAwesome.Icon.faw_home).withIdentifier (2),
+                        new PrimaryDrawerItem ().withName ("My Favourites").withIcon (FontAwesome.Icon.faw_home).withIdentifier (2).withSelectable (false),
                         new PrimaryDrawerItem ().withName ("How It Works").withIcon (FontAwesome.Icon.faw_home).withIdentifier (3).withSelectable (false),
                         new PrimaryDrawerItem ().withName ("About Us").withIcon (FontAwesome.Icon.faw_home).withIdentifier (4).withSelectable (false),
                         new PrimaryDrawerItem ().withName ("Testimonials").withIcon (FontAwesome.Icon.faw_home).withIdentifier (5).withSelectable (false),
@@ -428,16 +428,16 @@ public class MainActivity extends AppCompatActivity {
                 .onPositive (new MaterialDialog.SingleButtonCallback () {
                     @Override
                     public void onClick (@NonNull MaterialDialog dialog, @NonNull DialogAction which) {
-//                        dialog.dismiss ();
                         buyerDetailsPref.putStringPref (MainActivity.this, BuyerDetailsPref.BUYER_NAME, "");
                         buyerDetailsPref.putStringPref (MainActivity.this, BuyerDetailsPref.BUYER_EMAIL, "");
                         buyerDetailsPref.putStringPref (MainActivity.this, BuyerDetailsPref.BUYER_MOBILE, "");
                         buyerDetailsPref.putStringPref (MainActivity.this, BuyerDetailsPref.BUYER_LOGIN_KEY, "");
                         buyerDetailsPref.putIntPref (MainActivity.this, BuyerDetailsPref.BUYER_ID, 0);
-                        buyerDetailsPref.putStringPref (MainActivity.this, BuyerDetailsPref.BUYER_ACCESS_TOKEN, "");
+                        buyerDetailsPref.putStringPref (MainActivity.this, BuyerDetailsPref.BUYER_FACEBOOK_ID, "");
                         buyerDetailsPref.putStringPref (MainActivity.this, BuyerDetailsPref.PROFILE_HOME_TYPE, "");
                         buyerDetailsPref.putStringPref (MainActivity.this, BuyerDetailsPref.PROFILE_STATE, "");
-                        buyerDetailsPref.putStringPref (MainActivity.this, BuyerDetailsPref.PROFILE_HOME_BUDGET, "");
+                        buyerDetailsPref.putStringPref (MainActivity.this, BuyerDetailsPref.PROFILE_PRICE_RANGE, "");
+                        
                         Intent intent = new Intent (MainActivity.this, LoginActivity.class);
                         intent.setFlags (Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
                         startActivity (intent);

@@ -2,11 +2,6 @@ package com.actiknow.clearsale.utils;
 
 
 public class Constants {
-    public static int user_id=0;
-    public static String user_mail="user_email";
-
-
-
     public static final String API_KEY = "AIzaSyBb5_XdM8xuzSXx1CcvuqsDWQ222bJlZug";
     // broadcast receiver intent filters
     public static final String REGISTRATION_COMPLETE = "registrationComplete";
@@ -14,8 +9,10 @@ public class Constants {
     // id to handle the notification in the notification tray
     public static final int NOTIFICATION_ID = 100;
     public static final int NOTIFICATION_ID_BIG_IMAGE = 101;
+    public static int user_id = 0;
+    public static String user_mail = "user_email";
     public static String app_link_uri = "android-app://com.actiknow.bloodkonnect/http/host/path";
-    public static String font_name = "ColabReg.otf";
+    public static String font_name = "Graphik.otf";
     public static double latitude = 0.0;
     public static double longitude = 0.0;
     public static int splash_screen_first_time = 0; // 0 => default

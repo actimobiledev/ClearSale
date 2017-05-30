@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">ClearSale</string>
+    <string name="app_name">HomeTrust</string>
 
 
     <string name="please_enter_name">Please enter Name</string>
@@ -191,7 +191,7 @@
     <string name="activity_filter_back_button">Cancel</string>
     <string name="activity_filter_title">Filters</string>
 
-    <string name="activity_main_title">ClearSale</string>
+    <string name="activity_main_title">HomeTrust</string>
 
 
 </resources>

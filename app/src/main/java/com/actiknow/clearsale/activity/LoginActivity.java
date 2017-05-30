@@ -202,9 +202,8 @@ public class LoginActivity extends AppCompatActivity {
             }
         });
     }
-
-    private void loginWithFacebookDetailSendToServer(final String accessToken, final String name, final String email) {
-
+    
+    private void loginWithFacebookDetailSendToServer (final String facebook_id, final String name, final String email) {
         if (NetworkConnection.isNetworkAvailable(LoginActivity.this)) {
             Utils.showProgressDialog(progressDialog, getResources().getString(R.string.progress_dialog_text_please_wait), true);
             Utils.showLog(Log.INFO, "" + AppConfigTags.URL, AppConfigURL.URL_FACEBOOK_SIGN_IN, true);
@@ -212,22 +211,21 @@ public class LoginActivity extends AppCompatActivity {
                     new com.android.volley.Response.Listener<String>() {
                         @Override
                         public void onResponse(String response) {
-                            Utils.showLog(Log.INFO, "rahul" + AppConfigTags.SERVER_RESPONSE, response, true);
+                            Utils.showLog (Log.INFO, AppConfigTags.SERVER_RESPONSE, response, true);
                             if (response != null) {
                                 try {
                                     JSONObject jsonObj = new JSONObject(response);
                                     boolean error = jsonObj.getBoolean(AppConfigTags.ERROR);
                                     String message = jsonObj.getString(AppConfigTags.MESSAGE);
                                     if (!error) {
-                                        buyerDetailsPref.putIntPref (LoginActivity.this, BuyerDetailsPref.BUYER_ID, jsonObj.getInt (AppConfigTags.SIGN_IN_USER_ID));
-                                        buyerDetailsPref.putStringPref (LoginActivity.this, BuyerDetailsPref.BUYER_NAME, jsonObj.getString (AppConfigTags.SIGN_IN_USER_NAME));
-                                        buyerDetailsPref.putStringPref (LoginActivity.this, BuyerDetailsPref.BUYER_EMAIL, jsonObj.getString (AppConfigTags.SIGN_IN_USER_EMAIL));
-                                        buyerDetailsPref.putStringPref (LoginActivity.this, BuyerDetailsPref.BUYER_ACCESS_TOKEN, jsonObj.getString (AppConfigTags.SIGN_IN_ACCESS_TOKEN));
+                                        buyerDetailsPref.putIntPref (LoginActivity.this, BuyerDetailsPref.BUYER_ID, jsonObj.getInt (AppConfigTags.BUYER_ID));
+                                        buyerDetailsPref.putStringPref (LoginActivity.this, BuyerDetailsPref.BUYER_NAME, jsonObj.getString (AppConfigTags.BUYER_NAME));
+                                        buyerDetailsPref.putStringPref (LoginActivity.this, BuyerDetailsPref.BUYER_EMAIL, jsonObj.getString (AppConfigTags.BUYER_EMAIL));
+                                        buyerDetailsPref.putStringPref (LoginActivity.this, BuyerDetailsPref.BUYER_FACEBOOK_ID, jsonObj.getString (AppConfigTags.BUYER_FACEBOOK_ID));
                                         Intent intent = new Intent(LoginActivity.this, MainActivity.class);
                                         intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
                                         startActivity(intent);
                                         LoginActivity.this.overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
-
                                     } else {
                                         Utils.showSnackBar(LoginActivity.this, clMain, message, Snackbar.LENGTH_LONG, null, null);
                                     }
@@ -255,10 +253,10 @@ public class LoginActivity extends AppCompatActivity {
                 @Override
                 protected Map<String, String> getParams() throws AuthFailureError {
                     Map<String, String> params = new Hashtable<String, String> ();
-                    params.put(AppConfigTags.SIGN_IN_USER_EMAIL, email);
-                    params.put(AppConfigTags.SIGN_IN_NAME, name);
-                    params.put(AppConfigTags.SIGN_IN_ACCESS_TOKEN, accessToken);
-                    params.put (AppConfigTags.USER_FIREBASE_ID, buyerDetailsPref.getStringPref (LoginActivity.this, BuyerDetailsPref.BUYER_FIREBASE_ID));
+                    params.put (AppConfigTags.BUYER_EMAIL, email);
+                    params.put (AppConfigTags.BUYER_NAME, name);
+                    params.put (AppConfigTags.BUYER_FACEBOOK_ID, accessToken);
+                    params.put (AppConfigTags.BUYER_FIREBASE_ID, buyerDetailsPref.getStringPref (LoginActivity.this, BuyerDetailsPref.BUYER_FIREBASE_ID));
                     Utils.showLog(Log.INFO, AppConfigTags.PARAMETERS_SENT_TO_THE_SERVER, "" + params, true);
                     return params;
                 }
@@ -282,8 +280,6 @@ public class LoginActivity extends AppCompatActivity {
                 }
             });
         }
-
-
     }
 
     @Override
