@@ -423,6 +423,7 @@ public class MyProfileActivity extends AppCompatActivity {
                                         buyerDetailsPref.putStringPref (MyProfileActivity.this, BuyerDetailsPref.PROFILE_HOME_TYPE, jsonObj.getString (AppConfigTags.PROFILE_HOME_TYPE));
                                         buyerDetailsPref.putStringPref (MyProfileActivity.this, BuyerDetailsPref.PROFILE_STATE, jsonObj.getString (AppConfigTags.PROFILE_STATE));
                                         buyerDetailsPref.putStringPref (MyProfileActivity.this, BuyerDetailsPref.PROFILE_PRICE_RANGE, jsonObj.getString (AppConfigTags.PROFILE_PRICE_RANGE));
+                                        buyerDetailsPref.putIntPref (MyProfileActivity.this, BuyerDetailsPref.PROFILE_STATUS, jsonObj.getInt (AppConfigTags.PROFILE_STATUS));
                                         Utils.showSnackBar (MyProfileActivity.this, clMain, message, Snackbar.LENGTH_LONG, null, null);
                                         final Handler handler = new Handler ();
                                         handler.postDelayed (new Runnable () {

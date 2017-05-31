@@ -75,4 +75,13 @@ public class AppConfigTags {
     public static String PROFILE_STATE = "profile_state";
     public static String PROFILE_PRICE_RANGE = "profile_price_range";
     public static String PROFILE_HOME_TYPE = "profile_home_type";
+    
+    
+    public static String PROPERTY_OVERVIEW = "overview";
+    public static String PROPERTY_COMPS = "overview";
+    public static String PROPERTY_ACCESS = "access";
+    public static String PROPERTY_REALTOR = "realtor";
+    public static String PROPERTY_OFFER = "offer";
+    
+    
 }

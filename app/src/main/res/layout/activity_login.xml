@@ -64,7 +64,7 @@
                 android:layout_height="wrap_content"
                 android:layout_below="@+id/rlHeader"
                 android:orientation="horizontal"
-                android:visibility="gone"
+                android:visibility="visible"
                 android:weightSum="2">
                 <RelativeLayout
                     android:id="@+id/rlFbButton"
@@ -156,7 +156,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_below="@+id/llSocialButtons"
-                android:visibility="gone">
+                android:visibility="visible">
 
                 <View
                     android:id="@+id/view2"

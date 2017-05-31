@@ -3,6 +3,9 @@ package com.actiknow.clearsale.utils;
 
 public class Constants {
     public static final String API_KEY = "AIzaSyBb5_XdM8xuzSXx1CcvuqsDWQ222bJlZug";
+    
+    public static final String YOUTUBE_API_KEY = "AIzaSyA4EHWv-9d_6VzyMcLmK86cz2QbglmAk3w";
+    
     // broadcast receiver intent filters
     public static final String REGISTRATION_COMPLETE = "registrationComplete";
     public static final String PUSH_NOTIFICATION = "pushNotification";

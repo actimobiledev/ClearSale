@@ -16,19 +16,40 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal">
-            
 
-            <ImageView
-                android:id="@+id/ivVideo"
-                android:layout_width="100dp"
-                android:layout_height="100dp"
-                android:layout_centerVertical="true"
-                android:src="@drawable/play1"/>
+            <RelativeLayout
+                android:id="@+id/rlVideo"
+                android:layout_width="match_parent"
+                android:layout_height="200dp">
+
+                <ProgressBar
+                    android:id="@+id/progressBar"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerInParent="true"
+                    android:visibility="visible"/>
+
+                <com.google.android.youtube.player.YouTubeThumbnailView
+                    android:id="@+id/youtube_thumbnail"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:layout_margin="@dimen/activity_margin_small"
+                    android:visibility="gone"/>
+                <ImageView
+                    android:id="@+id/ivVideo"
+                    android:layout_width="wrap_content"
+                    android:layout_height="40dp"
+
+                    android:layout_centerInParent="true"
+                    android:src="@drawable/youtube_logo"
+                    android:visibility="gone"/>
+            </RelativeLayout>
+
             <RelativeLayout
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_toEndOf="@id/ivVideo"
-                android:layout_toRightOf="@id/ivVideo"
+                android:layout_below="@+id/rlVideo"
                 android:orientation="vertical">
                 <TextView
                     android:id="@+id/tvText"
@@ -43,7 +64,9 @@
                     android:layout_alignParentEnd="true"
                     android:layout_alignParentRight="true"
                     android:layout_below="@+id/tvText"
-                    android:padding="@dimen/activity_margin_small"
+                    android:paddingBottom="@dimen/activity_margin_small"
+                    android:paddingEnd="@dimen/activity_margin_small"
+                    android:paddingRight="@dimen/activity_margin_small"
                     android:text="CHAD "
                     android:textColor="@color/colorPrimaryDark"/>
 
