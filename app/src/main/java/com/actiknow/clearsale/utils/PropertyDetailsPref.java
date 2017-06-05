@@ -9,6 +9,8 @@ public class PropertyDetailsPref {
     public static String PROPERTY_STATE = "property_state";
     public static String PROPERTY_ADDRESS1 = "property_address1";
     public static String PROPERTY_ADDRESS2 = "property_address2";
+    public static String PROPERTY_LATITUDE = "property_latitude";
+    public static String PROPERTY_LONGITUDE = "property_longitude";
     public static String PROPERTY_PRICE = "property_price";
     public static String PROPERTY_YEAR_BUILD = "property_year_build";
     public static String PROPERTY_BEDROOM = "property_bedroom";

@@ -8,6 +8,7 @@ import android.os.Handler;
 import android.provider.Settings;
 import android.support.design.widget.CollapsingToolbarLayout;
 import android.support.design.widget.CoordinatorLayout;
+import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
@@ -26,7 +27,6 @@ import com.actiknow.clearsale.fragment.CompsFragment;
 import com.actiknow.clearsale.fragment.OverviewFragment;
 import com.actiknow.clearsale.fragment.PlaceAndOfferFragment;
 import com.actiknow.clearsale.fragment.PossessionFragment;
-import com.actiknow.clearsale.fragment.PropertyLocationFragment;
 import com.actiknow.clearsale.fragment.RealtorFragment;
 import com.actiknow.clearsale.utils.AppConfigTags;
 import com.actiknow.clearsale.utils.AppConfigURL;
@@ -41,6 +41,7 @@ import com.android.volley.Request;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.daimajia.slider.library.Animations.DescriptionAnimation;
+import com.daimajia.slider.library.Indicators.PagerIndicator;
 import com.daimajia.slider.library.SliderLayout;
 import com.daimajia.slider.library.SliderTypes.BaseSliderView;
 import com.daimajia.slider.library.Tricks.ViewPagerEx;
@@ -69,18 +70,19 @@ public class PropertyDetailActivity extends AppCompatActivity {
     PropertyDetailsPref propertyDetailsPref;
     BuyerDetailsPref buyerDetailsPref;
     RelativeLayout rlBack;
+    FloatingActionButton fabMaps;
     private SliderLayout slider;
     private CollapsingToolbarLayout collapsingToolbarLayout = null;
     private TabLayout tabLayout;
     private ViewPager viewPager;
     
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
+    protected void onCreate (Bundle savedInstanceState) {
+        super.onCreate (savedInstanceState);
         setContentView (R.layout.activity_property_detail);
-        initView();
-        initData();
-        initListener();
+        initView ();
+        initData ();
+        initListener ();
         getExtras ();
         getPropertyDetails ();
     }
@@ -89,34 +91,69 @@ public class PropertyDetailActivity extends AppCompatActivity {
         Intent intent = getIntent ();
         property_id = intent.getIntExtra (AppConfigTags.PROPERTY_ID, 0);
     }
-
-    private void initView() {
+    
+    private void initView () {
         rlBack = (RelativeLayout) findViewById (R.id.rlBack);
         clMain = (CoordinatorLayout) findViewById (R.id.clMain);
-        slider = (SliderLayout) findViewById(R.id.slider);
-        collapsingToolbarLayout = (CollapsingToolbarLayout) findViewById(R.id.collapsing_toolbar);
-        toolbar = (Toolbar) findViewById(R.id.toolbar);
-        tabLayout = (TabLayout) findViewById(R.id.tabs);
-        viewPager = (ViewPager) findViewById(R.id.viewpager);
+        slider = (SliderLayout) findViewById (R.id.slider);
+        collapsingToolbarLayout = (CollapsingToolbarLayout) findViewById (R.id.collapsing_toolbar);
+        toolbar = (Toolbar) findViewById (R.id.toolbar);
+        tabLayout = (TabLayout) findViewById (R.id.tabs);
+        viewPager = (ViewPager) findViewById (R.id.viewpager);
         rlSliderIndicator = (RelativeLayout) findViewById (R.id.rlSliderIndicator);
         tvSliderPosition = (TextView) findViewById (R.id.tvSliderPosition);
+        fabMaps = (FloatingActionButton) findViewById (R.id.fabMap);
+        
     }
-
-    private void initData() {
+    
+    private void initData () {
         propertyDetailsPref = PropertyDetailsPref.getInstance ();
         buyerDetailsPref = BuyerDetailsPref.getInstance ();
         progressDialog = new ProgressDialog (this);
-        tabLayout.setupWithViewPager(viewPager);
+        tabLayout.setupWithViewPager (viewPager);
         collapsingToolbarLayout.setTitleEnabled (false);
 //        appBar.setExpanded(true);
-        setupViewPager(viewPager);
+        setupViewPager (viewPager);
         Utils.setTypefaceToAllViews (this, rlBack);
     }
-
-    private void initListener() {
+    
+    private void initListener () {
+        rlBack.setOnClickListener (new View.OnClickListener () {
+            @Override
+            public void onClick (View v) {
+                propertyDetailsPref.putIntPref (PropertyDetailActivity.this, PropertyDetailsPref.PROPERTY_ID, 0);
+                propertyDetailsPref.putStringPref (PropertyDetailActivity.this, PropertyDetailsPref.PROPERTY_ADDRESS1, "");
+                propertyDetailsPref.putStringPref (PropertyDetailActivity.this, PropertyDetailsPref.PROPERTY_ADDRESS2, "");
+                propertyDetailsPref.putStringPref (PropertyDetailActivity.this, PropertyDetailsPref.PROPERTY_STATE, "");
+                propertyDetailsPref.putStringPref (PropertyDetailActivity.this, PropertyDetailsPref.PROPERTY_LATITUDE, "");
+                propertyDetailsPref.putStringPref (PropertyDetailActivity.this, PropertyDetailsPref.PROPERTY_LONGITUDE, "");
+                propertyDetailsPref.putStringPref (PropertyDetailActivity.this, PropertyDetailsPref.PROPERTY_PRICE, "");
+                propertyDetailsPref.putStringPref (PropertyDetailActivity.this, PropertyDetailsPref.PROPERTY_YEAR_BUILD, "");
+                propertyDetailsPref.putStringPref (PropertyDetailActivity.this, PropertyDetailsPref.PROPERTY_BEDROOM, "");
+                propertyDetailsPref.putStringPref (PropertyDetailActivity.this, PropertyDetailsPref.PROPERTY_BATHROOM, "");
+                propertyDetailsPref.putStringPref (PropertyDetailActivity.this, PropertyDetailsPref.PROPERTY_AREA, "");
+                propertyDetailsPref.putStringPref (PropertyDetailActivity.this, PropertyDetailsPref.PROPERTY_OVERVIEW, "");
+                propertyDetailsPref.putStringPref (PropertyDetailActivity.this, PropertyDetailsPref.PROPERTY_OFFER, "");
+                propertyDetailsPref.putStringPref (PropertyDetailActivity.this, PropertyDetailsPref.PROPERTY_ACCESS, "");
+                propertyDetailsPref.putStringPref (PropertyDetailActivity.this, PropertyDetailsPref.PROPERTY_REALTOR, "");
+                propertyDetailsPref.putStringPref (PropertyDetailActivity.this, PropertyDetailsPref.PROPERTY_COMPS, "");
+                propertyDetailsPref.putIntPref (PropertyDetailActivity.this, PropertyDetailsPref.PROPERTY_AUCTION_ID, 0);
+                propertyDetailsPref.putIntPref (PropertyDetailActivity.this, PropertyDetailsPref.PROPERTY_AUCTION_STATUS, 0);
+                finish ();
+                overridePendingTransition (R.anim.slide_in_left, R.anim.slide_out_right);
+            }
+        });
+        
+        fabMaps.setOnClickListener (new View.OnClickListener () {
+            @Override
+            public void onClick (View view) {
+                Intent intent = new Intent (PropertyDetailActivity.this, PropertyLocationActivity.class);
+                startActivity (intent);
+            }
+        });
     }
     
-    private void initSlider() {
+    private void initSlider () {
         slider.removeAllSliders ();
         for (int i = 0; i < bannerList.size (); i++) {
             String image = bannerList.get (i);
@@ -151,7 +188,9 @@ public class PropertyDetailActivity extends AppCompatActivity {
 //            holder.slider.addSlider (defaultSliderView);
             slider.addSlider (slider2);
         }
-        slider.getPagerIndicator ().setVisibility (View.GONE);
+        
+        slider.setIndicatorVisibility (PagerIndicator.IndicatorVisibility.Invisible);
+        slider.getPagerIndicator ().setVisibility (View.INVISIBLE);
         slider.setPresetTransformer (SliderLayout.Transformer.Default);
         slider.setCustomAnimation (new DescriptionAnimation ());
         slider.addOnPageChangeListener (new ViewPagerEx.OnPageChangeListener () {
@@ -194,7 +233,6 @@ public class PropertyDetailActivity extends AppCompatActivity {
 //                }
             }
         });
-        slider.setPresetIndicator (SliderLayout.PresetIndicators.Center_Bottom);
     }
     
     private void getPropertyDetails () {
@@ -214,32 +252,34 @@ public class PropertyDetailActivity extends AppCompatActivity {
                                     if (! error) {
     
                                         propertyDetailsPref.putIntPref (PropertyDetailActivity.this, PropertyDetailsPref.PROPERTY_ID, jsonObj.getInt (AppConfigTags.PROPERTY_ID));
-                                        propertyDetailsPref.putStringPref (PropertyDetailActivity.this, propertyDetailsPref.PROPERTY_ADDRESS1, jsonObj.getString (AppConfigTags.PROPERTY_ADDRESS));
-                                        propertyDetailsPref.putStringPref (PropertyDetailActivity.this, propertyDetailsPref.PROPERTY_ADDRESS2, jsonObj.getString (AppConfigTags.PROPERTY_ADDRESS2));
-                                        propertyDetailsPref.putStringPref (PropertyDetailActivity.this, propertyDetailsPref.PROPERTY_STATE, jsonObj.getString (AppConfigTags.PROPERTY_STATE));
-                                        propertyDetailsPref.putStringPref (PropertyDetailActivity.this, propertyDetailsPref.PROPERTY_PRICE, jsonObj.getString (AppConfigTags.PROPERTY_PRICE));
-                                        propertyDetailsPref.putStringPref (PropertyDetailActivity.this, propertyDetailsPref.PROPERTY_YEAR_BUILD, jsonObj.getString (AppConfigTags.PROPERTY_BUILT_YEAR));
-                                        propertyDetailsPref.putStringPref (PropertyDetailActivity.this, propertyDetailsPref.PROPERTY_BEDROOM, jsonObj.getString (AppConfigTags.PROPERTY_BEDROOMS));
-                                        propertyDetailsPref.putStringPref (PropertyDetailActivity.this, propertyDetailsPref.PROPERTY_BATHROOM, jsonObj.getString (AppConfigTags.PROPERTY_BATHROOMS));
-                                        propertyDetailsPref.putStringPref (PropertyDetailActivity.this, propertyDetailsPref.PROPERTY_AREA, jsonObj.getString (AppConfigTags.PROPERTY_AREA));
-                                        propertyDetailsPref.putStringPref (PropertyDetailActivity.this, propertyDetailsPref.PROPERTY_OVERVIEW, jsonObj.getString (AppConfigTags.PROPERTY_OVERVIEW));
-                                        propertyDetailsPref.putStringPref (PropertyDetailActivity.this, propertyDetailsPref.PROPERTY_OFFER, jsonObj.getString (AppConfigTags.PROPERTY_OFFER));
-                                        propertyDetailsPref.putStringPref (PropertyDetailActivity.this, propertyDetailsPref.PROPERTY_ACCESS, jsonObj.getString (AppConfigTags.PROPERTY_ACCESS));
-                                        propertyDetailsPref.putStringPref (PropertyDetailActivity.this, propertyDetailsPref.PROPERTY_REALTOR, jsonObj.getString (AppConfigTags.PROPERTY_REALTOR));
-                                        propertyDetailsPref.putStringPref (PropertyDetailActivity.this, propertyDetailsPref.PROPERTY_COMPS, jsonObj.getString (AppConfigTags.PROPERTY_COMPS));
-                                        propertyDetailsPref.putIntPref (PropertyDetailActivity.this, propertyDetailsPref.PROPERTY_AUCTION_ID, jsonObj.getInt (AppConfigTags.PROPERTY_BID_AUCTION_ID));
-                                        propertyDetailsPref.putIntPref (PropertyDetailActivity.this, propertyDetailsPref.PROPERTY_AUCTION_STATUS, jsonObj.getInt (AppConfigTags.PROPERTY_BID_AUCTION_STATUS));
-    
-    
+                                        propertyDetailsPref.putStringPref (PropertyDetailActivity.this, PropertyDetailsPref.PROPERTY_ADDRESS1, jsonObj.getString (AppConfigTags.PROPERTY_ADDRESS));
+                                        propertyDetailsPref.putStringPref (PropertyDetailActivity.this, PropertyDetailsPref.PROPERTY_ADDRESS2, jsonObj.getString (AppConfigTags.PROPERTY_ADDRESS2));
+                                        propertyDetailsPref.putStringPref (PropertyDetailActivity.this, PropertyDetailsPref.PROPERTY_STATE, jsonObj.getString (AppConfigTags.PROPERTY_STATE));
+                                        propertyDetailsPref.putStringPref (PropertyDetailActivity.this, PropertyDetailsPref.PROPERTY_LATITUDE, jsonObj.getString (AppConfigTags.PROPERTY_LATITUDE));
+                                        propertyDetailsPref.putStringPref (PropertyDetailActivity.this, PropertyDetailsPref.PROPERTY_LONGITUDE, jsonObj.getString (AppConfigTags.PROPERTY_LONGITUDE));
+                                        propertyDetailsPref.putStringPref (PropertyDetailActivity.this, PropertyDetailsPref.PROPERTY_PRICE, jsonObj.getString (AppConfigTags.PROPERTY_PRICE));
+                                        propertyDetailsPref.putStringPref (PropertyDetailActivity.this, PropertyDetailsPref.PROPERTY_YEAR_BUILD, jsonObj.getString (AppConfigTags.PROPERTY_BUILT_YEAR));
+                                        propertyDetailsPref.putStringPref (PropertyDetailActivity.this, PropertyDetailsPref.PROPERTY_BEDROOM, jsonObj.getString (AppConfigTags.PROPERTY_BEDROOMS));
+                                        propertyDetailsPref.putStringPref (PropertyDetailActivity.this, PropertyDetailsPref.PROPERTY_BATHROOM, jsonObj.getString (AppConfigTags.PROPERTY_BATHROOMS));
+                                        propertyDetailsPref.putStringPref (PropertyDetailActivity.this, PropertyDetailsPref.PROPERTY_AREA, jsonObj.getString (AppConfigTags.PROPERTY_AREA));
+                                        propertyDetailsPref.putStringPref (PropertyDetailActivity.this, PropertyDetailsPref.PROPERTY_OVERVIEW, jsonObj.getString (AppConfigTags.PROPERTY_OVERVIEW));
+                                        propertyDetailsPref.putStringPref (PropertyDetailActivity.this, PropertyDetailsPref.PROPERTY_OFFER, jsonObj.getString (AppConfigTags.PROPERTY_OFFER));
+                                        propertyDetailsPref.putStringPref (PropertyDetailActivity.this, PropertyDetailsPref.PROPERTY_ACCESS, jsonObj.getString (AppConfigTags.PROPERTY_ACCESS));
+                                        propertyDetailsPref.putStringPref (PropertyDetailActivity.this, PropertyDetailsPref.PROPERTY_REALTOR, jsonObj.getString (AppConfigTags.PROPERTY_REALTOR));
+                                        propertyDetailsPref.putStringPref (PropertyDetailActivity.this, PropertyDetailsPref.PROPERTY_COMPS, jsonObj.getString (AppConfigTags.PROPERTY_COMPS));
+                                        propertyDetailsPref.putIntPref (PropertyDetailActivity.this, PropertyDetailsPref.PROPERTY_AUCTION_ID, jsonObj.getInt (AppConfigTags.PROPERTY_BID_AUCTION_ID));
+                                        propertyDetailsPref.putIntPref (PropertyDetailActivity.this, PropertyDetailsPref.PROPERTY_AUCTION_STATUS, jsonObj.getInt (AppConfigTags.PROPERTY_BID_AUCTION_STATUS));
+                                        
+                                        
                                         JSONArray jsonArrayPropertyImages = jsonObj.getJSONArray (AppConfigTags.PROPERTY_IMAGES);
                                         for (int j = 0; j < jsonArrayPropertyImages.length (); j++) {
                                             JSONObject jsonObjectImages = jsonArrayPropertyImages.getJSONObject (j);
                                             bannerList.add (jsonObjectImages.getString (AppConfigTags.PROPERTY_IMAGE));
-        
+    
                                             propertyDetailsPref.putStringPref (PropertyDetailActivity.this, propertyDetailsPref.PROPERTY_IMAGES + j, jsonObjectImages.getString (AppConfigTags.PROPERTY_IMAGE));
                                             propertyDetailsPref.putIntPref (PropertyDetailActivity.this, "size", jsonArrayPropertyImages.length ());
-        
-        
+    
+    
                                         }
                                         initSlider ();
     
@@ -257,7 +297,7 @@ public class PropertyDetailActivity extends AppCompatActivity {
                                         ///  access = jsonObj.getString (AppConfigTags.PROPERTY_ACCESS);
                                         // realtor = jsonObj.getString (AppConfigTags.PROPERTY_REALTOR);
                                         // offer = jsonObj.getString (AppConfigTags.PROPERTY_OFFER);
-
+    
                                     }
                                     progressDialog.dismiss ();
                                 } catch (Exception e) {
@@ -314,45 +354,66 @@ public class PropertyDetailActivity extends AppCompatActivity {
         }
     }
     
-    
-    private void setupViewPager(ViewPager viewPager) {
-        ViewPagerAdapter adapter = new ViewPagerAdapter(getSupportFragmentManager());
-        adapter.addFragment(new OverviewFragment(), "OVERVIEW");
-        adapter.addFragment(new CompsFragment(), "COMPS");
-        adapter.addFragment(new PossessionFragment(), "ACCESS/POSSESSION");
-        adapter.addFragment(new RealtorFragment(), "ARE YOU REALTORS");
-        adapter.addFragment(new PlaceAndOfferFragment(), "PLACE AND OFFER");
-        adapter.addFragment(new PropertyLocationFragment(), "PROPERTY AND DETAIL");
-        viewPager.setAdapter(adapter);
+    private void setupViewPager (ViewPager viewPager) {
+        ViewPagerAdapter adapter = new ViewPagerAdapter (getSupportFragmentManager ());
+        adapter.addFragment (new OverviewFragment (), "OVERVIEW");
+        adapter.addFragment (new CompsFragment (), "COMPS");
+        adapter.addFragment (new PossessionFragment (), "ACCESS/POSSESSION");
+        adapter.addFragment (new RealtorFragment (), "ARE YOU REALTORS");
+        adapter.addFragment (new PlaceAndOfferFragment (), "PLACE AND OFFER");
+        viewPager.setAdapter (adapter);
     }
-
-
+    
+    @Override
+    public void onBackPressed () {
+        propertyDetailsPref.putIntPref (PropertyDetailActivity.this, PropertyDetailsPref.PROPERTY_ID, 0);
+        propertyDetailsPref.putStringPref (PropertyDetailActivity.this, PropertyDetailsPref.PROPERTY_ADDRESS1, "");
+        propertyDetailsPref.putStringPref (PropertyDetailActivity.this, PropertyDetailsPref.PROPERTY_ADDRESS2, "");
+        propertyDetailsPref.putStringPref (PropertyDetailActivity.this, PropertyDetailsPref.PROPERTY_STATE, "");
+        propertyDetailsPref.putStringPref (PropertyDetailActivity.this, PropertyDetailsPref.PROPERTY_LATITUDE, "");
+        propertyDetailsPref.putStringPref (PropertyDetailActivity.this, PropertyDetailsPref.PROPERTY_LONGITUDE, "");
+        propertyDetailsPref.putStringPref (PropertyDetailActivity.this, PropertyDetailsPref.PROPERTY_PRICE, "");
+        propertyDetailsPref.putStringPref (PropertyDetailActivity.this, PropertyDetailsPref.PROPERTY_YEAR_BUILD, "");
+        propertyDetailsPref.putStringPref (PropertyDetailActivity.this, PropertyDetailsPref.PROPERTY_BEDROOM, "");
+        propertyDetailsPref.putStringPref (PropertyDetailActivity.this, PropertyDetailsPref.PROPERTY_BATHROOM, "");
+        propertyDetailsPref.putStringPref (PropertyDetailActivity.this, PropertyDetailsPref.PROPERTY_AREA, "");
+        propertyDetailsPref.putStringPref (PropertyDetailActivity.this, PropertyDetailsPref.PROPERTY_OVERVIEW, "");
+        propertyDetailsPref.putStringPref (PropertyDetailActivity.this, PropertyDetailsPref.PROPERTY_OFFER, "");
+        propertyDetailsPref.putStringPref (PropertyDetailActivity.this, PropertyDetailsPref.PROPERTY_ACCESS, "");
+        propertyDetailsPref.putStringPref (PropertyDetailActivity.this, PropertyDetailsPref.PROPERTY_REALTOR, "");
+        propertyDetailsPref.putStringPref (PropertyDetailActivity.this, PropertyDetailsPref.PROPERTY_COMPS, "");
+        propertyDetailsPref.putIntPref (PropertyDetailActivity.this, PropertyDetailsPref.PROPERTY_AUCTION_ID, 0);
+        propertyDetailsPref.putIntPref (PropertyDetailActivity.this, PropertyDetailsPref.PROPERTY_AUCTION_STATUS, 0);
+        finish ();
+        overridePendingTransition (R.anim.slide_in_left, R.anim.slide_out_right);
+    }
+    
     class ViewPagerAdapter extends FragmentPagerAdapter {
-        private final List<Fragment> mFragmentList = new ArrayList<>();
-        private final List<String> mFragmentTitleList = new ArrayList<>();
-
-        public ViewPagerAdapter(FragmentManager manager) {
-            super(manager);
+        private final List<Fragment> mFragmentList = new ArrayList<> ();
+        private final List<String> mFragmentTitleList = new ArrayList<> ();
+        
+        public ViewPagerAdapter (FragmentManager manager) {
+            super (manager);
         }
-
+        
         @Override
-        public Fragment getItem(int position) {
-            return mFragmentList.get(position);
+        public Fragment getItem (int position) {
+            return mFragmentList.get (position);
         }
-
+        
         @Override
-        public int getCount() {
-            return mFragmentList.size();
+        public int getCount () {
+            return mFragmentList.size ();
         }
-
-        public void addFragment(Fragment fragment, String title) {
-            mFragmentList.add(fragment);
-            mFragmentTitleList.add(title);
+        
+        public void addFragment (Fragment fragment, String title) {
+            mFragmentList.add (fragment);
+            mFragmentTitleList.add (title);
         }
-
+        
         @Override
-        public CharSequence getPageTitle(int position) {
-            return mFragmentTitleList.get(position);
+        public CharSequence getPageTitle (int position) {
+            return mFragmentTitleList.get (position);
         }
     }
 }

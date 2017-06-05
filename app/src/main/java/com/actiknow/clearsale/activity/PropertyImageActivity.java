@@ -5,11 +5,13 @@ import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.widget.RelativeLayout;
 
 import com.actiknow.clearsale.R;
 import com.actiknow.clearsale.utils.PropertyDetailsPref;
+import com.actiknow.clearsale.utils.Utils;
 import com.mzelzoghbi.zgallery.Constants;
 import com.mzelzoghbi.zgallery.CustomViewPager;
 import com.mzelzoghbi.zgallery.OnImgClick;
@@ -33,6 +35,8 @@ public class PropertyImageActivity extends AppCompatActivity {
     RelativeLayout rlBack;
     ArrayList<String> propertyImageList = new ArrayList<> ();
     int size;
+    Toolbar mToolbar;
+    
     PropertyDetailsPref propertyDetailsPref;
     private int currentPos;
     
@@ -50,15 +54,19 @@ public class PropertyImageActivity extends AppCompatActivity {
         mViewPager = (CustomViewPager) findViewById (R.id.pager);
         imagesHorizontalList = (RecyclerView) findViewById (R.id.imagesHorizontalList);
         rlBack = (RelativeLayout) findViewById (R.id.rlBack);
+        mToolbar = (Toolbar) findViewById (R.id.toolbar);
     }
     
     private void initData () {
+        Utils.setTypefaceToAllViews (this, rlBack);
         propertyDetailsPref = PropertyDetailsPref.getInstance ();
         int size = propertyDetailsPref.getIntPref (PropertyImageActivity.this, "size");
+    
         for (int j = 0; j < size; j++) {
             propertyImageList.add (propertyDetailsPref.getStringPref (PropertyImageActivity.this, propertyDetailsPref.PROPERTY_IMAGES + j));
         }
-        
+    
+    
         //   propertyImageList.add("http://clearsale.com/theme/theme1/seller_files/exterior/property_327/dcca01ddf8b02fb5d2fe89d3c55eb5dcExterior%20pic.png");
         //  propertyImageList.add("http://clearsale.com/theme/theme1/seller_files/interior/property_327/d755cd303ff826ce587fb0e55e6bc1c6IMG_5034.jpg");
         // propertyImageList.add("http://clearsale.com/theme/theme1/seller_files/interior/property_327/63502fc15c1d04e5ad9f095d8bd03b2aIMG_5035.jpg");
@@ -78,9 +86,10 @@ public class PropertyImageActivity extends AppCompatActivity {
         
         
         mLayoutManager = new LinearLayoutManager (this, LinearLayoutManager.HORIZONTAL, false);
-        // pager adapteradapter = new ViewPagerAdapter(this, propertyImageList, mToolbar, imagesHorizontalList);
+        // pager adapter
+        adapter = new ViewPagerAdapter (this, propertyImageList, mToolbar, imagesHorizontalList);
         mViewPager.setAdapter (adapter);
-        // horizontal list adapter
+        // horizontal list adaapter
         hAdapter = new HorizontalListAdapters (this, propertyImageList, new OnImgClick () {
             @Override
             public void onClick (int pos) {
@@ -95,17 +104,18 @@ public class PropertyImageActivity extends AppCompatActivity {
             @Override
             public void onPageScrolled (int position, float positionOffset, int positionOffsetPixels) {
             }
-            
+    
             @Override
             public void onPageSelected (int position) {
                 imagesHorizontalList.smoothScrollToPosition (position);
                 hAdapter.setSelectedItem (position);
             }
-            
+    
             @Override
             public void onPageScrollStateChanged (int state) {
             }
         });
+    
         hAdapter.setSelectedItem (currentPos);
         mViewPager.setCurrentItem (currentPos);
     }
@@ -125,5 +135,4 @@ public class PropertyImageActivity extends AppCompatActivity {
         finish ();
         overridePendingTransition (R.anim.slide_in_left, R.anim.slide_out_right);
     }
-    
 }

@@ -68,6 +68,11 @@
             android:name=".activity.PropertyImageActivity"
             android:screenOrientation="portrait"/>
 
+        <activity
+            android:name=".activity.PropertyLocationActivity"
+            android:screenOrientation="portrait"/>
+
+
         <service android:name="com.actiknow.clearsale.service.MyFirebaseMessagingService">
             <intent-filter>
                 <action android:name="com.google.firebase.MESSAGING_EVENT" />
@@ -104,6 +109,10 @@
         <meta-data
             android:name="com.google.android.gms.version"
             android:value="@integer/google_play_services_version"/>
+
+        <meta-data
+            android:name="com.google.android.maps.v2.API_KEY"
+            android:value="AIzaSyA4EHWv-9d_6VzyMcLmK86cz2QbglmAk3w"/>
     </application>
 
 </manifest>

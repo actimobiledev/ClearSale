@@ -33,6 +33,8 @@ public class AppConfigTags {
     public static String PROPERTY_ADDRESS2 = "property_city";
     public static String PROPERTY_CITY = "property_city";
     public static String PROPERTY_STATE = "property_state";
+    public static String PROPERTY_LATITUDE = "latitude";
+    public static String PROPERTY_LONGITUDE = "longitude";
     public static String PROPERTY_PRICE = "property_price";
     public static String PROPERTY_BUILT_YEAR = "property_built_year";
     public static String PROPERTY_BEDROOMS = "property_bedrooms";

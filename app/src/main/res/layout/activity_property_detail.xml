@@ -52,14 +52,9 @@
                         android:padding="@dimen/activity_margin_extra_small"
                         android:text="18 of 20"
                         android:textColor="@color/text_color_white"
-                        android:textSize="@dimen/text_size_small"/>
+                        android:textSize="@dimen/text_size_small"
+                        android:visibility="gone"/>
                 </RelativeLayout>
-                <com.daimajia.slider.library.Indicators.PagerIndicator
-                    android:id="@+id/custom_indicator"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:gravity="center"
-                    android:visibility="gone"/>
                 <android.support.v7.widget.Toolbar
                     android:id="@+id/toolbar"
                     style="@style/Widget.MyApp.TransparentActionBar"
@@ -137,6 +132,16 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         app:layout_behavior="@string/appbar_scrolling_view_behavior"/>
+
+    <android.support.design.widget.FloatingActionButton
+        android:id="@+id/fabMap"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="bottom|end"
+        android:layout_margin="@dimen/activity_margin"
+        android:background="@color/colorPrimary"
+        android:src="@android:drawable/ic_dialog_map"
+        app:backgroundTint="@color/colorPrimary"/>
 
 
 </android.support.design.widget.CoordinatorLayout>

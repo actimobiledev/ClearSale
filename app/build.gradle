@@ -57,8 +57,8 @@ dependencies {
     compile 'me.bendik.simplerangeview:simplerangeview:0.1.1'
     compile 'com.jaredrummler:material-spinner:1.1.0'
 
-    compile 'com.google.firebase:firebase-messaging:10.2.4'
     compile 'com.google.android.gms:play-services:10.2.4'
+    compile 'com.google.firebase:firebase-messaging:10.2.4'
 
     compile 'com.android.support:multidex:1.0.1'
 
