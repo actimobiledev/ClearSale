@@ -10,7 +10,9 @@ public class BuyerDetailsPref {
     public static String BUYER_LOGIN_KEY = "buyer_login_key";
     public static String BUYER_ID = "buyer_id";
     public static String BUYER_FIREBASE_ID = "buyer_firebase_id";
+    public static String BUYER_IMAGE = "buyer_image";
     public static String BUYER_FACEBOOK_ID = "buyer_facebook_id";
+    public static String BUYER_LINKEDIN_ID = "buyer_linkedin_id";
     public static String PROFILE_STATUS = "profile_status";
     public static String PROFILE_HOME_TYPE = "profile_home_type";
     public static String PROFILE_STATE = "profile_state";

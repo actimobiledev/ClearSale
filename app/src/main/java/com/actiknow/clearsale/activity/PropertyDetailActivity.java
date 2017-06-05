@@ -4,8 +4,8 @@ package com.actiknow.clearsale.activity;
 import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Handler;
 import android.provider.Settings;
-import android.support.design.widget.AppBarLayout;
 import android.support.design.widget.CollapsingToolbarLayout;
 import android.support.design.widget.CoordinatorLayout;
 import android.support.design.widget.Snackbar;
@@ -14,12 +14,12 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
-import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
-import android.view.MenuItem;
 import android.view.View;
+import android.widget.RelativeLayout;
+import android.widget.TextView;
 
 import com.actiknow.clearsale.R;
 import com.actiknow.clearsale.fragment.CompsFragment;
@@ -28,23 +28,24 @@ import com.actiknow.clearsale.fragment.PlaceAndOfferFragment;
 import com.actiknow.clearsale.fragment.PossessionFragment;
 import com.actiknow.clearsale.fragment.PropertyLocationFragment;
 import com.actiknow.clearsale.fragment.RealtorFragment;
-import com.actiknow.clearsale.model.Banner;
 import com.actiknow.clearsale.utils.AppConfigTags;
 import com.actiknow.clearsale.utils.AppConfigURL;
+import com.actiknow.clearsale.utils.BuyerDetailsPref;
 import com.actiknow.clearsale.utils.Constants;
+import com.actiknow.clearsale.utils.CustomImageSlider;
 import com.actiknow.clearsale.utils.NetworkConnection;
+import com.actiknow.clearsale.utils.PropertyDetailsPref;
 import com.actiknow.clearsale.utils.Utils;
 import com.android.volley.AuthFailureError;
 import com.android.volley.Request;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.daimajia.slider.library.Animations.DescriptionAnimation;
-import com.daimajia.slider.library.Indicators.PagerIndicator;
 import com.daimajia.slider.library.SliderLayout;
 import com.daimajia.slider.library.SliderTypes.BaseSliderView;
-import com.daimajia.slider.library.SliderTypes.DefaultSliderView;
 import com.daimajia.slider.library.Tricks.ViewPagerEx;
 
+import org.json.JSONArray;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
@@ -57,25 +58,17 @@ import java.util.Map;
  * Created by l on 22/03/2017.
  */
 
-public class PropertyDetailActivity extends AppCompatActivity implements BaseSliderView.OnSliderClickListener, ViewPagerEx.OnPageChangeListener {
-    List<Banner> bannerList = new ArrayList<>();
-    AppBarLayout appBar;
+public class PropertyDetailActivity extends AppCompatActivity {
+    List<String> bannerList = new ArrayList<> ();
     Toolbar toolbar;
     CoordinatorLayout clMain;
-    String address1;
-    //  String city;
-    String state;
-    String price;
-    String yearBuild;
-    String bedroom;
-    String bathroom;
-    String area;
-    String overview;
-    String comps;
-    String access;
-    String realtor;
-    String offer;
+    int property_id;
     ProgressDialog progressDialog;
+    RelativeLayout rlSliderIndicator;
+    TextView tvSliderPosition;
+    PropertyDetailsPref propertyDetailsPref;
+    BuyerDetailsPref buyerDetailsPref;
+    RelativeLayout rlBack;
     private SliderLayout slider;
     private CollapsingToolbarLayout collapsingToolbarLayout = null;
     private TabLayout tabLayout;
@@ -84,83 +77,125 @@ public class PropertyDetailActivity extends AppCompatActivity implements BaseSli
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.property_detail_activity);
-
+        setContentView (R.layout.activity_property_detail);
         initView();
         initData();
         initListener();
-        getBannerList();
-
+        getExtras ();
+        getPropertyDetails ();
+    }
+    
+    private void getExtras () {
+        Intent intent = getIntent ();
+        property_id = intent.getIntExtra (AppConfigTags.PROPERTY_ID, 0);
     }
 
     private void initView() {
+        rlBack = (RelativeLayout) findViewById (R.id.rlBack);
         clMain = (CoordinatorLayout) findViewById (R.id.clMain);
         slider = (SliderLayout) findViewById(R.id.slider);
         collapsingToolbarLayout = (CollapsingToolbarLayout) findViewById(R.id.collapsing_toolbar);
-        appBar = (AppBarLayout) findViewById(R.id.appbar);
         toolbar = (Toolbar) findViewById(R.id.toolbar);
         tabLayout = (TabLayout) findViewById(R.id.tabs);
         viewPager = (ViewPager) findViewById(R.id.viewpager);
-
+        rlSliderIndicator = (RelativeLayout) findViewById (R.id.rlSliderIndicator);
+        tvSliderPosition = (TextView) findViewById (R.id.tvSliderPosition);
     }
 
     private void initData() {
+        propertyDetailsPref = PropertyDetailsPref.getInstance ();
+        buyerDetailsPref = BuyerDetailsPref.getInstance ();
         progressDialog = new ProgressDialog (this);
-        setSupportActionBar(toolbar);
-        ActionBar actionBar = getSupportActionBar();
-        actionBar.setDisplayHomeAsUpEnabled(true);
         tabLayout.setupWithViewPager(viewPager);
-        collapsingToolbarLayout.setTitle("Details");
-        collapsingToolbarLayout.setTitleEnabled(true);
-        appBar.setExpanded(true);
+        collapsingToolbarLayout.setTitleEnabled (false);
+//        appBar.setExpanded(true);
         setupViewPager(viewPager);
+        Utils.setTypefaceToAllViews (this, rlBack);
     }
 
     private void initListener() {
     }
-
-    private void getBannerList() {
-        bannerList.add(new Banner(1, "http://clearsale.com/theme/theme1/seller_files/exterior/property_327/dcca01ddf8b02fb5d2fe89d3c55eb5dcExterior%20pic.png"));
-        bannerList.add(new Banner(2, "http://clearsale.com/theme/theme1/seller_files/interior/property_327/d755cd303ff826ce587fb0e55e6bc1c6IMG_5034.jpg"));
-        bannerList.add(new Banner(3, "http://clearsale.com/theme/theme1/seller_files/interior/property_327/63502fc15c1d04e5ad9f095d8bd03b2aIMG_5035.jpg"));
-        bannerList.add(new Banner(4, "http://clearsale.com/theme/theme1/seller_files/interior/property_327/1a6c485de807e99fbb7b11a8f06e354fIMG_5036.jpg"));
-        bannerList.add(new Banner(5, "http://clearsale.com/theme/theme1/seller_files/interior/property_327/d913733c109e622efea54bf04c778d1bIMG_5038.jpg"));
-        bannerList.add(new Banner(6, "http://clearsale.com/theme/theme1/seller_files/interior/property_327/1d525c19d5c659f9d39a1abb941baf75IMG_5039.jpg"));
-        bannerList.add(new Banner(7, "http://clearsale.com/theme/theme1/seller_files/interior/property_327/8bafdd842b1558edd07efd4b58b69ecfIMG_5040.jpg"));
-        bannerList.add(new Banner(8, "http://clearsale.com/theme/theme1/seller_files/interior/property_327/6465f55d083394753d7656fbea7b5df6IMG_5041.jpg"));
-        bannerList.add(new Banner(9, "http://clearsale.com/theme/theme1/seller_files/interior/property_327/23a5f19eee30dfcc0f7ddd7b4116986cIMG_5042.jpg"));
-        bannerList.add(new Banner(10, "http://clearsale.com/theme/theme1/seller_files/interior/property_327/b41719c7631a3d7bc0c2d246cd2fb5daIMG_5043.jpg"));
-        bannerList.add(new Banner(11, "http://clearsale.com/theme/theme1/seller_files/interior/property_327/1ee4363f712ced227c0b154029e5cfb8IMG_5048.jpg"));
-        bannerList.add(new Banner(12, "http://clearsale.com/theme/theme1/seller_files/interior/property_327/3fd6c0348b2f1443715d0ee4139632c8IMG_5053.jpg"));
-
-        initSlider();
-    }
-
-    private void initSlider() {
-        for (int i = 0; i < bannerList.size(); i++) {
-            Banner banner = bannerList.get(i);
-            // SpannableString s = new SpannableString (banner.getTitle ());
-            // s.setSpan (new TypefaceSpan(this, Constants.font_name), 0, s.length (), Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
-
-            DefaultSliderView defaultSliderView = new DefaultSliderView(this);
-            defaultSliderView
-                    .image(banner.getImage())
-                    .setScaleType(BaseSliderView.ScaleType.Fit)
-                    .setOnSliderClickListener(this);
-
-            defaultSliderView.bundle(new Bundle());
-            // defaultSliderView.getBundle ().putString ("extra", String.valueOf (s));
-            slider.addSlider(defaultSliderView);
-        }
-        slider.setIndicatorVisibility(PagerIndicator.IndicatorVisibility.Invisible);
-        slider.setPresetTransformer(SliderLayout.Transformer.Default);
-        slider.setCustomAnimation(new DescriptionAnimation());
-        slider.setDuration(6000);
-        slider.addOnPageChangeListener(this);
-        slider.setCustomIndicator((PagerIndicator) findViewById(R.id.custom_indicator));
-        slider.setPresetIndicator(SliderLayout.PresetIndicators.Center_Bottom);
-    }
     
+    private void initSlider() {
+        slider.removeAllSliders ();
+        for (int i = 0; i < bannerList.size (); i++) {
+            String image = bannerList.get (i);
+            CustomImageSlider slider2 = new CustomImageSlider (this);
+            slider2
+                    .image (image)
+                    .setScaleType (BaseSliderView.ScaleType.Fit)
+                    .setOnSliderClickListener (new BaseSliderView.OnSliderClickListener () {
+                        @Override
+                        public void onSliderClick (BaseSliderView slider) {
+                            Intent intent = new Intent (PropertyDetailActivity.this, PropertyImageActivity.class);
+                            startActivity (intent);
+                        }
+                    });
+
+//            DefaultSliderView defaultSliderView = new DefaultSliderView (activity);
+//            defaultSliderView
+//                    .image (image)
+//                    .setScaleType (BaseSliderView.ScaleType.Fit)
+//                    .setOnSliderClickListener (new BaseSliderView.OnSliderClickListener () {
+//                        @Override
+//                        public void onSliderClick (BaseSliderView slider) {
+//                            Intent intent = new Intent (activity, PropertyDetailActivity.class);
+//                            intent.putExtra (AppConfigTags.PROPERTY_ID, property.getId ());
+//                            activity.startActivity (intent);
+//                            activity.overridePendingTransition (R.anim.slide_in_right, R.anim.slide_out_left);
+//                        }
+//                    });
+//
+//            defaultSliderView.bundle (new Bundle ());
+            // defaultSliderView.getBundle ().putString ("extra", String.valueOf (s));
+//            holder.slider.addSlider (defaultSliderView);
+            slider.addSlider (slider2);
+        }
+        slider.getPagerIndicator ().setVisibility (View.GONE);
+        slider.setPresetTransformer (SliderLayout.Transformer.Default);
+        slider.setCustomAnimation (new DescriptionAnimation ());
+        slider.addOnPageChangeListener (new ViewPagerEx.OnPageChangeListener () {
+            @Override
+            public void onPageScrolled (int position, float positionOffset, int positionOffsetPixels) {
+//                Log.e ("karman page " + property.getId (), "state " + position);
+//                holder.rlSliderIndicator.setVisibility (View.VISIBLE);
+//                holder.tvSliderPosition.setText (position + " of " + property.getImageList ().size ());
+            }
+            
+            @Override
+            public void onPageSelected (int position) {
+                tvSliderPosition.setText ((position + 1) + " of " + bannerList.size ());
+            }
+            
+            @Override
+            public void onPageScrollStateChanged (int state) {
+                final Handler handler = new Handler ();
+                Runnable finalizer = null;
+                switch (state) {
+                    case 0:
+                        finalizer = new Runnable () {
+                            public void run () {
+                                rlSliderIndicator.setVisibility (View.GONE);
+//                                rlFooter.setVisibility (View.VISIBLE);
+                            }
+                        };
+                        handler.postDelayed (finalizer, 1500);
+                        break;
+                    case 1:
+//                        handler.removeCallbacks (finalizer);
+//                        holder.rlFooter.setVisibility (View.GONE);
+                        rlSliderIndicator.setVisibility (View.VISIBLE);
+                        break;
+                    case 2:
+                        break;
+                }
+//                if (property.getId () == 1){
+//                    Log.e ("karman " + property.getId (), "state " + state);
+//                }
+            }
+        });
+        slider.setPresetIndicator (SliderLayout.PresetIndicators.Center_Bottom);
+    }
     
     private void getPropertyDetails () {
         if (NetworkConnection.isNetworkAvailable (PropertyDetailActivity.this)) {
@@ -177,20 +212,52 @@ public class PropertyDetailActivity extends AppCompatActivity implements BaseSli
                                     boolean error = jsonObj.getBoolean (AppConfigTags.ERROR);
                                     String message = jsonObj.getString (AppConfigTags.MESSAGE);
                                     if (! error) {
-                                        String address1 = jsonObj.getString (AppConfigTags.PROPERTY_ADDRESS);
+    
+                                        propertyDetailsPref.putIntPref (PropertyDetailActivity.this, PropertyDetailsPref.PROPERTY_ID, jsonObj.getInt (AppConfigTags.PROPERTY_ID));
+                                        propertyDetailsPref.putStringPref (PropertyDetailActivity.this, propertyDetailsPref.PROPERTY_ADDRESS1, jsonObj.getString (AppConfigTags.PROPERTY_ADDRESS));
+                                        propertyDetailsPref.putStringPref (PropertyDetailActivity.this, propertyDetailsPref.PROPERTY_ADDRESS2, jsonObj.getString (AppConfigTags.PROPERTY_ADDRESS2));
+                                        propertyDetailsPref.putStringPref (PropertyDetailActivity.this, propertyDetailsPref.PROPERTY_STATE, jsonObj.getString (AppConfigTags.PROPERTY_STATE));
+                                        propertyDetailsPref.putStringPref (PropertyDetailActivity.this, propertyDetailsPref.PROPERTY_PRICE, jsonObj.getString (AppConfigTags.PROPERTY_PRICE));
+                                        propertyDetailsPref.putStringPref (PropertyDetailActivity.this, propertyDetailsPref.PROPERTY_YEAR_BUILD, jsonObj.getString (AppConfigTags.PROPERTY_BUILT_YEAR));
+                                        propertyDetailsPref.putStringPref (PropertyDetailActivity.this, propertyDetailsPref.PROPERTY_BEDROOM, jsonObj.getString (AppConfigTags.PROPERTY_BEDROOMS));
+                                        propertyDetailsPref.putStringPref (PropertyDetailActivity.this, propertyDetailsPref.PROPERTY_BATHROOM, jsonObj.getString (AppConfigTags.PROPERTY_BATHROOMS));
+                                        propertyDetailsPref.putStringPref (PropertyDetailActivity.this, propertyDetailsPref.PROPERTY_AREA, jsonObj.getString (AppConfigTags.PROPERTY_AREA));
+                                        propertyDetailsPref.putStringPref (PropertyDetailActivity.this, propertyDetailsPref.PROPERTY_OVERVIEW, jsonObj.getString (AppConfigTags.PROPERTY_OVERVIEW));
+                                        propertyDetailsPref.putStringPref (PropertyDetailActivity.this, propertyDetailsPref.PROPERTY_OFFER, jsonObj.getString (AppConfigTags.PROPERTY_OFFER));
+                                        propertyDetailsPref.putStringPref (PropertyDetailActivity.this, propertyDetailsPref.PROPERTY_ACCESS, jsonObj.getString (AppConfigTags.PROPERTY_ACCESS));
+                                        propertyDetailsPref.putStringPref (PropertyDetailActivity.this, propertyDetailsPref.PROPERTY_REALTOR, jsonObj.getString (AppConfigTags.PROPERTY_REALTOR));
+                                        propertyDetailsPref.putStringPref (PropertyDetailActivity.this, propertyDetailsPref.PROPERTY_COMPS, jsonObj.getString (AppConfigTags.PROPERTY_COMPS));
+                                        propertyDetailsPref.putIntPref (PropertyDetailActivity.this, propertyDetailsPref.PROPERTY_AUCTION_ID, jsonObj.getInt (AppConfigTags.PROPERTY_BID_AUCTION_ID));
+                                        propertyDetailsPref.putIntPref (PropertyDetailActivity.this, propertyDetailsPref.PROPERTY_AUCTION_STATUS, jsonObj.getInt (AppConfigTags.PROPERTY_BID_AUCTION_STATUS));
+    
+    
+                                        JSONArray jsonArrayPropertyImages = jsonObj.getJSONArray (AppConfigTags.PROPERTY_IMAGES);
+                                        for (int j = 0; j < jsonArrayPropertyImages.length (); j++) {
+                                            JSONObject jsonObjectImages = jsonArrayPropertyImages.getJSONObject (j);
+                                            bannerList.add (jsonObjectImages.getString (AppConfigTags.PROPERTY_IMAGE));
+        
+                                            propertyDetailsPref.putStringPref (PropertyDetailActivity.this, propertyDetailsPref.PROPERTY_IMAGES + j, jsonObjectImages.getString (AppConfigTags.PROPERTY_IMAGE));
+                                            propertyDetailsPref.putIntPref (PropertyDetailActivity.this, "size", jsonArrayPropertyImages.length ());
+        
+        
+                                        }
+                                        initSlider ();
+    
+    
+                                        //    String address1 = jsonObj.getString (AppConfigTags.PROPERTY_ADDRESS);
                                         //  String city=jsonObj.getString(AppConfigTags.PROPERTY_CITY_NAME);
-                                        state = jsonObj.getString (AppConfigTags.PROPERTY_STATE);
-                                        price = jsonObj.getString (AppConfigTags.PROPERTY_PRICE);
-                                        yearBuild = jsonObj.getString (AppConfigTags.PROPERTY_BUILT_YEAR);
-                                        bedroom = jsonObj.getString (AppConfigTags.PROPERTY_BEDROOMS);
-                                        bathroom = jsonObj.getString (AppConfigTags.PROPERTY_BATHROOMS);
-                                        area = jsonObj.getString (AppConfigTags.PROPERTY_AREA);
-                                        overview = jsonObj.getString (AppConfigTags.PROPERTY_OVERVIEW);
-                                        comps = jsonObj.getString (AppConfigTags.PROPERTY_COMPS);
-                                        access = jsonObj.getString (AppConfigTags.PROPERTY_ACCESS);
-                                        realtor = jsonObj.getString (AppConfigTags.PROPERTY_REALTOR);
-                                        offer = jsonObj.getString (AppConfigTags.PROPERTY_OFFER);
-                                        
+                                        //  state = jsonObj.getString (AppConfigTags.PROPERTY_STATE);
+                                        //  price = jsonObj.getString (AppConfigTags.PROPERTY_PRICE);
+                                        //  yearBuild = jsonObj.getString (AppConfigTags.PROPERTY_BUILT_YEAR);
+                                        //  bedroom = jsonObj.getString (AppConfigTags.PROPERTY_BEDROOMS);
+                                        //  bathroom = jsonObj.getString (AppConfigTags.PROPERTY_BATHROOMS);
+                                        //  area = jsonObj.getString (AppConfigTags.PROPERTY_AREA);
+                                        //  overview = jsonObj.getString (AppConfigTags.PROPERTY_OVERVIEW);
+                                        //  comps = jsonObj.getString (AppConfigTags.PROPERTY_COMPS);
+                                        ///  access = jsonObj.getString (AppConfigTags.PROPERTY_ACCESS);
+                                        // realtor = jsonObj.getString (AppConfigTags.PROPERTY_REALTOR);
+                                        // offer = jsonObj.getString (AppConfigTags.PROPERTY_OFFER);
+
                                     }
                                     progressDialog.dismiss ();
                                 } catch (Exception e) {
@@ -216,12 +283,13 @@ public class PropertyDetailActivity extends AppCompatActivity implements BaseSli
                 @Override
                 protected Map<String, String> getParams () throws AuthFailureError {
                     Map<String, String> params = new Hashtable<String, String> ();
-                    params.put (AppConfigTags.PROPERTY_ID, String.valueOf (1));
+                    params.put (AppConfigTags.PROPERTY_ID, String.valueOf (property_id));
+                    params.put (AppConfigTags.BUYER_ID, String.valueOf (buyerDetailsPref.getIntPref (PropertyDetailActivity.this, BuyerDetailsPref.BUYER_ID)));
                     params.put (AppConfigTags.TYPE, "property_detail");
                     Utils.showLog (Log.INFO, AppConfigTags.PARAMETERS_SENT_TO_THE_SERVER, "" + params, true);
                     return params;
                 }
-                
+    
                 @Override
                 public Map<String, String> getHeaders () throws AuthFailureError {
                     Map<String, String> params = new HashMap<> ();
@@ -247,40 +315,6 @@ public class PropertyDetailActivity extends AppCompatActivity implements BaseSli
     }
     
     
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        switch (item.getItemId()) {
-            case android.R.id.home:
-                onBackPressed();
-                overridePendingTransition(R.anim.slide_in_left, R.anim.slide_out_right);
-                return true;
-        }
-
-        return super.onOptionsItemSelected(item);
-    }
-
-    @Override
-    public void onSliderClick(BaseSliderView slider) {
-
-    }
-
-    @Override
-    public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
-
-    }
-
-    @Override
-    public void onPageSelected(int position) {
-
-    }
-
-    @Override
-    public void onPageScrollStateChanged(int state) {
-
-    }
-
-
     private void setupViewPager(ViewPager viewPager) {
         ViewPagerAdapter adapter = new ViewPagerAdapter(getSupportFragmentManager());
         adapter.addFragment(new OverviewFragment(), "OVERVIEW");

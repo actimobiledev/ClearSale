@@ -2,10 +2,12 @@ package com.actiknow.clearsale.activity;
 
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Bitmap;
 import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.Settings;
+import android.support.annotation.DrawableRes;
 import android.support.annotation.NonNull;
 import android.support.design.widget.CoordinatorLayout;
 import android.support.design.widget.Snackbar;
@@ -37,15 +39,22 @@ import com.android.volley.Request;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.bumptech.glide.Glide;
+import com.facebook.FacebookSdk;
+import com.facebook.login.LoginManager;
+import com.linkedin.platform.LISessionManager;
 import com.mikepenz.fontawesome_typeface_library.FontAwesome;
 import com.mikepenz.iconics.IconicsDrawable;
+import com.mikepenz.iconics.typeface.IIcon;
 import com.mikepenz.materialdrawer.AccountHeader;
 import com.mikepenz.materialdrawer.AccountHeaderBuilder;
 import com.mikepenz.materialdrawer.Drawer;
 import com.mikepenz.materialdrawer.DrawerBuilder;
+import com.mikepenz.materialdrawer.holder.ImageHolder;
+import com.mikepenz.materialdrawer.holder.StringHolder;
 import com.mikepenz.materialdrawer.model.PrimaryDrawerItem;
 import com.mikepenz.materialdrawer.model.ProfileDrawerItem;
 import com.mikepenz.materialdrawer.model.interfaces.IDrawerItem;
+import com.mikepenz.materialdrawer.model.interfaces.IProfile;
 import com.mikepenz.materialdrawer.util.AbstractDrawerImageLoader;
 import com.mikepenz.materialdrawer.util.DrawerImageLoader;
 import com.mikepenz.materialdrawer.util.DrawerUIUtils;
@@ -94,10 +103,10 @@ public class MainActivity extends AppCompatActivity {
         if (buyerDetailsPref.getIntPref (MainActivity.this, BuyerDetailsPref.BUYER_ID) == 0) {
             Intent myIntent = new Intent (this, LoginActivity.class);
             startActivity (myIntent);
-        }// else if (buyerDetailsPref.getIntPref (MainActivity.this, BuyerDetailsPref.PROFILE_STATUS) == 0) {
-//            Intent myIntent = new Intent (this, MyProfileActivity.class);
-//            startActivity (myIntent);
-//        }
+        } else if (buyerDetailsPref.getIntPref (MainActivity.this, BuyerDetailsPref.PROFILE_STATUS) == 0) {
+            Intent myIntent = new Intent (this, MyProfileActivity.class);
+            startActivity (myIntent);
+        }
         if (buyerDetailsPref.getIntPref (MainActivity.this, BuyerDetailsPref.BUYER_ID) == 0)
             finish ();
     }
@@ -113,6 +122,7 @@ public class MainActivity extends AppCompatActivity {
     }
     
     private void initData () {
+        FacebookSdk.sdkInitialize (this.getApplicationContext ());
         buyerDetailsPref = BuyerDetailsPref.getInstance ();
         swipeRefreshLayout.setRefreshing (true);
         propertyList.clear ();
@@ -224,7 +234,8 @@ public class MainActivity extends AppCompatActivity {
                                                     jsonObjectProperty.getString (AppConfigTags.PROPERTY_BUILT_YEAR),
                                                     jsonObjectProperty.getString (AppConfigTags.PROPERTY_ADDRESS),
                                                     jsonObjectProperty.getString (AppConfigTags.PROPERTY_CITY),
-                                                    jsonObjectProperty.getBoolean (AppConfigTags.PROPERTY_IS_OFFER));
+                                                    jsonObjectProperty.getBoolean (AppConfigTags.PROPERTY_IS_OFFER),
+                                                    jsonObjectProperty.getBoolean (AppConfigTags.PROPERTY_IS_FAVOURITE));
                                             
                                             
                                             JSONArray jsonArrayPropertyImages = jsonObjectProperty.getJSONArray (AppConfigTags.PROPERTY_IMAGES);
@@ -273,6 +284,7 @@ public class MainActivity extends AppCompatActivity {
                 protected Map<String, String> getParams () throws AuthFailureError {
                     Map<String, String> params = new Hashtable<String, String> ();
                     params.put (AppConfigTags.TYPE, "property_list");
+                    params.put (AppConfigTags.BUYER_ID, String.valueOf (buyerDetailsPref.getIntPref (MainActivity.this, BuyerDetailsPref.BUYER_ID)));
                     Utils.showLog (Log.INFO, AppConfigTags.PARAMETERS_SENT_TO_THE_SERVER, "" + params, true);
                     return params;
                 }
@@ -300,10 +312,89 @@ public class MainActivity extends AppCompatActivity {
     }
     
     private void initDrawer () {
+        IProfile profile = new IProfile () {
+            @Override
+            public Object withName (String name) {
+                return null;
+            }
+        
+            @Override
+            public StringHolder getName () {
+                return null;
+            }
+        
+            @Override
+            public Object withEmail (String email) {
+                return null;
+            }
+        
+            @Override
+            public StringHolder getEmail () {
+                return null;
+            }
+        
+            @Override
+            public Object withIcon (Drawable icon) {
+                return null;
+            }
+        
+            @Override
+            public Object withIcon (Bitmap bitmap) {
+                return null;
+            }
+        
+            @Override
+            public Object withIcon (@DrawableRes int iconRes) {
+                return null;
+            }
+        
+            @Override
+            public Object withIcon (String url) {
+                return null;
+            }
+        
+            @Override
+            public Object withIcon (Uri uri) {
+                return null;
+            }
+        
+            @Override
+            public Object withIcon (IIcon icon) {
+                return null;
+            }
+        
+            @Override
+            public ImageHolder getIcon () {
+                return null;
+            }
+        
+            @Override
+            public Object withSelectable (boolean selectable) {
+                return null;
+            }
+        
+            @Override
+            public boolean isSelectable () {
+                return false;
+            }
+        
+            @Override
+            public Object withIdentifier (long identifier) {
+                return null;
+            }
+        
+            @Override
+            public long getIdentifier () {
+                return 0;
+            }
+        };
+        
         DrawerImageLoader.init (new AbstractDrawerImageLoader () {
             @Override
             public void set (ImageView imageView, Uri uri, Drawable placeholder) {
-                //  Glide.with(imageView.getContext()).load(uri).placeholder(placeholder).into(imageView);
+                if (uri != null) {
+                    Glide.with (imageView.getContext ()).load (uri).placeholder (placeholder).into (imageView);
+                }
             }
             
             @Override
@@ -332,35 +423,47 @@ public class MainActivity extends AppCompatActivity {
         });
         headerResult = new AccountHeaderBuilder ()
                 .withActivity (this)
-                .withCompactStyle (true)
-                .addProfiles (new ProfileDrawerItem ()
-                        .withName (buyerDetailsPref.getStringPref (MainActivity.this, BuyerDetailsPref.BUYER_NAME))
-                        .withEmail (buyerDetailsPref.getStringPref (MainActivity.this, BuyerDetailsPref.BUYER_EMAIL)))
-                .withProfileImagesClickable (false)
+                .withCompactStyle (false)
+                .withTypeface (SetTypeFace.getTypeface (MainActivity.this))
                 .withTypeface (SetTypeFace.getTypeface (this))
                 .withPaddingBelowHeader (false)
+                .withSelectionListEnabled (false)
                 .withSelectionListEnabledForSingleProfile (false)
-                .withHeaderBackground (R.color.colorPrimaryDark)
+                .withProfileImagesVisible (true)
+                .withOnlyMainProfileImageVisible (true)
+                .withDividerBelowHeader (true)
+                .withHeaderBackground (R.drawable.drawer_bg)
                 .withSavedInstance (savedInstanceState)
                 .build ();
-        
-        
+    
+    
+        if (buyerDetailsPref.getStringPref (MainActivity.this, BuyerDetailsPref.BUYER_IMAGE).length () != 0) {
+            headerResult.addProfiles (new ProfileDrawerItem ()
+                    .withIcon (buyerDetailsPref.getStringPref (MainActivity.this, BuyerDetailsPref.BUYER_IMAGE))
+                    .withName (buyerDetailsPref.getStringPref (MainActivity.this, BuyerDetailsPref.BUYER_NAME))
+                    .withEmail (buyerDetailsPref.getStringPref (MainActivity.this, BuyerDetailsPref.BUYER_EMAIL)));
+        } else {
+            headerResult.addProfiles (new ProfileDrawerItem ()
+                    .withName (buyerDetailsPref.getStringPref (MainActivity.this, BuyerDetailsPref.BUYER_NAME))
+                    .withEmail (buyerDetailsPref.getStringPref (MainActivity.this, BuyerDetailsPref.BUYER_EMAIL)));
+        }
+    
         result = new DrawerBuilder ()
                 .withActivity (this)
-//                .withAccountHeader(headerResult)
+                .withAccountHeader (headerResult)
 //                .withToolbar (toolbar)
 //                .withItemAnimator (new AlphaCrossFadeAnimator ())
                 .addDrawerItems (
-                        new PrimaryDrawerItem ().withName ("Home").withIcon (FontAwesome.Icon.faw_home).withIdentifier (1),
-                        new PrimaryDrawerItem ().withName ("My Favourites").withIcon (FontAwesome.Icon.faw_home).withIdentifier (2).withSelectable (false),
-                        new PrimaryDrawerItem ().withName ("How It Works").withIcon (FontAwesome.Icon.faw_home).withIdentifier (3).withSelectable (false),
-                        new PrimaryDrawerItem ().withName ("About Us").withIcon (FontAwesome.Icon.faw_home).withIdentifier (4).withSelectable (false),
-                        new PrimaryDrawerItem ().withName ("Testimonials").withIcon (FontAwesome.Icon.faw_home).withIdentifier (5).withSelectable (false),
-                        new PrimaryDrawerItem ().withName ("Contact Us").withIcon (FontAwesome.Icon.faw_home).withIdentifier (6).withSelectable (false),
-                        new PrimaryDrawerItem ().withName ("FAQ").withIcon (FontAwesome.Icon.faw_home).withIdentifier (7).withSelectable (false),
-                        new PrimaryDrawerItem ().withName ("My Profile").withIcon (FontAwesome.Icon.faw_home).withIdentifier (8).withSelectable (false),
-                        new PrimaryDrawerItem ().withName ("Change Password").withIcon (FontAwesome.Icon.faw_home).withIdentifier (9).withSelectable (false),
-                        new PrimaryDrawerItem ().withName ("Sign Out").withIcon (FontAwesome.Icon.faw_home).withIdentifier (10).withSelectable (false)
+                        new PrimaryDrawerItem ().withName ("Home").withIcon (FontAwesome.Icon.faw_home).withIdentifier (1).withTypeface (SetTypeFace.getTypeface (MainActivity.this)),
+                        new PrimaryDrawerItem ().withName ("My Favourites").withIcon (FontAwesome.Icon.faw_heart).withIdentifier (2).withSelectable (false).withTypeface (SetTypeFace.getTypeface (MainActivity.this)),
+                        new PrimaryDrawerItem ().withName ("How It Works").withIcon (FontAwesome.Icon.faw_info).withIdentifier (3).withSelectable (false).withTypeface (SetTypeFace.getTypeface (MainActivity.this)),
+                        new PrimaryDrawerItem ().withName ("About Us").withIcon (FontAwesome.Icon.faw_info).withIdentifier (4).withSelectable (false).withTypeface (SetTypeFace.getTypeface (MainActivity.this)),
+                        new PrimaryDrawerItem ().withName ("Testimonials").withIcon (FontAwesome.Icon.faw_comments).withIdentifier (5).withSelectable (false).withTypeface (SetTypeFace.getTypeface (MainActivity.this)),
+                        new PrimaryDrawerItem ().withName ("Contact Us").withIcon (FontAwesome.Icon.faw_phone).withIdentifier (6).withSelectable (false).withTypeface (SetTypeFace.getTypeface (MainActivity.this)),
+                        new PrimaryDrawerItem ().withName ("FAQ").withIcon (FontAwesome.Icon.faw_question).withIdentifier (7).withSelectable (false).withTypeface (SetTypeFace.getTypeface (MainActivity.this)),
+                        new PrimaryDrawerItem ().withName ("My Profile").withIcon (FontAwesome.Icon.faw_user).withIdentifier (8).withSelectable (false).withTypeface (SetTypeFace.getTypeface (MainActivity.this)),
+                        new PrimaryDrawerItem ().withName ("Change Password").withIcon (FontAwesome.Icon.faw_key).withIdentifier (9).withSelectable (false).withTypeface (SetTypeFace.getTypeface (MainActivity.this)),
+                        new PrimaryDrawerItem ().withName ("Sign Out").withIcon (FontAwesome.Icon.faw_sign_out).withIdentifier (10).withSelectable (false).withTypeface (SetTypeFace.getTypeface (MainActivity.this))
                 )
                 .withSavedInstance (savedInstanceState)
                 .withOnDrawerItemClickListener (new Drawer.OnDrawerItemClickListener () {
@@ -428,10 +531,14 @@ public class MainActivity extends AppCompatActivity {
                 .onPositive (new MaterialDialog.SingleButtonCallback () {
                     @Override
                     public void onClick (@NonNull MaterialDialog dialog, @NonNull DialogAction which) {
+                        LoginManager.getInstance ().logOut ();
+                        LISessionManager.getInstance (getApplicationContext ()).clearSession ();
+                        
                         buyerDetailsPref.putStringPref (MainActivity.this, BuyerDetailsPref.BUYER_NAME, "");
                         buyerDetailsPref.putStringPref (MainActivity.this, BuyerDetailsPref.BUYER_EMAIL, "");
                         buyerDetailsPref.putStringPref (MainActivity.this, BuyerDetailsPref.BUYER_MOBILE, "");
                         buyerDetailsPref.putStringPref (MainActivity.this, BuyerDetailsPref.BUYER_LOGIN_KEY, "");
+                        buyerDetailsPref.putStringPref (MainActivity.this, BuyerDetailsPref.BUYER_IMAGE, "");
                         buyerDetailsPref.putIntPref (MainActivity.this, BuyerDetailsPref.BUYER_ID, 0);
                         buyerDetailsPref.putStringPref (MainActivity.this, BuyerDetailsPref.BUYER_FACEBOOK_ID, "");
                         buyerDetailsPref.putStringPref (MainActivity.this, BuyerDetailsPref.PROFILE_HOME_TYPE, "");

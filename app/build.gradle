@@ -21,6 +21,8 @@ android {
     sourceSets { main { resources.srcDirs = ['src/main/resources', 'src/main/libs/'] } }
 }
 
+
+
 dependencies {
     compile fileTree(dir: 'libs', include: ['*.jar'])
 
@@ -29,8 +31,9 @@ dependencies {
 
     })
 
-    compile fileTree(dir: 'libs', include: ['linkedin-sdk'])
+    compile project(':linkedin-sdk')
 
+    compile 'com.github.mzelzoghbi:zgallery:0.3'
 
     compile('com.mikepenz:materialdrawer:5.8.1@aar') {
         transitive = true
@@ -58,7 +61,6 @@ dependencies {
     compile 'com.google.android.gms:play-services:10.2.4'
 
     compile 'com.android.support:multidex:1.0.1'
-
 
     compile 'com.facebook.android:facebook-android-sdk:[4,5)'
     compile 'com.github.bumptech.glide:glide:3.7.0'

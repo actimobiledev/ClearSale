@@ -80,18 +80,11 @@
                         android:layout_centerVertical="true"
                         android:padding="@dimen/activity_margin_extra_small"
                         android:src="@drawable/ic_fb_icon"/>
-                    <com.facebook.login.widget.LoginButton
-                        android:id="@+id/login_button"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_gravity="center"
-                        android:layout_weight="1"
-                        android:visibility="gone"/>
                     <TextView
                         android:layout_width="1dp"
                         android:layout_height="wrap_content"
-                        android:layout_alignBottom="@+id/ivFbIcon"
                         android:layout_alignTop="@+id/ivFbIcon"
+                        android:layout_centerVertical="true"
                         android:layout_marginBottom="2dp"
                         android:layout_marginTop="2dp"
                         android:layout_toEndOf="@id/ivFbIcon"
@@ -129,8 +122,7 @@
                     <TextView
                         android:layout_width="1dp"
                         android:layout_height="wrap_content"
-                        android:layout_alignBottom="@+id/ivLinkedInIcon"
-                        android:layout_alignTop="@+id/ivLinkedInIcon"
+                        android:layout_centerVertical="true"
                         android:layout_marginBottom="2dp"
                         android:layout_marginTop="2dp"
                         android:layout_toEndOf="@id/ivLinkedInIcon"

@@ -2,11 +2,15 @@ package com.actiknow.clearsale.fragment;
 
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.text.Html;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.webkit.WebView;
+import android.widget.TextView;
 
 import com.actiknow.clearsale.R;
+import com.actiknow.clearsale.utils.PropertyDetailsPref;
 
 
 /**
@@ -14,6 +18,9 @@ import com.actiknow.clearsale.R;
  */
 
 public class RealtorFragment extends Fragment {
+    TextView tvRealtor;
+    PropertyDetailsPref propertyDetailsPref;
+    WebView webView;
 
 
     @Override
@@ -22,18 +29,21 @@ public class RealtorFragment extends Fragment {
         initView (rootView);
         initData ();
         initListener ();
-
-
         return rootView;
 
     }
 
     private void initView(View rootView) {
+        propertyDetailsPref = PropertyDetailsPref.getInstance ();
+        tvRealtor = (TextView) rootView.findViewById (R.id.tvRealtor);
+        webView = (WebView) rootView.findViewById (R.id.webView1);
+
 
     }
 
     private void initData() {
-
+        tvRealtor.setText (Html.fromHtml (propertyDetailsPref.getStringPref (getActivity (), PropertyDetailsPref.PROPERTY_REALTOR)));
+        webView.loadData (propertyDetailsPref.getStringPref (getActivity (), PropertyDetailsPref.PROPERTY_REALTOR), "text/html", "UTF-8");
     }
 
     private void initListener() {

@@ -198,6 +198,16 @@ public class SignUpFragment extends Fragment {
                                         buyerDetailsPref.putStringPref (getActivity (), BuyerDetailsPref.BUYER_MOBILE, jsonObj.getString (AppConfigTags.BUYER_MOBILE));
                                         buyerDetailsPref.putIntPref (getActivity (), BuyerDetailsPref.PROFILE_STATUS, jsonObj.getInt (AppConfigTags.PROFILE_STATUS));
     
+                                        switch (jsonObj.getInt (AppConfigTags.PROFILE_STATUS)) {
+                                            case 0:
+                                                break;
+                                            case 1:
+                                                buyerDetailsPref.putStringPref (getActivity (), BuyerDetailsPref.PROFILE_STATE, jsonObj.getString (AppConfigTags.PROFILE_STATE));
+                                                buyerDetailsPref.putStringPref (getActivity (), BuyerDetailsPref.PROFILE_PRICE_RANGE, jsonObj.getString (AppConfigTags.PROFILE_PRICE_RANGE));
+                                                buyerDetailsPref.putStringPref (getActivity (), BuyerDetailsPref.PROFILE_HOME_TYPE, jsonObj.getString (AppConfigTags.PROFILE_HOME_TYPE));
+                                                break;
+                                        }
+    
     
                                         Intent intent = new Intent (getActivity (), MainActivity.class);
                                         intent.setFlags (Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
@@ -233,6 +243,7 @@ public class SignUpFragment extends Fragment {
                     params.put (AppConfigTags.BUYER_NAME, name);
                     params.put (AppConfigTags.BUYER_EMAIL, email);
                     params.put (AppConfigTags.BUYER_MOBILE, number);
+                    params.put (AppConfigTags.BUYER_FIREBASE_ID, buyerDetailsPref.getStringPref (getActivity (), BuyerDetailsPref.BUYER_FIREBASE_ID));
                     Utils.showLog(Log.INFO, AppConfigTags.PARAMETERS_SENT_TO_THE_SERVER, "" + params, true);
                     return params;
                 }

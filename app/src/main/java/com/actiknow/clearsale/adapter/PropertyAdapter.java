@@ -4,7 +4,6 @@ import android.app.Activity;
 import android.content.Intent;
 import android.graphics.drawable.Drawable;
 import android.os.Build;
-import android.os.Bundle;
 import android.os.Handler;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
@@ -23,6 +22,7 @@ import com.actiknow.clearsale.utils.AppConfigTags;
 import com.actiknow.clearsale.utils.AppConfigURL;
 import com.actiknow.clearsale.utils.BuyerDetailsPref;
 import com.actiknow.clearsale.utils.Constants;
+import com.actiknow.clearsale.utils.CustomImageSlider;
 import com.actiknow.clearsale.utils.NetworkConnection;
 import com.actiknow.clearsale.utils.SetTypeFace;
 import com.actiknow.clearsale.utils.Utils;
@@ -33,7 +33,6 @@ import com.android.volley.toolbox.StringRequest;
 import com.daimajia.slider.library.Animations.DescriptionAnimation;
 import com.daimajia.slider.library.SliderLayout;
 import com.daimajia.slider.library.SliderTypes.BaseSliderView;
-import com.daimajia.slider.library.SliderTypes.DefaultSliderView;
 import com.daimajia.slider.library.Tricks.ViewPagerEx;
 
 import org.json.JSONObject;
@@ -132,39 +131,38 @@ public class PropertyAdapter extends RecyclerView.Adapter<PropertyAdapter.ViewHo
         holder.slider.removeAllSliders ();
         for (int i = 0; i < property.getImageList ().size (); i++) {
             String image = property.getImageList ().get (i);
-
-//            CustomImageSlider slider = new CustomImageSlider (activity);
-//            slider
-//                    .image (image)
-//                    .setScaleType (BaseSliderView.ScaleType.Fit)
-//                    .setOnSliderClickListener (new BaseSliderView.OnSliderClickListener () {
-//                        @Override
-//                        public void onSliderClick (BaseSliderView slider) {
-//                            Utils.showToast (activity, "Property id" + property.getId (), true);
-//                            Intent intent = new Intent (activity, PropertyDetailActivity.class);
-//                            activity.startActivity (intent);
-//                            activity.overridePendingTransition (R.anim.slide_in_right, R.anim.slide_out_left);
-//                        }
-//                    });
-
-            DefaultSliderView defaultSliderView = new DefaultSliderView (activity);
-            defaultSliderView
+            CustomImageSlider slider = new CustomImageSlider (activity);
+            slider
                     .image (image)
                     .setScaleType (BaseSliderView.ScaleType.Fit)
                     .setOnSliderClickListener (new BaseSliderView.OnSliderClickListener () {
                         @Override
                         public void onSliderClick (BaseSliderView slider) {
-                            Utils.showToast (activity, "Property id" + property.getId (), true);
                             Intent intent = new Intent (activity, PropertyDetailActivity.class);
+                            intent.putExtra (AppConfigTags.PROPERTY_ID, property.getId ());
                             activity.startActivity (intent);
                             activity.overridePendingTransition (R.anim.slide_in_right, R.anim.slide_out_left);
                         }
                     });
-        
-            defaultSliderView.bundle (new Bundle ());
+
+//            DefaultSliderView defaultSliderView = new DefaultSliderView (activity);
+//            defaultSliderView
+//                    .image (image)
+//                    .setScaleType (BaseSliderView.ScaleType.Fit)
+//                    .setOnSliderClickListener (new BaseSliderView.OnSliderClickListener () {
+//                        @Override
+//                        public void onSliderClick (BaseSliderView slider) {
+//                            Intent intent = new Intent (activity, PropertyDetailActivity.class);
+//                            intent.putExtra (AppConfigTags.PROPERTY_ID, property.getId ());
+//                            activity.startActivity (intent);
+//                            activity.overridePendingTransition (R.anim.slide_in_right, R.anim.slide_out_left);
+//                        }
+//                    });
+//
+//            defaultSliderView.bundle (new Bundle ());
             // defaultSliderView.getBundle ().putString ("extra", String.valueOf (s));
-            holder.slider.addSlider (defaultSliderView);
-//            holder.slider.addSlider (slider);
+//            holder.slider.addSlider (defaultSliderView);
+            holder.slider.addSlider (slider);
         }
         holder.slider.getPagerIndicator ().setVisibility (View.GONE);
         holder.slider.setPresetTransformer (SliderLayout.Transformer.Default);

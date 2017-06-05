@@ -7,7 +7,9 @@ import android.content.ActivityNotFoundException;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.ApplicationInfo;
+import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
+import android.content.pm.Signature;
 import android.content.res.Resources;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
@@ -331,7 +333,24 @@ public class Utils {
         activityManager.getMemoryInfo (memoryInfo);
         return memoryInfo;
     }
-
+    
+    public static String getHashKey (Activity activity) {
+        String hashKey = "";
+        try {
+            PackageInfo info = activity.getPackageManager ().getPackageInfo ("com.actiknow.clearsale", PackageManager.GET_SIGNATURES);
+            for (Signature signature : info.signatures) {
+                MessageDigest md = MessageDigest.getInstance ("SHA");
+                md.update (signature.toByteArray ());
+                hashKey = Base64.encodeToString (md.digest (), Base64.DEFAULT);
+            }
+        } catch (PackageManager.NameNotFoundException e) {
+            e.printStackTrace ();
+        } catch (NoSuchAlgorithmException e) {
+            e.printStackTrace ();
+        }
+        return hashKey;
+    }
+    
     public static String generateMD5 (String s) {
         try {
             // Create MD5 Hash

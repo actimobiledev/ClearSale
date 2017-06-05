@@ -30,6 +30,7 @@ public class AppConfigTags {
     
     public static String PROPERTY_ID = "property_id";
     public static String PROPERTY_ADDRESS = "property_address";
+    public static String PROPERTY_ADDRESS2 = "property_city";
     public static String PROPERTY_CITY = "property_city";
     public static String PROPERTY_STATE = "property_state";
     public static String PROPERTY_PRICE = "property_price";
@@ -39,6 +40,7 @@ public class AppConfigTags {
     public static String PROPERTY_STATUS = "property_status";
     public static String PROPERTY_AREA = "property_area";
     public static String PROPERTY_IS_OFFER = "is_offer";
+    public static String PROPERTY_IS_FAVOURITE = "property_is_favourite";
     public static String PROPERTY_IMAGES = "property_images";
     public static String PROPERTY_IMAGE = "property_image";
     public static String PROPERTIES = "properties";
@@ -51,6 +53,7 @@ public class AppConfigTags {
     public static String BUYER_MOBILE = "buyer_mobile";
     public static String BUYER_PASSWORD = "buyer_password";
     public static String BUYER_FIREBASE_ID = "buyer_firebase_id";
+    public static String BUYER_LINKEDIN_ID = "buyer_linkedin_id";
     public static String BUYER_FACEBOOK_ID = "buyer_facebook_id";
     public static String PROFILE_STATUS = "profile_status";
     
@@ -77,11 +80,16 @@ public class AppConfigTags {
     public static String PROFILE_HOME_TYPE = "profile_home_type";
     
     
-    public static String PROPERTY_OVERVIEW = "overview";
-    public static String PROPERTY_COMPS = "overview";
-    public static String PROPERTY_ACCESS = "access";
-    public static String PROPERTY_REALTOR = "realtor";
-    public static String PROPERTY_OFFER = "offer";
+    public static String PROPERTY_OVERVIEW = "property_overview";
+    public static String PROPERTY_COMPS = "property_comps";
+    public static String PROPERTY_ACCESS = "property_access";
+    public static String PROPERTY_REALTOR = "property_realtor";
+    public static String PROPERTY_OFFER = "is_offer";
     
+    
+    public static String PROPERTY_BID_AMOUNT = "bid_amt";
+    public static String PROPERTY_BID_COMMENTS = "bid_comments";
+    public static String PROPERTY_BID_AUCTION_ID = "auction_id";
+    public static String PROPERTY_BID_AUCTION_STATUS = "auction_status";
     
 }

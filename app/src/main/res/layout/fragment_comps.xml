@@ -14,17 +14,26 @@
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="match_parent"
             android:orientation="vertical"
             android:padding="12dp">
 
             <TextView
+                android:id="@+id/tvComps"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:autoLink="web"
+                android:linksClickable="true"
                 android:text="Subject Property:  1200 sq ft, 2 bed, 2 bath - Zillow"
                 android:textColor="@color/text_color_black"
                 android:textSize="15sp"
-                android:textStyle="bold" />
+                android:visibility="gone"/>
+
+
+            <WebView
+                android:id="@+id/webView1"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"/>
 
             <TextView
                 android:layout_width="match_parent"
@@ -33,7 +42,8 @@
                 android:text="7040 E Girard Ave #104, Denver, CO 80224 - Under Contract $270,000 on 2/8/17, 2 bed, 2 bath, 1200 sq ft - Zillow"
                 android:textColor="@color/text_color_black"
                 android:textSize="15sp"
-                android:textStyle="bold" />
+                android:textStyle="bold"
+                android:visibility="gone"/>
 
             <TextView
                 android:layout_width="match_parent"
@@ -41,7 +51,8 @@
                 android:layout_marginTop="10dp"
                 android:text="Morning-side Condo complex, same as subject. Same layout as subject.  Clean remodel. The only comps selling for top ARV have clean flip remodels. Our subject has nice cabinetry in the kitchen and bathrooms that are usable for flip. This is why we have set the fix budget at $25,000 versus $30,000.  1-car covered garage parking space, same as subje "
                 android:textColor="@color/text_color_black"
-                android:textSize="15sp" />
+                android:textSize="15sp"
+                android:visibility="gone"/>
 
             <TextView
                 android:layout_width="match_parent"
@@ -50,7 +61,8 @@
                 android:text="3465 S Poplar St #105, Denver, CO 80224 - Sold $269,500 on 2/13/17, 2 bed, 2 bath, 1173 sq ft - Zillow"
                 android:textColor="@color/text_color_black"
                 android:textSize="15sp"
-                android:textStyle="bold" />
+                android:textStyle="bold"
+                android:visibility="gone"/>
 
             <TextView
                 android:layout_width="match_parent"
@@ -58,7 +70,8 @@
                 android:layout_marginTop="5dp"
                 android:text="Morning-side Condo complex, same as subject. Same layout as subject.  Clean remodel. The only comps selling for top ARV have clean flip remodels. Our subject has nice cabinetry in the kitchen and bathrooms that are usable for flip. This is why we have set the fix budget at $25,000 versus $30,000.  1-car covered garage parking space, same as subject."
                 android:textColor="@color/text_color_black"
-                android:textSize="15sp" />
+                android:textSize="15sp"
+                android:visibility="gone"/>
 
             <TextView
                 android:layout_width="match_parent"
@@ -67,7 +80,8 @@
                 android:text=" 6930 E Girard Ave #403, Denver, CO 80224 - Sold $250,000 on 8/16/16, 2 bed 2 bath, 1300 sq ft - Zillow"
                 android:textColor="@color/text_color_black"
                 android:textSize="15sp"
-                android:textStyle="bold" />
+                android:textStyle="bold"
+                android:visibility="gone"/>
 
             <TextView
                 android:layout_width="match_parent"
@@ -76,7 +90,8 @@
                 android:text="Morning-side Condo complex, same as subject. Same layout as subject. This comps listed on MLS as 1300 sq ft, perhaps they are counting the patio space. Our subject has a fully enclosed patio of 112 sf (this is not included in our 1200 sf listed).
 This comp is 6 months older than above comps. Clean remodel. The only comps selling for top ARV have clean flip remodels. Our subject has nice cabinetry in the kitchen and bathrooms that are usable for flip. This is why we have set the fix budget at $25,000 versus $30,000.  1-car covered garage parking space, same as subject."
                 android:textColor="@color/text_color_black"
-                android:textSize="15sp" />
+                android:textSize="15sp"
+                android:visibility="gone"/>
 
 
         </LinearLayout>

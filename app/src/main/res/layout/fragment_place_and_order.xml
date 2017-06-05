@@ -14,72 +14,89 @@
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="match_parent"
             android:orientation="vertical"
             android:padding="12dp">
 
+
+            <WebView
+                android:id="@+id/webView1"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"/>
+
+
             <TextView
+                android:id="@+id/tvOffer"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="To place your offer, please scroll to the top of this page, just under the pictures. Enter the price that makes it a buy for you, and we consider this a binding offer that you are ready to wire $8000 and sign Purchase Agreement within 4 business hours."
                 android:textColor="@color/text_color_black"
-                android:textSize="15sp" />
+                android:textSize="15sp"
+                android:visibility="gone"/>
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_marginTop="30dp"
                 android:text="In the comment section, state the possession and close date detailed above, note if your lender will require an appraisal access and note any variance from what we offer in your comments. Do not include escalation clauses, we cannot accommodate those at this time. Offers do not include any commissions, so if you expect a payment you must note that in comments section of your offer."
                 android:textColor="@color/text_color_black"
                 android:textSize="15sp"
-                android:layout_marginTop="30dp"/>
+                android:visibility="gone"/>
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_marginTop="30dp"
                 android:text="$5,000 non-refundable deposit due at contract/assignment signing. $3,000 earnest money due to title company at contract/assignment signing. These BOTH count towards Your Buy Price and neither is refundable except when we can't provide you clear title or if seller doesn't close. Your Buy Price is net to seller – Buyer pays all closing costs (see below for details). For some properties close may be delayed or sped up dependent on tenant vacating property – ask us for details."
                 android:textColor="@color/text_color_black"
                 android:textSize="15sp"
-                android:layout_marginTop="30dp"/>
+                android:visibility="gone"/>
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_marginTop="30dp"
                 android:text="Looking forward to working with you on this New Wholesale Property."
                 android:textColor="@color/text_color_black"
                 android:textSize="15sp"
-                android:layout_marginTop="30dp"/>
+                android:visibility="gone"/>
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_marginTop="30dp"
                 android:text="Hope Byrne, Principal"
                 android:textColor="@color/text_color_black"
                 android:textSize="15sp"
-                android:layout_marginTop="30dp"/>
+                android:visibility="gone"/>
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_marginTop="20dp"
                 android:text="HomeTrust LLC"
                 android:textColor="@color/text_color_black"
                 android:textSize="15sp"
-                android:layout_marginTop="20dp"/>
+                android:visibility="gone"/>
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_marginTop="20dp"
                 android:text="HomeTrustWholesale@gmail.com"
                 android:textColor="@color/text_color_blue"
                 android:textSize="15sp"
-                android:layout_marginTop="20dp"/>
+                android:visibility="gone"/>
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_marginTop="20dp"
                 android:text="Text: 303-816-3170 (do not text for showing info, email the above email)"
                 android:textColor="@color/text_color_black"
                 android:textSize="15sp"
-                android:layout_marginTop="20dp"/>
+                android:visibility="gone"/>
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_marginTop="40dp"
                 android:text="All square footage, beds/baths, and other details are estimates. Buyer must verify zoning and utilities. Do your own due diligence. Selling Price is net to Seller:  any commissions/finders fees must be added on top, and buyer is responsible for all costs associated with purchase and closing. Non-refundable deposit and earnest money due via wire transfer at Contract/Assignment signing. Cash or hard money only. Information deemed reliable but not guaranteed. Properties are sold “as-is.”"
                 android:textColor="@color/text_color_black"
                 android:textSize="12sp"
-                android:layout_marginTop="40dp"/>
+                android:visibility="gone"/>
 
 
         </LinearLayout>

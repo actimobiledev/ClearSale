@@ -16,6 +16,17 @@
         <item name="popupTheme">@style/ThemeOverlay.AppCompat.Light</item>
     </style>
 
+
+    <style name="Widget.MyApp.TransparentActionBar" parent="Widget.AppCompat.ActionBar">
+        <item name="android:background">#00ffffff</item>
+        <item name="theme">@style/ThemeOverlay.MyApp.ActionBar</item>
+        <item name="popupTheme">@style/ThemeOverlay.AppCompat.Light</item>
+    </style>
+
+
+    <style name="AppTheme.AppBarOverlay2" parent="ThemeOverlay.AppCompat.ActionBar">
+        <item name="android:background">#00ffffff</item>
+    </style>
     <style name="AppTheme.AppBarOverlay" parent="ThemeOverlay.AppCompat.ActionBar"/>
     <style name="AppTheme.PopupOverlay" parent="ThemeOverlay.AppCompat.Light"/>
 
@@ -86,9 +97,6 @@
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
         <item name="colorAccent">@color/colorAccent</item>
     </style>
-
-
-
 
 
 

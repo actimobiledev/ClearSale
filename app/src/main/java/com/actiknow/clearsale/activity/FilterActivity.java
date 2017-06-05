@@ -35,21 +35,35 @@ public class FilterActivity extends AppCompatActivity {
     MaterialSpinner spinner;
     MaterialSpinner spinnerBed;
     MaterialSpinner spinnerBath;
+    
+    TextView tvBedAny;
+    TextView tvBed2;
+    TextView tvBed3;
+    TextView tvBed4;
+    
+    TextView tvBathAny;
+    TextView tvBath2;
+    TextView tvBath3;
+    TextView tvBath4;
+    String bedroom;
+    String bathroom;
+
+
     TextView tvApply;
     private String[] Price = new String[] {"0", "$100K", "$150K", "$200k", "$300K", "$300+K"};
     private String[] BedRoom = new String[] {"Any", "2-3", "3-4", "4+"};
     private String[] Bath = new String[] {"Any", "2-3", "3-4", "4+"};
     private String[] Location = new String[] {"0", "2", "4", "6", "8+"};
-    
+
     @Override
     protected void onCreate (Bundle savedInstanceState) {
         super.onCreate (savedInstanceState);
-        
+    
         setContentView (R.layout.activity_filter);
         initView ();
         initData ();
         initListener ();
-        
+
     }
     
     private void initView () {
@@ -63,6 +77,17 @@ public class FilterActivity extends AppCompatActivity {
         spinner = (MaterialSpinner) findViewById (R.id.spinner);
         spinnerBed = (MaterialSpinner) findViewById (R.id.spinnerBed);
         spinnerBath = (MaterialSpinner) findViewById (R.id.spinnerBath);
+    
+    
+        tvBedAny = (TextView) findViewById (R.id.tvBedAny);
+        tvBed2 = (TextView) findViewById (R.id.tvBed2);
+        tvBed3 = (TextView) findViewById (R.id.tvBed3);
+        tvBed4 = (TextView) findViewById (R.id.tvBed4);
+    
+        tvBathAny = (TextView) findViewById (R.id.tvBathAny);
+        tvBath2 = (TextView) findViewById (R.id.tvBath2);
+        tvBath3 = (TextView) findViewById (R.id.tvBath3);
+        tvBath4 = (TextView) findViewById (R.id.tvBath4);
     }
     
     private void initData () {
@@ -86,7 +111,7 @@ public class FilterActivity extends AppCompatActivity {
     private void initListener () {
         spinner.setItems ("All", "Available", "First Look", "Pending", "Sold", "Offer Window Closing");
         spinner.setOnItemSelectedListener (new MaterialSpinner.OnItemSelectedListener<String> () {
-            
+    
             @Override
             public void onItemSelected (MaterialSpinner view, int position, long id, String item) {
 //                Snackbar.make (view, "Clicked " + item, Snackbar.LENGTH_LONG).show ();
@@ -95,7 +120,7 @@ public class FilterActivity extends AppCompatActivity {
         
         spinnerBed.setItems (BedRoom);
         spinnerBed.setOnItemSelectedListener (new MaterialSpinner.OnItemSelectedListener<String> () {
-            
+    
             @Override
             public void onItemSelected (MaterialSpinner view, int position, long id, String item) {
 //                Snackbar.make (view, "Clicked " + item, Snackbar.LENGTH_LONG).show ();
@@ -104,7 +129,7 @@ public class FilterActivity extends AppCompatActivity {
         
         spinnerBath.setItems (Bath);
         spinnerBath.setOnItemSelectedListener (new MaterialSpinner.OnItemSelectedListener<String> () {
-            
+    
             @Override
             public void onItemSelected (MaterialSpinner view, int position, long id, String item) {
 //                Snackbar.make (view, "Clicked " + item, Snackbar.LENGTH_LONG).show ();
@@ -123,10 +148,10 @@ public class FilterActivity extends AppCompatActivity {
             @Override
             public void onStartRangeChanged (@NotNull SimpleRangeView simpleRangeView, int i) {
             }
-            
+    
             @Override
             public void onEndRangeChanged (@NotNull SimpleRangeView simpleRangeView, int i) {
-                
+        
             }
         });
         
@@ -143,10 +168,10 @@ public class FilterActivity extends AppCompatActivity {
             public void onStartRangeChanged (@NotNull SimpleRangeView simpleRangeView, int i) {
                 simpleRangeView.setStart (0);
             }
-            
+    
             @Override
             public void onEndRangeChanged (@NotNull SimpleRangeView simpleRangeView, int i) {
-                
+        
             }
         });
         
@@ -165,6 +190,184 @@ public class FilterActivity extends AppCompatActivity {
                 overridePendingTransition (R.anim.stay, R.anim.slide_out_down);
             }
         });
+    
+    
+        tvBedAny.setOnClickListener (new View.OnClickListener () {
+            @Override
+            public void onClick (View view) {
+                bedroom = "";
+            
+                tvBedAny.setBackgroundResource (R.drawable.state_button_selected);
+                tvBedAny.setTextColor (getResources ().getColor (R.color.text_color_white));
+            
+                tvBed2.setBackgroundResource (R.drawable.state_button_unselected);
+                tvBed2.setTextColor (getResources ().getColor (R.color.app_text_color_dark));
+            
+                tvBed3.setBackgroundResource (R.drawable.state_button_unselected);
+                tvBed3.setTextColor (getResources ().getColor (R.color.app_text_color_dark));
+            
+                tvBed4.setBackgroundResource (R.drawable.state_button_unselected);
+                tvBed4.setTextColor (getResources ().getColor (R.color.app_text_color_dark));
+            
+            
+            }
+        });
+    
+    
+        tvBed2.setOnClickListener (new View.OnClickListener () {
+            @Override
+            public void onClick (View view) {
+                bedroom = "2-3";
+            
+                tvBed2.setBackgroundResource (R.drawable.state_button_selected);
+                tvBed2.setTextColor (getResources ().getColor (R.color.text_color_white));
+            
+                tvBedAny.setBackgroundResource (R.drawable.state_button_unselected);
+                tvBedAny.setTextColor (getResources ().getColor (R.color.app_text_color_dark));
+            
+                tvBed3.setBackgroundResource (R.drawable.state_button_unselected);
+                tvBed3.setTextColor (getResources ().getColor (R.color.app_text_color_dark));
+            
+                tvBed4.setBackgroundResource (R.drawable.state_button_unselected);
+                tvBed4.setTextColor (getResources ().getColor (R.color.app_text_color_dark));
+            
+            
+            }
+        });
+    
+    
+        tvBed3.setOnClickListener (new View.OnClickListener () {
+            @Override
+            public void onClick (View view) {
+                bedroom = "3-4";
+            
+                tvBed3.setBackgroundResource (R.drawable.state_button_selected);
+                tvBed3.setTextColor (getResources ().getColor (R.color.text_color_white));
+            
+                tvBedAny.setBackgroundResource (R.drawable.state_button_unselected);
+                tvBedAny.setTextColor (getResources ().getColor (R.color.app_text_color_dark));
+            
+                tvBed2.setBackgroundResource (R.drawable.state_button_unselected);
+                tvBed2.setTextColor (getResources ().getColor (R.color.app_text_color_dark));
+            
+                tvBed4.setBackgroundResource (R.drawable.state_button_unselected);
+                tvBed4.setTextColor (getResources ().getColor (R.color.app_text_color_dark));
+            
+            
+            }
+        });
+    
+    
+        tvBed4.setOnClickListener (new View.OnClickListener () {
+            @Override
+            public void onClick (View view) {
+                bedroom = "4+";
+            
+                tvBed4.setBackgroundResource (R.drawable.state_button_selected);
+                tvBed4.setTextColor (getResources ().getColor (R.color.text_color_white));
+            
+                tvBedAny.setBackgroundResource (R.drawable.state_button_unselected);
+                tvBedAny.setTextColor (getResources ().getColor (R.color.app_text_color_dark));
+            
+                tvBed2.setBackgroundResource (R.drawable.state_button_unselected);
+                tvBed2.setTextColor (getResources ().getColor (R.color.app_text_color_dark));
+            
+                tvBed3.setBackgroundResource (R.drawable.state_button_unselected);
+                tvBed3.setTextColor (getResources ().getColor (R.color.app_text_color_dark));
+            
+            
+            }
+        });
+    
+    
+        tvBathAny.setOnClickListener (new View.OnClickListener () {
+            @Override
+            public void onClick (View view) {
+                bathroom = "";
+            
+                tvBathAny.setBackgroundResource (R.drawable.state_button_selected);
+                tvBathAny.setTextColor (getResources ().getColor (R.color.text_color_white));
+            
+                tvBath2.setBackgroundResource (R.drawable.state_button_unselected);
+                tvBath2.setTextColor (getResources ().getColor (R.color.app_text_color_dark));
+            
+                tvBath3.setBackgroundResource (R.drawable.state_button_unselected);
+                tvBath3.setTextColor (getResources ().getColor (R.color.app_text_color_dark));
+            
+                tvBath4.setBackgroundResource (R.drawable.state_button_unselected);
+                tvBath4.setTextColor (getResources ().getColor (R.color.app_text_color_dark));
+            
+            
+            }
+        });
+    
+    
+        tvBath2.setOnClickListener (new View.OnClickListener () {
+            @Override
+            public void onClick (View view) {
+                bathroom = "2-3";
+            
+                tvBath2.setBackgroundResource (R.drawable.state_button_selected);
+                tvBath2.setTextColor (getResources ().getColor (R.color.text_color_white));
+            
+                tvBathAny.setBackgroundResource (R.drawable.state_button_unselected);
+                tvBathAny.setTextColor (getResources ().getColor (R.color.app_text_color_dark));
+            
+                tvBath3.setBackgroundResource (R.drawable.state_button_unselected);
+                tvBath3.setTextColor (getResources ().getColor (R.color.app_text_color_dark));
+            
+                tvBath4.setBackgroundResource (R.drawable.state_button_unselected);
+                tvBath4.setTextColor (getResources ().getColor (R.color.app_text_color_dark));
+            
+            
+            }
+        });
+    
+    
+        tvBath3.setOnClickListener (new View.OnClickListener () {
+            @Override
+            public void onClick (View view) {
+                bathroom = "3-4";
+            
+                tvBath3.setBackgroundResource (R.drawable.state_button_selected);
+                tvBath3.setTextColor (getResources ().getColor (R.color.text_color_white));
+            
+                tvBathAny.setBackgroundResource (R.drawable.state_button_unselected);
+                tvBathAny.setTextColor (getResources ().getColor (R.color.app_text_color_dark));
+            
+                tvBath2.setBackgroundResource (R.drawable.state_button_unselected);
+                tvBath2.setTextColor (getResources ().getColor (R.color.app_text_color_dark));
+            
+                tvBath4.setBackgroundResource (R.drawable.state_button_unselected);
+                tvBath4.setTextColor (getResources ().getColor (R.color.app_text_color_dark));
+            
+            
+            }
+        });
+    
+    
+        tvBath4.setOnClickListener (new View.OnClickListener () {
+            @Override
+            public void onClick (View view) {
+                bathroom = "4+";
+            
+                tvBath4.setBackgroundResource (R.drawable.state_button_selected);
+                tvBath4.setTextColor (getResources ().getColor (R.color.text_color_white));
+            
+                tvBathAny.setBackgroundResource (R.drawable.state_button_unselected);
+                tvBathAny.setTextColor (getResources ().getColor (R.color.app_text_color_dark));
+            
+                tvBath2.setBackgroundResource (R.drawable.state_button_unselected);
+                tvBath2.setTextColor (getResources ().getColor (R.color.app_text_color_dark));
+            
+                tvBath3.setBackgroundResource (R.drawable.state_button_unselected);
+                tvBath3.setTextColor (getResources ().getColor (R.color.app_text_color_dark));
+            
+            
+            }
+        });
+
+
     }
     
     @Override

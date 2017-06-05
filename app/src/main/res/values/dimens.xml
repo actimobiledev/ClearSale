@@ -46,11 +46,9 @@
 
     <dimen name="welcome_screen_bottom_padding">50dp</dimen>
 
-    <!--
-        <dimen name="material_drawer_item_primary_text">22sp</dimen>
-    -->
 
-    <dimen name="material_drawer_account_header_text">26sp</dimen>
+    <dimen name="material_drawer_item_primary_text">16sp</dimen>
+    <dimen name="material_drawer_account_header_text">16sp</dimen>
 
 
     <!-- Karman -->

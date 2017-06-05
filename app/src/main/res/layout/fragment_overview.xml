@@ -6,73 +6,191 @@
     android:layout_height="match_parent"
     app:layout_behavior="@string/appbar_scrolling_view_behavior">
 
-
-    <android.support.v7.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_margin="10dp">
+        android:layout_height="wrap_content">
 
         <LinearLayout
+            android:id="@+id/llPropertyOffer"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="vertical"
-            android:padding="12dp">
+            android:layout_marginLeft="@dimen/activity_margin"
+            android:layout_marginRight="@dimen/activity_margin"
+            android:orientation="vertical">
 
             <TextView
-                android:layout_width="match_parent"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Hampden 2 bed 2 bath condo in Morning-side Condominium complex in clean rental shape and priced to flip. All of the listed comps are in the Morning-side complex. There are various street names and addresses that are a part of this 13 acre community. All comps are built around the early to mid 1970's with nearly exact same layouts (some minimal variation). Our subject works as a straightforward flip. "
-                android:textColor="@color/text_color_black"
-                android:textSize="15sp" />
-
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="20dp"
-                android:text="There are two recent sales (Feb 2017) for $270,000; both of these condos have the same layout and same beds/baths as our subject and fixed with clean flip remodels. We have placed the flip budget at $25,000. Our subject has nice cabinetry in the kitchen and bathrooms that are usable for flip. The kitchen can be complete with new counter-tops, hardware, appliances, light fixtures and back-splash if you wish. There are ceiling fans in good condition and hardwood flooring in the entryway and kitchen you may or may not choose to keep. "
-                android:textColor="@color/text_color_black"
-                android:textSize="15sp" />
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="20dp"
-                android:text="The HOA on this building is $371 per month. With this HOA fee and market rent on these condos at around $1500 per month, this project does look better as a fix and sell. Close is April 19. The property is already vacant. This date can possibly be moved sooner. Please let us know if you would like to request a faster close. "
-                android:textColor="@color/text_color_black"
-                android:textSize="15sp" />
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="20dp"
-                android:text="ARV Estimate:  $270,000   "
-                android:textColor="@color/text_color_black"
-                android:textSize="15sp" />
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="10dp"
-                android:text="Fix Estimate:  Rental $3500   Flip $25,000"
-                android:textColor="@color/text_color_black"
-                android:textSize="15sp" />
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="10dp"
-                android:text="Your Buy Price:  $189,995"
-                android:textColor="@color/text_color_black"
-                android:textSize="18sp"
+                android:layout_marginTop="@dimen/activity_margin"
+                android:text="@string/activity_property_detail_text_best_offer"
+                android:textSize="@dimen/text_size_medium"
                 android:textStyle="bold"/>
-            <TextView
+
+
+            <EditText
+                android:id="@+id/etOfferUsd"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="20dp"
-                android:text="If you are an agent, your buyers price including 2.8% commission: $195,314"
-                android:textColor="@color/text_color_black"
-                android:textSize="12sp"
-               android:paddingBottom="10dp"/>
+                android:background="@drawable/edit_text_background"
+                android:hint="@string/activity_property_detail_hint_usd"
+                android:inputType="number"
+                android:lines="1"
+                android:padding="@dimen/edittext_padding"
+                android:textColorHint="@color/hint_text_color"
+                android:textSize="@dimen/text_size_medium"/>
+
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:paddingTop="@dimen/edittext_padding"
+
+                android:text="@string/activity_property_detail_text_offer_detail"
+                android:textSize="@dimen/text_size_medium"
+                android:textStyle="bold"/>
+
+
+            <EditText
+                android:id="@+id/etOfferDetail"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/edit_text_background"
+                android:gravity="top"
+                android:inputType="textMultiLine"
+                android:lines="3"
+                android:padding="@dimen/edittext_padding"
+                android:textColorHint="@color/hint_text_color"
+                android:textSize="@dimen/text_size_medium"/>
+
+
+            <com.actiknow.clearsale.utils.ExpandableTextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:paddingTop="@dimen/edittext_padding"
+                android:text="@string/activity_property_detail_text_offer_detail2"/>
+
+
+            <CheckBox
+                android:id="@+id/cbAttendedAccess"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/activity_margin"
+                android:text="@string/activity_property_detail_text_attended_access"
+                android:textSize="@dimen/text_size_medium"/>
+
+
+            <com.actiknow.clearsale.utils.ExpandableTextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:paddingTop="@dimen/edittext_padding"
+                android:text="@string/activity_property_detail_text_note"/>
+
+
+            <TextView
+                android:id="@+id/tvSubmit"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/activity_margin"
+                android:background="@drawable/rounded_button"
+                android:elevation="@dimen/button_elevation"
+                android:gravity="center"
+                android:padding="@dimen/button_padding"
+                android:text="@string/activity_contact_button_submit"
+                android:textColor="@color/text_color_white"
+                android:textSize="@dimen/text_size_extra_large"
+                android:textStyle="bold"/>
+
 
         </LinearLayout>
 
-    </android.support.v7.widget.CardView>
+
+        <android.support.v7.widget.CardView
+            xmlns:android="http://schemas.android.com/apk/res/android"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/llPropertyOffer"
+            android:layout_margin="10dp">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="vertical"
+                android:padding="12dp">
 
 
+                <WebView
+                    android:id="@+id/webView1"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"/>
+
+
+                <TextView
+                    android:id="@+id/tvOverView"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:textColor="@color/text_color_black"
+                    android:textSize="15sp"
+                    android:visibility="gone"/>
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="20dp"
+                    android:text="There are two recent sales (Feb 2017) for $270,000; both of these condos have the same layout and same beds/baths as our subject and fixed with clean flip remodels. We have placed the flip budget at $25,000. Our subject has nice cabinetry in the kitchen and bathrooms that are usable for flip. The kitchen can be complete with new counter-tops, hardware, appliances, light fixtures and back-splash if you wish. There are ceiling fans in good condition and hardwood flooring in the entryway and kitchen you may or may not choose to keep. "
+                    android:textColor="@color/text_color_black"
+                    android:textSize="15sp"
+                    android:visibility="gone"/>
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="20dp"
+                    android:text="The HOA on this building is $371 per month. With this HOA fee and market rent on these condos at around $1500 per month, this project does look better as a fix and sell. Close is April 19. The property is already vacant. This date can possibly be moved sooner. Please let us know if you would like to request a faster close. "
+                    android:textColor="@color/text_color_black"
+                    android:textSize="15sp"
+                    android:visibility="gone"/>
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="20dp"
+                    android:text="ARV Estimate:  $270,000   "
+                    android:textColor="@color/text_color_black"
+                    android:textSize="15sp"
+                    android:visibility="gone"/>
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:text="Fix Estimate:  Rental $3500   Flip $25,000"
+                    android:textColor="@color/text_color_black"
+                    android:textSize="15sp"
+                    android:visibility="gone"/>
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:text="Your Buy Price:  $189,995"
+                    android:textColor="@color/text_color_black"
+                    android:textSize="18sp"
+                    android:textStyle="bold"
+                    android:visibility="gone"/>
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="20dp"
+                    android:paddingBottom="10dp"
+                    android:text="If you are an agent, your buyers price including 2.8% commission: $195,314"
+                    android:textColor="@color/text_color_black"
+                    android:textSize="12sp"
+                    android:visibility="gone"/>
+
+            </LinearLayout>
+
+        </android.support.v7.widget.CardView>
+
+    </RelativeLayout>
 </android.support.v4.widget.NestedScrollView>

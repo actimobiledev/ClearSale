@@ -31,9 +31,7 @@ import com.actiknow.clearsale.utils.NetworkConnection;
 import com.actiknow.clearsale.utils.TypefaceSpan;
 import com.actiknow.clearsale.utils.Utils;
 import com.android.volley.AuthFailureError;
-import com.android.volley.NetworkResponse;
 import com.android.volley.Request;
-import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.jaredrummler.materialspinner.MaterialSpinner;
@@ -62,13 +60,25 @@ public class MyProfileActivity extends AppCompatActivity {
     List<String> budgetSelectedList = new ArrayList ();
     ProgressDialog progressDialog;
     String[] spinnerItems;
-
+    
+    TextView tvButton1;
+    TextView tvButton2;
+    TextView tvButton3;
+    TextView tvButton4;
+    TextView tvButton5;
+    TextView tvButton6;
+    TextView tvButton7;
+    TextView tvButton8;
+    TextView tvButton9;
+    TextView tvButton10;
+    
     RelativeLayout rlBack;
     TextView tvSave;
     
+    List<String> stateList = new ArrayList<String> ();
+    
     TextView tvColorado;
     TextView tvSeattle;
-    
     
     @Override
     protected void onCreate (Bundle savedInstanceState) {
@@ -91,7 +101,54 @@ public class MyProfileActivity extends AppCompatActivity {
         String priceRange[] = buyerDetailsPref.getStringPref (MyProfileActivity.this, BuyerDetailsPref.PROFILE_PRICE_RANGE).trim ().split (",");
         
         for (int i = 0; i < stateName.length; i++) {
-            Log.e ("karman", stateName[i]);
+            try {
+                if (stateName[i].equalsIgnoreCase (stateList.get (0))) {
+                    stateSelectedList.add (stateList.get (0));
+                    tvButton1.setBackgroundResource (R.drawable.state_button_selected);
+                    tvButton1.setTextColor (getResources ().getColor (R.color.text_color_white));
+                } else if (stateName[i].equalsIgnoreCase (stateList.get (1))) {
+                    stateSelectedList.add (stateList.get (1));
+                    tvButton2.setBackgroundResource (R.drawable.state_button_selected);
+                    tvButton2.setTextColor (getResources ().getColor (R.color.text_color_white));
+                } else if (stateName[i].equalsIgnoreCase (stateList.get (2))) {
+                    stateSelectedList.add (stateList.get (2));
+                    tvButton3.setBackgroundResource (R.drawable.state_button_selected);
+                    tvButton3.setTextColor (getResources ().getColor (R.color.text_color_white));
+                } else if (stateName[i].equalsIgnoreCase (stateList.get (3))) {
+                    stateSelectedList.add (stateList.get (3));
+                    tvButton4.setBackgroundResource (R.drawable.state_button_selected);
+                    tvButton4.setTextColor (getResources ().getColor (R.color.text_color_white));
+                } else if (stateName[i].equalsIgnoreCase (stateList.get (4))) {
+                    stateSelectedList.add (stateList.get (4));
+                    tvButton5.setBackgroundResource (R.drawable.state_button_selected);
+                    tvButton5.setTextColor (getResources ().getColor (R.color.text_color_white));
+                } else if (stateName[i].equalsIgnoreCase (stateList.get (5))) {
+                    stateSelectedList.add (stateList.get (5));
+                    tvButton6.setBackgroundResource (R.drawable.state_button_selected);
+                    tvButton6.setTextColor (getResources ().getColor (R.color.text_color_white));
+                } else if (stateName[i].equalsIgnoreCase (stateList.get (6))) {
+                    stateSelectedList.add (stateList.get (6));
+                    tvButton7.setBackgroundResource (R.drawable.state_button_selected);
+                    tvButton7.setTextColor (getResources ().getColor (R.color.text_color_white));
+                } else if (stateName[i].equalsIgnoreCase (stateList.get (7))) {
+                    stateSelectedList.add (stateList.get (7));
+                    tvButton8.setBackgroundResource (R.drawable.state_button_selected);
+                    tvButton8.setTextColor (getResources ().getColor (R.color.text_color_white));
+                } else if (stateName[i].equalsIgnoreCase (stateList.get (8))) {
+                    stateSelectedList.add (stateList.get (8));
+                    tvButton9.setBackgroundResource (R.drawable.state_button_selected);
+                    tvButton9.setTextColor (getResources ().getColor (R.color.text_color_white));
+                } else if (stateName[i].equalsIgnoreCase (stateList.get (9))) {
+                    stateSelectedList.add (stateList.get (9));
+                    tvButton10.setBackgroundResource (R.drawable.state_button_selected);
+                    tvButton10.setTextColor (getResources ().getColor (R.color.text_color_white));
+                }
+            } catch (Exception e) {
+                e.printStackTrace ();
+            }
+
+    
+              /*
             switch (stateName[i]) {
                 case "CO":
                     stateSelectedList.add ("CO");
@@ -104,6 +161,7 @@ public class MyProfileActivity extends AppCompatActivity {
                     tvSeattle.setTextColor (getResources ().getColor (R.color.text_color_white));
                     break;
             }
+            */
         }
         
         for (int i = 0; i < priceRange.length; i++) {
@@ -123,7 +181,6 @@ public class MyProfileActivity extends AppCompatActivity {
             }
         }
         
-        
         if (buyerDetailsPref.getStringPref (MyProfileActivity.this, BuyerDetailsPref.PROFILE_HOME_TYPE).equalsIgnoreCase (spinnerItems[1])) {
             spinner.setSelectedIndex (1);
         } else if (buyerDetailsPref.getStringPref (MyProfileActivity.this, BuyerDetailsPref.PROFILE_HOME_TYPE).equalsIgnoreCase (spinnerItems[2])) {
@@ -133,8 +190,6 @@ public class MyProfileActivity extends AppCompatActivity {
         } else if (buyerDetailsPref.getStringPref (MyProfileActivity.this, BuyerDetailsPref.PROFILE_HOME_TYPE).equalsIgnoreCase (spinnerItems[4])) {
             spinner.setSelectedIndex (4);
         }
-        
-        
     }
     
     private void initView () {
@@ -152,6 +207,18 @@ public class MyProfileActivity extends AppCompatActivity {
         clMain = (CoordinatorLayout) findViewById (R.id.clMain);
         tvColorado = (TextView) findViewById (R.id.tvColorado);
         tvSeattle = (TextView) findViewById (R.id.tvSeattle);
+    
+    
+        tvButton1 = (TextView) findViewById (R.id.tvButton1);
+        tvButton2 = (TextView) findViewById (R.id.tvButton2);
+        tvButton3 = (TextView) findViewById (R.id.tvButton3);
+        tvButton4 = (TextView) findViewById (R.id.tvButton4);
+        tvButton5 = (TextView) findViewById (R.id.tvButton5);
+        tvButton6 = (TextView) findViewById (R.id.tvButton6);
+        tvButton7 = (TextView) findViewById (R.id.tvButton7);
+        tvButton8 = (TextView) findViewById (R.id.tvButton8);
+        tvButton9 = (TextView) findViewById (R.id.tvButton9);
+        tvButton10 = (TextView) findViewById (R.id.tvButton10);
         
         Utils.setTypefaceToAllViews (this, tvSave);
     }
@@ -166,30 +233,1195 @@ public class MyProfileActivity extends AppCompatActivity {
                 "Whole house remodel include moving walls plus all of the above",
                 "Structural work plus all of above",
         };
+    
+        stateList.clear ();
+        stateList.add ("CO");
+        stateList.add ("WA");
+       
         ArrayAdapter<String> spinnerArrayAdapter = new ArrayAdapter<String> (this, R.layout.spinner, spinnerItems);
         spinnerArrayAdapter.setDropDownViewResource (R.layout.spinner);
         spinner.setAdapter (spinnerArrayAdapter);
-
-
-//        List<String> stateList = new ArrayList<String> ();
-//        stateList.add ("CO");
-//        stateList.add ("WA");
-
-//        llState.setWeightSum (2);
-//        for (int i = 0; i < stateList.size (); i++) {
-//            LinearLayoutCompat.LayoutParams lparams = new LinearLayoutCompat.LayoutParams (
-//                    LinearLayoutCompat.LayoutParams.WRAP_CONTENT, LinearLayoutCompat.LayoutParams.WRAP_CONTENT, 1);
-//            TextView tvState2 = new TextView (MyProfileActivity.this);
-//            tvState2.setText (stateList.get (i));
-//            tvState2.setId (i);
-//            tvState2.setPadding (30, 30, 30, 30);
-//            tvState2.setLayoutParams (lparams);
-//            llState.addView (tvState2);
-//            tvState2.setBackgroundResource (R.drawable.state_button_unselected);
-//            tvState2.setTextColor (Color.BLACK);
-//        }
-        
-        
+    
+    
+        llState.setWeightSum (stateList.size ());
+        for (int i = 1; i <= stateList.size (); i++) {
+            switch (i) {
+                case 1:
+                    tvButton1.setText (stateList.get (0));
+                    tvButton1.setVisibility (View.VISIBLE);
+                    tvButton1.setOnClickListener (new View.OnClickListener () {
+                        @Override
+                        public void onClick (View v) {
+                            if (stateSelectedList.contains (stateList.get (0))) {
+                                for (int i = 0; i < stateSelectedList.size (); i++) {
+                                    if (stateSelectedList.get (i).equalsIgnoreCase (stateList.get (0))) {
+                                        stateSelectedList.remove (i);
+                                        tvButton1.setBackgroundResource (R.drawable.state_button_unselected);
+                                        tvButton1.setTextColor (getResources ().getColor (R.color.app_text_color_dark));
+                                    }
+                                }
+                            } else {
+                                stateSelectedList.add (stateList.get (0));
+                                tvButton1.setBackgroundResource (R.drawable.state_button_selected);
+                                tvButton1.setTextColor (getResources ().getColor (R.color.text_color_white));
+                            }
+                        }
+                    });
+                
+                    break;
+                case 2:
+                    tvButton1.setText (stateList.get (0));
+                    tvButton1.setVisibility (View.VISIBLE);
+                    tvButton2.setText (stateList.get (1));
+                    tvButton2.setVisibility (View.VISIBLE);
+                    tvButton1.setOnClickListener (new View.OnClickListener () {
+                        @Override
+                        public void onClick (View v) {
+                            if (stateSelectedList.contains (stateList.get (0))) {
+                                for (int i = 0; i < stateSelectedList.size (); i++) {
+                                    if (stateSelectedList.get (i).equalsIgnoreCase (stateList.get (0))) {
+                                        stateSelectedList.remove (i);
+                                        tvButton1.setBackgroundResource (R.drawable.state_button_unselected);
+                                        tvButton1.setTextColor (getResources ().getColor (R.color.app_text_color_dark));
+                                    }
+                                }
+                            } else {
+                                stateSelectedList.add (stateList.get (0));
+                                tvButton1.setBackgroundResource (R.drawable.state_button_selected);
+                                tvButton1.setTextColor (getResources ().getColor (R.color.text_color_white));
+                            }
+                        }
+                    });
+                
+                    tvButton2.setOnClickListener (new View.OnClickListener () {
+                        @Override
+                        public void onClick (View v) {
+                            if (stateSelectedList.contains (stateList.get (1))) {
+                                for (int i = 0; i < stateSelectedList.size (); i++) {
+                                    if (stateSelectedList.get (i).equalsIgnoreCase (stateList.get (1))) {
+                                        stateSelectedList.remove (i);
+                                        tvButton2.setBackgroundResource (R.drawable.state_button_unselected);
+                                        tvButton2.setTextColor (getResources ().getColor (R.color.app_text_color_dark));
+                                    }
+                                }
+                            } else {
+                                stateSelectedList.add (stateList.get (1));
+                                tvButton2.setBackgroundResource (R.drawable.state_button_selected);
+                                tvButton2.setTextColor (getResources ().getColor (R.color.text_color_white));
+                            }
+                        }
+                    });
+                
+                    break;
+                case 3:
+                    tvButton1.setText (stateList.get (0));
+                    tvButton1.setVisibility (View.VISIBLE);
+                    tvButton2.setText (stateList.get (1));
+                    tvButton2.setVisibility (View.VISIBLE);
+                    tvButton3.setText (stateList.get (2));
+                    tvButton3.setVisibility (View.VISIBLE);
+                    tvButton1.setOnClickListener (new View.OnClickListener () {
+                        @Override
+                        public void onClick (View v) {
+                            if (stateSelectedList.contains (stateList.get (0))) {
+                                for (int i = 0; i < stateSelectedList.size (); i++) {
+                                    if (stateSelectedList.get (i).equalsIgnoreCase (stateList.get (0))) {
+                                        stateSelectedList.remove (i);
+                                        tvButton1.setBackgroundResource (R.drawable.state_button_unselected);
+                                        tvButton1.setTextColor (getResources ().getColor (R.color.app_text_color_dark));
+                                    }
+                                }
+                            } else {
+                                stateSelectedList.add (stateList.get (0));
+                                tvButton1.setBackgroundResource (R.drawable.state_button_selected);
+                                tvButton1.setTextColor (getResources ().getColor (R.color.text_color_white));
+                            }
+                        }
+                    });
+                
+                    tvButton2.setOnClickListener (new View.OnClickListener () {
+                        @Override
+                        public void onClick (View v) {
+                            if (stateSelectedList.contains (stateList.get (1))) {
+                                for (int i = 0; i < stateSelectedList.size (); i++) {
+                                    if (stateSelectedList.get (i).equalsIgnoreCase (stateList.get (1))) {
+                                        stateSelectedList.remove (i);
+                                        tvButton2.setBackgroundResource (R.drawable.state_button_unselected);
+                                        tvButton2.setTextColor (getResources ().getColor (R.color.app_text_color_dark));
+                                    }
+                                }
+                            } else {
+                                stateSelectedList.add (stateList.get (1));
+                                tvButton2.setBackgroundResource (R.drawable.state_button_selected);
+                                tvButton2.setTextColor (getResources ().getColor (R.color.text_color_white));
+                            }
+                        }
+                    });
+                
+                    tvButton3.setOnClickListener (new View.OnClickListener () {
+                        @Override
+                        public void onClick (View v) {
+                            if (stateSelectedList.contains (stateList.get (2))) {
+                                for (int i = 0; i < stateSelectedList.size (); i++) {
+                                    if (stateSelectedList.get (i).equalsIgnoreCase (stateList.get (2))) {
+                                        stateSelectedList.remove (i);
+                                        tvButton3.setBackgroundResource (R.drawable.state_button_unselected);
+                                        tvButton3.setTextColor (getResources ().getColor (R.color.app_text_color_dark));
+                                    }
+                                }
+                            } else {
+                                stateSelectedList.add (stateList.get (2));
+                                tvButton3.setBackgroundResource (R.drawable.state_button_selected);
+                                tvButton3.setTextColor (getResources ().getColor (R.color.text_color_white));
+                            }
+                        }
+                    });
+                
+                    break;
+                case 4:
+                    tvButton1.setText (stateList.get (0));
+                    tvButton1.setVisibility (View.VISIBLE);
+                    tvButton2.setText (stateList.get (1));
+                    tvButton2.setVisibility (View.VISIBLE);
+                    tvButton3.setText (stateList.get (2));
+                    tvButton3.setVisibility (View.VISIBLE);
+                    tvButton4.setText (stateList.get (3));
+                    tvButton4.setVisibility (View.VISIBLE);
+                    tvButton1.setOnClickListener (new View.OnClickListener () {
+                        @Override
+                        public void onClick (View v) {
+                            if (stateSelectedList.contains (stateList.get (0))) {
+                                for (int i = 0; i < stateSelectedList.size (); i++) {
+                                    if (stateSelectedList.get (i).equalsIgnoreCase (stateList.get (0))) {
+                                        stateSelectedList.remove (i);
+                                        tvButton1.setBackgroundResource (R.drawable.state_button_unselected);
+                                        tvButton1.setTextColor (getResources ().getColor (R.color.app_text_color_dark));
+                                    }
+                                }
+                            } else {
+                                stateSelectedList.add (stateList.get (0));
+                                tvButton1.setBackgroundResource (R.drawable.state_button_selected);
+                                tvButton1.setTextColor (getResources ().getColor (R.color.text_color_white));
+                            }
+                        }
+                    });
+                
+                    tvButton2.setOnClickListener (new View.OnClickListener () {
+                        @Override
+                        public void onClick (View v) {
+                            if (stateSelectedList.contains (stateList.get (1))) {
+                                for (int i = 0; i < stateSelectedList.size (); i++) {
+                                    if (stateSelectedList.get (i).equalsIgnoreCase (stateList.get (1))) {
+                                        stateSelectedList.remove (i);
+                                        tvButton2.setBackgroundResource (R.drawable.state_button_unselected);
+                                        tvButton2.setTextColor (getResources ().getColor (R.color.app_text_color_dark));
+                                    }
+                                }
+                            } else {
+                                stateSelectedList.add (stateList.get (1));
+                                tvButton2.setBackgroundResource (R.drawable.state_button_selected);
+                                tvButton2.setTextColor (getResources ().getColor (R.color.text_color_white));
+                            }
+                        }
+                    });
+                
+                    tvButton3.setOnClickListener (new View.OnClickListener () {
+                        @Override
+                        public void onClick (View v) {
+                            if (stateSelectedList.contains (stateList.get (2))) {
+                                for (int i = 0; i < stateSelectedList.size (); i++) {
+                                    if (stateSelectedList.get (i).equalsIgnoreCase (stateList.get (2))) {
+                                        stateSelectedList.remove (i);
+                                        tvButton3.setBackgroundResource (R.drawable.state_button_unselected);
+                                        tvButton3.setTextColor (getResources ().getColor (R.color.app_text_color_dark));
+                                    }
+                                }
+                            } else {
+                                stateSelectedList.add (stateList.get (2));
+                                tvButton3.setBackgroundResource (R.drawable.state_button_selected);
+                                tvButton3.setTextColor (getResources ().getColor (R.color.text_color_white));
+                            }
+                        }
+                    });
+                
+                    tvButton4.setOnClickListener (new View.OnClickListener () {
+                        @Override
+                        public void onClick (View v) {
+                            if (stateSelectedList.contains (stateList.get (3))) {
+                                for (int i = 0; i < stateSelectedList.size (); i++) {
+                                    if (stateSelectedList.get (i).equalsIgnoreCase (stateList.get (3))) {
+                                        stateSelectedList.remove (i);
+                                        tvButton4.setBackgroundResource (R.drawable.state_button_unselected);
+                                        tvButton4.setTextColor (getResources ().getColor (R.color.app_text_color_dark));
+                                    }
+                                }
+                            } else {
+                                stateSelectedList.add (stateList.get (3));
+                                tvButton4.setBackgroundResource (R.drawable.state_button_selected);
+                                tvButton4.setTextColor (getResources ().getColor (R.color.text_color_white));
+                            }
+                        }
+                    });
+                
+                    break;
+                case 5:
+                    tvButton1.setText (stateList.get (0));
+                    tvButton1.setVisibility (View.VISIBLE);
+                    tvButton2.setText (stateList.get (1));
+                    tvButton2.setVisibility (View.VISIBLE);
+                    tvButton3.setText (stateList.get (2));
+                    tvButton3.setVisibility (View.VISIBLE);
+                    tvButton4.setText (stateList.get (3));
+                    tvButton4.setVisibility (View.VISIBLE);
+                    tvButton5.setText (stateList.get (4));
+                    tvButton5.setVisibility (View.VISIBLE);
+                    tvButton1.setOnClickListener (new View.OnClickListener () {
+                        @Override
+                        public void onClick (View v) {
+                            if (stateSelectedList.contains (stateList.get (0))) {
+                                for (int i = 0; i < stateSelectedList.size (); i++) {
+                                    if (stateSelectedList.get (i).equalsIgnoreCase (stateList.get (0))) {
+                                        stateSelectedList.remove (i);
+                                        tvButton1.setBackgroundResource (R.drawable.state_button_unselected);
+                                        tvButton1.setTextColor (getResources ().getColor (R.color.app_text_color_dark));
+                                    }
+                                }
+                            } else {
+                                stateSelectedList.add (stateList.get (0));
+                                tvButton1.setBackgroundResource (R.drawable.state_button_selected);
+                                tvButton1.setTextColor (getResources ().getColor (R.color.text_color_white));
+                            }
+                        }
+                    });
+                
+                    tvButton2.setOnClickListener (new View.OnClickListener () {
+                        @Override
+                        public void onClick (View v) {
+                            if (stateSelectedList.contains (stateList.get (1))) {
+                                for (int i = 0; i < stateSelectedList.size (); i++) {
+                                    if (stateSelectedList.get (i).equalsIgnoreCase (stateList.get (1))) {
+                                        stateSelectedList.remove (i);
+                                        tvButton2.setBackgroundResource (R.drawable.state_button_unselected);
+                                        tvButton2.setTextColor (getResources ().getColor (R.color.app_text_color_dark));
+                                    }
+                                }
+                            } else {
+                                stateSelectedList.add (stateList.get (1));
+                                tvButton2.setBackgroundResource (R.drawable.state_button_selected);
+                                tvButton2.setTextColor (getResources ().getColor (R.color.text_color_white));
+                            }
+                        }
+                    });
+                
+                    tvButton3.setOnClickListener (new View.OnClickListener () {
+                        @Override
+                        public void onClick (View v) {
+                            if (stateSelectedList.contains (stateList.get (2))) {
+                                for (int i = 0; i < stateSelectedList.size (); i++) {
+                                    if (stateSelectedList.get (i).equalsIgnoreCase (stateList.get (2))) {
+                                        stateSelectedList.remove (i);
+                                        tvButton3.setBackgroundResource (R.drawable.state_button_unselected);
+                                        tvButton3.setTextColor (getResources ().getColor (R.color.app_text_color_dark));
+                                    }
+                                }
+                            } else {
+                                stateSelectedList.add (stateList.get (2));
+                                tvButton3.setBackgroundResource (R.drawable.state_button_selected);
+                                tvButton3.setTextColor (getResources ().getColor (R.color.text_color_white));
+                            }
+                        }
+                    });
+                
+                    tvButton4.setOnClickListener (new View.OnClickListener () {
+                        @Override
+                        public void onClick (View v) {
+                            if (stateSelectedList.contains (stateList.get (3))) {
+                                for (int i = 0; i < stateSelectedList.size (); i++) {
+                                    if (stateSelectedList.get (i).equalsIgnoreCase (stateList.get (3))) {
+                                        stateSelectedList.remove (i);
+                                        tvButton4.setBackgroundResource (R.drawable.state_button_unselected);
+                                        tvButton4.setTextColor (getResources ().getColor (R.color.app_text_color_dark));
+                                    }
+                                }
+                            } else {
+                                stateSelectedList.add (stateList.get (3));
+                                tvButton4.setBackgroundResource (R.drawable.state_button_selected);
+                                tvButton4.setTextColor (getResources ().getColor (R.color.text_color_white));
+                            }
+                        }
+                    });
+                
+                    tvButton5.setOnClickListener (new View.OnClickListener () {
+                        @Override
+                        public void onClick (View v) {
+                            if (stateSelectedList.contains (stateList.get (4))) {
+                                for (int i = 0; i < stateSelectedList.size (); i++) {
+                                    if (stateSelectedList.get (i).equalsIgnoreCase (stateList.get (4))) {
+                                        stateSelectedList.remove (i);
+                                        tvButton5.setBackgroundResource (R.drawable.state_button_unselected);
+                                        tvButton5.setTextColor (getResources ().getColor (R.color.app_text_color_dark));
+                                    }
+                                }
+                            } else {
+                                stateSelectedList.add (stateList.get (4));
+                                tvButton5.setBackgroundResource (R.drawable.state_button_selected);
+                                tvButton5.setTextColor (getResources ().getColor (R.color.text_color_white));
+                            }
+                        }
+                    });
+                
+                    break;
+                case 6:
+                    tvButton1.setText (stateList.get (0));
+                    tvButton1.setVisibility (View.VISIBLE);
+                    tvButton2.setText (stateList.get (1));
+                    tvButton2.setVisibility (View.VISIBLE);
+                    tvButton3.setText (stateList.get (2));
+                    tvButton3.setVisibility (View.VISIBLE);
+                    tvButton4.setText (stateList.get (3));
+                    tvButton4.setVisibility (View.VISIBLE);
+                    tvButton5.setText (stateList.get (4));
+                    tvButton5.setVisibility (View.VISIBLE);
+                    tvButton6.setText (stateList.get (5));
+                    tvButton6.setVisibility (View.VISIBLE);
+                    tvButton1.setOnClickListener (new View.OnClickListener () {
+                        @Override
+                        public void onClick (View v) {
+                            if (stateSelectedList.contains (stateList.get (0))) {
+                                for (int i = 0; i < stateSelectedList.size (); i++) {
+                                    if (stateSelectedList.get (i).equalsIgnoreCase (stateList.get (0))) {
+                                        stateSelectedList.remove (i);
+                                        tvButton1.setBackgroundResource (R.drawable.state_button_unselected);
+                                        tvButton1.setTextColor (getResources ().getColor (R.color.app_text_color_dark));
+                                    }
+                                }
+                            } else {
+                                stateSelectedList.add (stateList.get (0));
+                                tvButton1.setBackgroundResource (R.drawable.state_button_selected);
+                                tvButton1.setTextColor (getResources ().getColor (R.color.text_color_white));
+                            }
+                        }
+                    });
+                
+                    tvButton2.setOnClickListener (new View.OnClickListener () {
+                        @Override
+                        public void onClick (View v) {
+                            if (stateSelectedList.contains (stateList.get (1))) {
+                                for (int i = 0; i < stateSelectedList.size (); i++) {
+                                    if (stateSelectedList.get (i).equalsIgnoreCase (stateList.get (1))) {
+                                        stateSelectedList.remove (i);
+                                        tvButton2.setBackgroundResource (R.drawable.state_button_unselected);
+                                        tvButton2.setTextColor (getResources ().getColor (R.color.app_text_color_dark));
+                                    }
+                                }
+                            } else {
+                                stateSelectedList.add (stateList.get (1));
+                                tvButton2.setBackgroundResource (R.drawable.state_button_selected);
+                                tvButton2.setTextColor (getResources ().getColor (R.color.text_color_white));
+                            }
+                        }
+                    });
+                
+                    tvButton3.setOnClickListener (new View.OnClickListener () {
+                        @Override
+                        public void onClick (View v) {
+                            if (stateSelectedList.contains (stateList.get (2))) {
+                                for (int i = 0; i < stateSelectedList.size (); i++) {
+                                    if (stateSelectedList.get (i).equalsIgnoreCase (stateList.get (2))) {
+                                        stateSelectedList.remove (i);
+                                        tvButton3.setBackgroundResource (R.drawable.state_button_unselected);
+                                        tvButton3.setTextColor (getResources ().getColor (R.color.app_text_color_dark));
+                                    }
+                                }
+                            } else {
+                                stateSelectedList.add (stateList.get (2));
+                                tvButton3.setBackgroundResource (R.drawable.state_button_selected);
+                                tvButton3.setTextColor (getResources ().getColor (R.color.text_color_white));
+                            }
+                        }
+                    });
+                
+                    tvButton4.setOnClickListener (new View.OnClickListener () {
+                        @Override
+                        public void onClick (View v) {
+                            if (stateSelectedList.contains (stateList.get (3))) {
+                                for (int i = 0; i < stateSelectedList.size (); i++) {
+                                    if (stateSelectedList.get (i).equalsIgnoreCase (stateList.get (3))) {
+                                        stateSelectedList.remove (i);
+                                        tvButton4.setBackgroundResource (R.drawable.state_button_unselected);
+                                        tvButton4.setTextColor (getResources ().getColor (R.color.app_text_color_dark));
+                                    }
+                                }
+                            } else {
+                                stateSelectedList.add (stateList.get (3));
+                                tvButton4.setBackgroundResource (R.drawable.state_button_selected);
+                                tvButton4.setTextColor (getResources ().getColor (R.color.text_color_white));
+                            }
+                        }
+                    });
+                
+                    tvButton5.setOnClickListener (new View.OnClickListener () {
+                        @Override
+                        public void onClick (View v) {
+                            if (stateSelectedList.contains (stateList.get (4))) {
+                                for (int i = 0; i < stateSelectedList.size (); i++) {
+                                    if (stateSelectedList.get (i).equalsIgnoreCase (stateList.get (4))) {
+                                        stateSelectedList.remove (i);
+                                        tvButton5.setBackgroundResource (R.drawable.state_button_unselected);
+                                        tvButton5.setTextColor (getResources ().getColor (R.color.app_text_color_dark));
+                                    }
+                                }
+                            } else {
+                                stateSelectedList.add (stateList.get (4));
+                                tvButton5.setBackgroundResource (R.drawable.state_button_selected);
+                                tvButton5.setTextColor (getResources ().getColor (R.color.text_color_white));
+                            }
+                        }
+                    });
+                
+                    tvButton6.setOnClickListener (new View.OnClickListener () {
+                        @Override
+                        public void onClick (View v) {
+                            if (stateSelectedList.contains (stateList.get (5))) {
+                                for (int i = 0; i < stateSelectedList.size (); i++) {
+                                    if (stateSelectedList.get (i).equalsIgnoreCase (stateList.get (5))) {
+                                        stateSelectedList.remove (i);
+                                        tvButton6.setBackgroundResource (R.drawable.state_button_unselected);
+                                        tvButton6.setTextColor (getResources ().getColor (R.color.app_text_color_dark));
+                                    }
+                                }
+                            } else {
+                                stateSelectedList.add (stateList.get (5));
+                                tvButton6.setBackgroundResource (R.drawable.state_button_selected);
+                                tvButton6.setTextColor (getResources ().getColor (R.color.text_color_white));
+                            }
+                        }
+                    });
+                
+                    break;
+                case 7:
+                    tvButton1.setText (stateList.get (0));
+                    tvButton1.setVisibility (View.VISIBLE);
+                    tvButton2.setText (stateList.get (1));
+                    tvButton2.setVisibility (View.VISIBLE);
+                    tvButton3.setText (stateList.get (2));
+                    tvButton3.setVisibility (View.VISIBLE);
+                    tvButton4.setText (stateList.get (3));
+                    tvButton4.setVisibility (View.VISIBLE);
+                    tvButton5.setText (stateList.get (4));
+                    tvButton5.setVisibility (View.VISIBLE);
+                    tvButton6.setText (stateList.get (5));
+                    tvButton6.setVisibility (View.VISIBLE);
+                    tvButton7.setText (stateList.get (6));
+                    tvButton7.setVisibility (View.VISIBLE);
+                    tvButton1.setOnClickListener (new View.OnClickListener () {
+                        @Override
+                        public void onClick (View v) {
+                            if (stateSelectedList.contains (stateList.get (0))) {
+                                for (int i = 0; i < stateSelectedList.size (); i++) {
+                                    if (stateSelectedList.get (i).equalsIgnoreCase (stateList.get (0))) {
+                                        stateSelectedList.remove (i);
+                                        tvButton1.setBackgroundResource (R.drawable.state_button_unselected);
+                                        tvButton1.setTextColor (getResources ().getColor (R.color.app_text_color_dark));
+                                    }
+                                }
+                            } else {
+                                stateSelectedList.add (stateList.get (0));
+                                tvButton1.setBackgroundResource (R.drawable.state_button_selected);
+                                tvButton1.setTextColor (getResources ().getColor (R.color.text_color_white));
+                            }
+                        }
+                    });
+                
+                    tvButton2.setOnClickListener (new View.OnClickListener () {
+                        @Override
+                        public void onClick (View v) {
+                            if (stateSelectedList.contains (stateList.get (1))) {
+                                for (int i = 0; i < stateSelectedList.size (); i++) {
+                                    if (stateSelectedList.get (i).equalsIgnoreCase (stateList.get (1))) {
+                                        stateSelectedList.remove (i);
+                                        tvButton2.setBackgroundResource (R.drawable.state_button_unselected);
+                                        tvButton2.setTextColor (getResources ().getColor (R.color.app_text_color_dark));
+                                    }
+                                }
+                            } else {
+                                stateSelectedList.add (stateList.get (1));
+                                tvButton2.setBackgroundResource (R.drawable.state_button_selected);
+                                tvButton2.setTextColor (getResources ().getColor (R.color.text_color_white));
+                            }
+                        }
+                    });
+                
+                    tvButton3.setOnClickListener (new View.OnClickListener () {
+                        @Override
+                        public void onClick (View v) {
+                            if (stateSelectedList.contains (stateList.get (2))) {
+                                for (int i = 0; i < stateSelectedList.size (); i++) {
+                                    if (stateSelectedList.get (i).equalsIgnoreCase (stateList.get (2))) {
+                                        stateSelectedList.remove (i);
+                                        tvButton3.setBackgroundResource (R.drawable.state_button_unselected);
+                                        tvButton3.setTextColor (getResources ().getColor (R.color.app_text_color_dark));
+                                    }
+                                }
+                            } else {
+                                stateSelectedList.add (stateList.get (2));
+                                tvButton3.setBackgroundResource (R.drawable.state_button_selected);
+                                tvButton3.setTextColor (getResources ().getColor (R.color.text_color_white));
+                            }
+                        }
+                    });
+                
+                    tvButton4.setOnClickListener (new View.OnClickListener () {
+                        @Override
+                        public void onClick (View v) {
+                            if (stateSelectedList.contains (stateList.get (3))) {
+                                for (int i = 0; i < stateSelectedList.size (); i++) {
+                                    if (stateSelectedList.get (i).equalsIgnoreCase (stateList.get (3))) {
+                                        stateSelectedList.remove (i);
+                                        tvButton4.setBackgroundResource (R.drawable.state_button_unselected);
+                                        tvButton4.setTextColor (getResources ().getColor (R.color.app_text_color_dark));
+                                    }
+                                }
+                            } else {
+                                stateSelectedList.add (stateList.get (3));
+                                tvButton4.setBackgroundResource (R.drawable.state_button_selected);
+                                tvButton4.setTextColor (getResources ().getColor (R.color.text_color_white));
+                            }
+                        }
+                    });
+                
+                    tvButton5.setOnClickListener (new View.OnClickListener () {
+                        @Override
+                        public void onClick (View v) {
+                            if (stateSelectedList.contains (stateList.get (4))) {
+                                for (int i = 0; i < stateSelectedList.size (); i++) {
+                                    if (stateSelectedList.get (i).equalsIgnoreCase (stateList.get (4))) {
+                                        stateSelectedList.remove (i);
+                                        tvButton5.setBackgroundResource (R.drawable.state_button_unselected);
+                                        tvButton5.setTextColor (getResources ().getColor (R.color.app_text_color_dark));
+                                    }
+                                }
+                            } else {
+                                stateSelectedList.add (stateList.get (4));
+                                tvButton5.setBackgroundResource (R.drawable.state_button_selected);
+                                tvButton5.setTextColor (getResources ().getColor (R.color.text_color_white));
+                            }
+                        }
+                    });
+                
+                    tvButton6.setOnClickListener (new View.OnClickListener () {
+                        @Override
+                        public void onClick (View v) {
+                            if (stateSelectedList.contains (stateList.get (5))) {
+                                for (int i = 0; i < stateSelectedList.size (); i++) {
+                                    if (stateSelectedList.get (i).equalsIgnoreCase (stateList.get (5))) {
+                                        stateSelectedList.remove (i);
+                                        tvButton6.setBackgroundResource (R.drawable.state_button_unselected);
+                                        tvButton6.setTextColor (getResources ().getColor (R.color.app_text_color_dark));
+                                    }
+                                }
+                            } else {
+                                stateSelectedList.add (stateList.get (5));
+                                tvButton6.setBackgroundResource (R.drawable.state_button_selected);
+                                tvButton6.setTextColor (getResources ().getColor (R.color.text_color_white));
+                            }
+                        }
+                    });
+                
+                    tvButton7.setOnClickListener (new View.OnClickListener () {
+                        @Override
+                        public void onClick (View v) {
+                            if (stateSelectedList.contains (stateList.get (6))) {
+                                for (int i = 0; i < stateSelectedList.size (); i++) {
+                                    if (stateSelectedList.get (i).equalsIgnoreCase (stateList.get (6))) {
+                                        stateSelectedList.remove (i);
+                                        tvButton7.setBackgroundResource (R.drawable.state_button_unselected);
+                                        tvButton7.setTextColor (getResources ().getColor (R.color.app_text_color_dark));
+                                    }
+                                }
+                            } else {
+                                stateSelectedList.add (stateList.get (6));
+                                tvButton7.setBackgroundResource (R.drawable.state_button_selected);
+                                tvButton7.setTextColor (getResources ().getColor (R.color.text_color_white));
+                            }
+                        }
+                    });
+                
+                    break;
+                case 8:
+                    tvButton1.setText (stateList.get (0));
+                    tvButton1.setVisibility (View.VISIBLE);
+                    tvButton2.setText (stateList.get (1));
+                    tvButton2.setVisibility (View.VISIBLE);
+                    tvButton3.setText (stateList.get (2));
+                    tvButton3.setVisibility (View.VISIBLE);
+                    tvButton4.setText (stateList.get (3));
+                    tvButton4.setVisibility (View.VISIBLE);
+                    tvButton5.setText (stateList.get (4));
+                    tvButton5.setVisibility (View.VISIBLE);
+                    tvButton6.setText (stateList.get (5));
+                    tvButton6.setVisibility (View.VISIBLE);
+                    tvButton7.setText (stateList.get (6));
+                    tvButton7.setVisibility (View.VISIBLE);
+                    tvButton8.setText (stateList.get (7));
+                    tvButton8.setVisibility (View.VISIBLE);
+                    tvButton1.setOnClickListener (new View.OnClickListener () {
+                        @Override
+                        public void onClick (View v) {
+                            if (stateSelectedList.contains (stateList.get (0))) {
+                                for (int i = 0; i < stateSelectedList.size (); i++) {
+                                    if (stateSelectedList.get (i).equalsIgnoreCase (stateList.get (0))) {
+                                        stateSelectedList.remove (i);
+                                        tvButton1.setBackgroundResource (R.drawable.state_button_unselected);
+                                        tvButton1.setTextColor (getResources ().getColor (R.color.app_text_color_dark));
+                                    }
+                                }
+                            } else {
+                                stateSelectedList.add (stateList.get (0));
+                                tvButton1.setBackgroundResource (R.drawable.state_button_selected);
+                                tvButton1.setTextColor (getResources ().getColor (R.color.text_color_white));
+                            }
+                        }
+                    });
+                
+                    tvButton2.setOnClickListener (new View.OnClickListener () {
+                        @Override
+                        public void onClick (View v) {
+                            if (stateSelectedList.contains (stateList.get (1))) {
+                                for (int i = 0; i < stateSelectedList.size (); i++) {
+                                    if (stateSelectedList.get (i).equalsIgnoreCase (stateList.get (1))) {
+                                        stateSelectedList.remove (i);
+                                        tvButton2.setBackgroundResource (R.drawable.state_button_unselected);
+                                        tvButton2.setTextColor (getResources ().getColor (R.color.app_text_color_dark));
+                                    }
+                                }
+                            } else {
+                                stateSelectedList.add (stateList.get (1));
+                                tvButton2.setBackgroundResource (R.drawable.state_button_selected);
+                                tvButton2.setTextColor (getResources ().getColor (R.color.text_color_white));
+                            }
+                        }
+                    });
+                
+                    tvButton3.setOnClickListener (new View.OnClickListener () {
+                        @Override
+                        public void onClick (View v) {
+                            if (stateSelectedList.contains (stateList.get (2))) {
+                                for (int i = 0; i < stateSelectedList.size (); i++) {
+                                    if (stateSelectedList.get (i).equalsIgnoreCase (stateList.get (2))) {
+                                        stateSelectedList.remove (i);
+                                        tvButton3.setBackgroundResource (R.drawable.state_button_unselected);
+                                        tvButton3.setTextColor (getResources ().getColor (R.color.app_text_color_dark));
+                                    }
+                                }
+                            } else {
+                                stateSelectedList.add (stateList.get (2));
+                                tvButton3.setBackgroundResource (R.drawable.state_button_selected);
+                                tvButton3.setTextColor (getResources ().getColor (R.color.text_color_white));
+                            }
+                        }
+                    });
+                
+                    tvButton4.setOnClickListener (new View.OnClickListener () {
+                        @Override
+                        public void onClick (View v) {
+                            if (stateSelectedList.contains (stateList.get (3))) {
+                                for (int i = 0; i < stateSelectedList.size (); i++) {
+                                    if (stateSelectedList.get (i).equalsIgnoreCase (stateList.get (3))) {
+                                        stateSelectedList.remove (i);
+                                        tvButton4.setBackgroundResource (R.drawable.state_button_unselected);
+                                        tvButton4.setTextColor (getResources ().getColor (R.color.app_text_color_dark));
+                                    }
+                                }
+                            } else {
+                                stateSelectedList.add (stateList.get (3));
+                                tvButton4.setBackgroundResource (R.drawable.state_button_selected);
+                                tvButton4.setTextColor (getResources ().getColor (R.color.text_color_white));
+                            }
+                        }
+                    });
+                
+                    tvButton5.setOnClickListener (new View.OnClickListener () {
+                        @Override
+                        public void onClick (View v) {
+                            if (stateSelectedList.contains (stateList.get (4))) {
+                                for (int i = 0; i < stateSelectedList.size (); i++) {
+                                    if (stateSelectedList.get (i).equalsIgnoreCase (stateList.get (4))) {
+                                        stateSelectedList.remove (i);
+                                        tvButton5.setBackgroundResource (R.drawable.state_button_unselected);
+                                        tvButton5.setTextColor (getResources ().getColor (R.color.app_text_color_dark));
+                                    }
+                                }
+                            } else {
+                                stateSelectedList.add (stateList.get (4));
+                                tvButton5.setBackgroundResource (R.drawable.state_button_selected);
+                                tvButton5.setTextColor (getResources ().getColor (R.color.text_color_white));
+                            }
+                        }
+                    });
+                
+                    tvButton6.setOnClickListener (new View.OnClickListener () {
+                        @Override
+                        public void onClick (View v) {
+                            if (stateSelectedList.contains (stateList.get (5))) {
+                                for (int i = 0; i < stateSelectedList.size (); i++) {
+                                    if (stateSelectedList.get (i).equalsIgnoreCase (stateList.get (5))) {
+                                        stateSelectedList.remove (i);
+                                        tvButton6.setBackgroundResource (R.drawable.state_button_unselected);
+                                        tvButton6.setTextColor (getResources ().getColor (R.color.app_text_color_dark));
+                                    }
+                                }
+                            } else {
+                                stateSelectedList.add (stateList.get (5));
+                                tvButton6.setBackgroundResource (R.drawable.state_button_selected);
+                                tvButton6.setTextColor (getResources ().getColor (R.color.text_color_white));
+                            }
+                        }
+                    });
+                
+                    tvButton7.setOnClickListener (new View.OnClickListener () {
+                        @Override
+                        public void onClick (View v) {
+                            if (stateSelectedList.contains (stateList.get (6))) {
+                                for (int i = 0; i < stateSelectedList.size (); i++) {
+                                    if (stateSelectedList.get (i).equalsIgnoreCase (stateList.get (6))) {
+                                        stateSelectedList.remove (i);
+                                        tvButton7.setBackgroundResource (R.drawable.state_button_unselected);
+                                        tvButton7.setTextColor (getResources ().getColor (R.color.app_text_color_dark));
+                                    }
+                                }
+                            } else {
+                                stateSelectedList.add (stateList.get (6));
+                                tvButton7.setBackgroundResource (R.drawable.state_button_selected);
+                                tvButton7.setTextColor (getResources ().getColor (R.color.text_color_white));
+                            }
+                        }
+                    });
+                
+                    tvButton8.setOnClickListener (new View.OnClickListener () {
+                        @Override
+                        public void onClick (View v) {
+                            if (stateSelectedList.contains (stateList.get (7))) {
+                                for (int i = 0; i < stateSelectedList.size (); i++) {
+                                    if (stateSelectedList.get (i).equalsIgnoreCase (stateList.get (7))) {
+                                        stateSelectedList.remove (i);
+                                        tvButton8.setBackgroundResource (R.drawable.state_button_unselected);
+                                        tvButton8.setTextColor (getResources ().getColor (R.color.app_text_color_dark));
+                                    }
+                                }
+                            } else {
+                                stateSelectedList.add (stateList.get (7));
+                                tvButton8.setBackgroundResource (R.drawable.state_button_selected);
+                                tvButton8.setTextColor (getResources ().getColor (R.color.text_color_white));
+                            }
+                        }
+                    });
+                
+                    break;
+                case 9:
+                    tvButton1.setText (stateList.get (0));
+                    tvButton1.setVisibility (View.VISIBLE);
+                    tvButton2.setText (stateList.get (1));
+                    tvButton2.setVisibility (View.VISIBLE);
+                    tvButton3.setText (stateList.get (2));
+                    tvButton3.setVisibility (View.VISIBLE);
+                    tvButton4.setText (stateList.get (3));
+                    tvButton4.setVisibility (View.VISIBLE);
+                    tvButton5.setText (stateList.get (4));
+                    tvButton5.setVisibility (View.VISIBLE);
+                    tvButton6.setText (stateList.get (5));
+                    tvButton6.setVisibility (View.VISIBLE);
+                    tvButton7.setText (stateList.get (6));
+                    tvButton7.setVisibility (View.VISIBLE);
+                    tvButton8.setText (stateList.get (7));
+                    tvButton8.setVisibility (View.VISIBLE);
+                    tvButton9.setText (stateList.get (8));
+                    tvButton9.setVisibility (View.VISIBLE);
+                    tvButton1.setOnClickListener (new View.OnClickListener () {
+                        @Override
+                        public void onClick (View v) {
+                            if (stateSelectedList.contains (stateList.get (0))) {
+                                for (int i = 0; i < stateSelectedList.size (); i++) {
+                                    if (stateSelectedList.get (i).equalsIgnoreCase (stateList.get (0))) {
+                                        stateSelectedList.remove (i);
+                                        tvButton1.setBackgroundResource (R.drawable.state_button_unselected);
+                                        tvButton1.setTextColor (getResources ().getColor (R.color.app_text_color_dark));
+                                    }
+                                }
+                            } else {
+                                stateSelectedList.add (stateList.get (0));
+                                tvButton1.setBackgroundResource (R.drawable.state_button_selected);
+                                tvButton1.setTextColor (getResources ().getColor (R.color.text_color_white));
+                            }
+                        }
+                    });
+                
+                    tvButton2.setOnClickListener (new View.OnClickListener () {
+                        @Override
+                        public void onClick (View v) {
+                            if (stateSelectedList.contains (stateList.get (1))) {
+                                for (int i = 0; i < stateSelectedList.size (); i++) {
+                                    if (stateSelectedList.get (i).equalsIgnoreCase (stateList.get (1))) {
+                                        stateSelectedList.remove (i);
+                                        tvButton2.setBackgroundResource (R.drawable.state_button_unselected);
+                                        tvButton2.setTextColor (getResources ().getColor (R.color.app_text_color_dark));
+                                    }
+                                }
+                            } else {
+                                stateSelectedList.add (stateList.get (1));
+                                tvButton2.setBackgroundResource (R.drawable.state_button_selected);
+                                tvButton2.setTextColor (getResources ().getColor (R.color.text_color_white));
+                            }
+                        }
+                    });
+                
+                    tvButton3.setOnClickListener (new View.OnClickListener () {
+                        @Override
+                        public void onClick (View v) {
+                            if (stateSelectedList.contains (stateList.get (2))) {
+                                for (int i = 0; i < stateSelectedList.size (); i++) {
+                                    if (stateSelectedList.get (i).equalsIgnoreCase (stateList.get (2))) {
+                                        stateSelectedList.remove (i);
+                                        tvButton3.setBackgroundResource (R.drawable.state_button_unselected);
+                                        tvButton3.setTextColor (getResources ().getColor (R.color.app_text_color_dark));
+                                    }
+                                }
+                            } else {
+                                stateSelectedList.add (stateList.get (2));
+                                tvButton3.setBackgroundResource (R.drawable.state_button_selected);
+                                tvButton3.setTextColor (getResources ().getColor (R.color.text_color_white));
+                            }
+                        }
+                    });
+                
+                    tvButton4.setOnClickListener (new View.OnClickListener () {
+                        @Override
+                        public void onClick (View v) {
+                            if (stateSelectedList.contains (stateList.get (3))) {
+                                for (int i = 0; i < stateSelectedList.size (); i++) {
+                                    if (stateSelectedList.get (i).equalsIgnoreCase (stateList.get (3))) {
+                                        stateSelectedList.remove (i);
+                                        tvButton4.setBackgroundResource (R.drawable.state_button_unselected);
+                                        tvButton4.setTextColor (getResources ().getColor (R.color.app_text_color_dark));
+                                    }
+                                }
+                            } else {
+                                stateSelectedList.add (stateList.get (3));
+                                tvButton4.setBackgroundResource (R.drawable.state_button_selected);
+                                tvButton4.setTextColor (getResources ().getColor (R.color.text_color_white));
+                            }
+                        }
+                    });
+                
+                    tvButton5.setOnClickListener (new View.OnClickListener () {
+                        @Override
+                        public void onClick (View v) {
+                            if (stateSelectedList.contains (stateList.get (4))) {
+                                for (int i = 0; i < stateSelectedList.size (); i++) {
+                                    if (stateSelectedList.get (i).equalsIgnoreCase (stateList.get (4))) {
+                                        stateSelectedList.remove (i);
+                                        tvButton5.setBackgroundResource (R.drawable.state_button_unselected);
+                                        tvButton5.setTextColor (getResources ().getColor (R.color.app_text_color_dark));
+                                    }
+                                }
+                            } else {
+                                stateSelectedList.add (stateList.get (4));
+                                tvButton5.setBackgroundResource (R.drawable.state_button_selected);
+                                tvButton5.setTextColor (getResources ().getColor (R.color.text_color_white));
+                            }
+                        }
+                    });
+                
+                    tvButton6.setOnClickListener (new View.OnClickListener () {
+                        @Override
+                        public void onClick (View v) {
+                            if (stateSelectedList.contains (stateList.get (5))) {
+                                for (int i = 0; i < stateSelectedList.size (); i++) {
+                                    if (stateSelectedList.get (i).equalsIgnoreCase (stateList.get (5))) {
+                                        stateSelectedList.remove (i);
+                                        tvButton6.setBackgroundResource (R.drawable.state_button_unselected);
+                                        tvButton6.setTextColor (getResources ().getColor (R.color.app_text_color_dark));
+                                    }
+                                }
+                            } else {
+                                stateSelectedList.add (stateList.get (5));
+                                tvButton6.setBackgroundResource (R.drawable.state_button_selected);
+                                tvButton6.setTextColor (getResources ().getColor (R.color.text_color_white));
+                            }
+                        }
+                    });
+                
+                    tvButton7.setOnClickListener (new View.OnClickListener () {
+                        @Override
+                        public void onClick (View v) {
+                            if (stateSelectedList.contains (stateList.get (6))) {
+                                for (int i = 0; i < stateSelectedList.size (); i++) {
+                                    if (stateSelectedList.get (i).equalsIgnoreCase (stateList.get (6))) {
+                                        stateSelectedList.remove (i);
+                                        tvButton7.setBackgroundResource (R.drawable.state_button_unselected);
+                                        tvButton7.setTextColor (getResources ().getColor (R.color.app_text_color_dark));
+                                    }
+                                }
+                            } else {
+                                stateSelectedList.add (stateList.get (6));
+                                tvButton7.setBackgroundResource (R.drawable.state_button_selected);
+                                tvButton7.setTextColor (getResources ().getColor (R.color.text_color_white));
+                            }
+                        }
+                    });
+                
+                    tvButton8.setOnClickListener (new View.OnClickListener () {
+                        @Override
+                        public void onClick (View v) {
+                            if (stateSelectedList.contains (stateList.get (7))) {
+                                for (int i = 0; i < stateSelectedList.size (); i++) {
+                                    if (stateSelectedList.get (i).equalsIgnoreCase (stateList.get (7))) {
+                                        stateSelectedList.remove (i);
+                                        tvButton8.setBackgroundResource (R.drawable.state_button_unselected);
+                                        tvButton8.setTextColor (getResources ().getColor (R.color.app_text_color_dark));
+                                    }
+                                }
+                            } else {
+                                stateSelectedList.add (stateList.get (7));
+                                tvButton8.setBackgroundResource (R.drawable.state_button_selected);
+                                tvButton8.setTextColor (getResources ().getColor (R.color.text_color_white));
+                            }
+                        }
+                    });
+                
+                    tvButton9.setOnClickListener (new View.OnClickListener () {
+                        @Override
+                        public void onClick (View v) {
+                            if (stateSelectedList.contains (stateList.get (8))) {
+                                for (int i = 0; i < stateSelectedList.size (); i++) {
+                                    if (stateSelectedList.get (i).equalsIgnoreCase (stateList.get (8))) {
+                                        stateSelectedList.remove (i);
+                                        tvButton9.setBackgroundResource (R.drawable.state_button_unselected);
+                                        tvButton9.setTextColor (getResources ().getColor (R.color.app_text_color_dark));
+                                    }
+                                }
+                            } else {
+                                stateSelectedList.add (stateList.get (8));
+                                tvButton9.setBackgroundResource (R.drawable.state_button_selected);
+                                tvButton9.setTextColor (getResources ().getColor (R.color.text_color_white));
+                            }
+                        }
+                    });
+                
+                    break;
+                case 10:
+                    tvButton1.setText (stateList.get (0));
+                    tvButton1.setVisibility (View.VISIBLE);
+                    tvButton2.setText (stateList.get (1));
+                    tvButton2.setVisibility (View.VISIBLE);
+                    tvButton3.setText (stateList.get (2));
+                    tvButton3.setVisibility (View.VISIBLE);
+                    tvButton4.setText (stateList.get (3));
+                    tvButton4.setVisibility (View.VISIBLE);
+                    tvButton5.setText (stateList.get (4));
+                    tvButton5.setVisibility (View.VISIBLE);
+                    tvButton6.setText (stateList.get (5));
+                    tvButton6.setVisibility (View.VISIBLE);
+                    tvButton7.setText (stateList.get (6));
+                    tvButton7.setVisibility (View.VISIBLE);
+                    tvButton8.setText (stateList.get (7));
+                    tvButton8.setVisibility (View.VISIBLE);
+                    tvButton9.setText (stateList.get (8));
+                    tvButton9.setVisibility (View.VISIBLE);
+                    tvButton10.setText (stateList.get (9));
+                    tvButton10.setVisibility (View.VISIBLE);
+                    tvButton1.setOnClickListener (new View.OnClickListener () {
+                        @Override
+                        public void onClick (View v) {
+                            if (stateSelectedList.contains (stateList.get (0))) {
+                                for (int i = 0; i < stateSelectedList.size (); i++) {
+                                    if (stateSelectedList.get (i).equalsIgnoreCase (stateList.get (0))) {
+                                        stateSelectedList.remove (i);
+                                        tvButton1.setBackgroundResource (R.drawable.state_button_unselected);
+                                        tvButton1.setTextColor (getResources ().getColor (R.color.app_text_color_dark));
+                                    }
+                                }
+                            } else {
+                                stateSelectedList.add (stateList.get (0));
+                                tvButton1.setBackgroundResource (R.drawable.state_button_selected);
+                                tvButton1.setTextColor (getResources ().getColor (R.color.text_color_white));
+                            }
+                        }
+                    });
+                
+                    tvButton2.setOnClickListener (new View.OnClickListener () {
+                        @Override
+                        public void onClick (View v) {
+                            if (stateSelectedList.contains (stateList.get (1))) {
+                                for (int i = 0; i < stateSelectedList.size (); i++) {
+                                    if (stateSelectedList.get (i).equalsIgnoreCase (stateList.get (1))) {
+                                        stateSelectedList.remove (i);
+                                        tvButton2.setBackgroundResource (R.drawable.state_button_unselected);
+                                        tvButton2.setTextColor (getResources ().getColor (R.color.app_text_color_dark));
+                                    }
+                                }
+                            } else {
+                                stateSelectedList.add (stateList.get (1));
+                                tvButton2.setBackgroundResource (R.drawable.state_button_selected);
+                                tvButton2.setTextColor (getResources ().getColor (R.color.text_color_white));
+                            }
+                        }
+                    });
+                
+                    tvButton3.setOnClickListener (new View.OnClickListener () {
+                        @Override
+                        public void onClick (View v) {
+                            if (stateSelectedList.contains (stateList.get (2))) {
+                                for (int i = 0; i < stateSelectedList.size (); i++) {
+                                    if (stateSelectedList.get (i).equalsIgnoreCase (stateList.get (2))) {
+                                        stateSelectedList.remove (i);
+                                        tvButton3.setBackgroundResource (R.drawable.state_button_unselected);
+                                        tvButton3.setTextColor (getResources ().getColor (R.color.app_text_color_dark));
+                                    }
+                                }
+                            } else {
+                                stateSelectedList.add (stateList.get (2));
+                                tvButton3.setBackgroundResource (R.drawable.state_button_selected);
+                                tvButton3.setTextColor (getResources ().getColor (R.color.text_color_white));
+                            }
+                        }
+                    });
+                
+                    tvButton4.setOnClickListener (new View.OnClickListener () {
+                        @Override
+                        public void onClick (View v) {
+                            if (stateSelectedList.contains (stateList.get (3))) {
+                                for (int i = 0; i < stateSelectedList.size (); i++) {
+                                    if (stateSelectedList.get (i).equalsIgnoreCase (stateList.get (3))) {
+                                        stateSelectedList.remove (i);
+                                        tvButton4.setBackgroundResource (R.drawable.state_button_unselected);
+                                        tvButton4.setTextColor (getResources ().getColor (R.color.app_text_color_dark));
+                                    }
+                                }
+                            } else {
+                                stateSelectedList.add (stateList.get (3));
+                                tvButton4.setBackgroundResource (R.drawable.state_button_selected);
+                                tvButton4.setTextColor (getResources ().getColor (R.color.text_color_white));
+                            }
+                        }
+                    });
+                
+                    tvButton5.setOnClickListener (new View.OnClickListener () {
+                        @Override
+                        public void onClick (View v) {
+                            if (stateSelectedList.contains (stateList.get (4))) {
+                                for (int i = 0; i < stateSelectedList.size (); i++) {
+                                    if (stateSelectedList.get (i).equalsIgnoreCase (stateList.get (4))) {
+                                        stateSelectedList.remove (i);
+                                        tvButton5.setBackgroundResource (R.drawable.state_button_unselected);
+                                        tvButton5.setTextColor (getResources ().getColor (R.color.app_text_color_dark));
+                                    }
+                                }
+                            } else {
+                                stateSelectedList.add (stateList.get (4));
+                                tvButton5.setBackgroundResource (R.drawable.state_button_selected);
+                                tvButton5.setTextColor (getResources ().getColor (R.color.text_color_white));
+                            }
+                        }
+                    });
+                
+                    tvButton6.setOnClickListener (new View.OnClickListener () {
+                        @Override
+                        public void onClick (View v) {
+                            if (stateSelectedList.contains (stateList.get (5))) {
+                                for (int i = 0; i < stateSelectedList.size (); i++) {
+                                    if (stateSelectedList.get (i).equalsIgnoreCase (stateList.get (5))) {
+                                        stateSelectedList.remove (i);
+                                        tvButton6.setBackgroundResource (R.drawable.state_button_unselected);
+                                        tvButton6.setTextColor (getResources ().getColor (R.color.app_text_color_dark));
+                                    }
+                                }
+                            } else {
+                                stateSelectedList.add (stateList.get (5));
+                                tvButton6.setBackgroundResource (R.drawable.state_button_selected);
+                                tvButton6.setTextColor (getResources ().getColor (R.color.text_color_white));
+                            }
+                        }
+                    });
+                
+                    tvButton7.setOnClickListener (new View.OnClickListener () {
+                        @Override
+                        public void onClick (View v) {
+                            if (stateSelectedList.contains (stateList.get (6))) {
+                                for (int i = 0; i < stateSelectedList.size (); i++) {
+                                    if (stateSelectedList.get (i).equalsIgnoreCase (stateList.get (6))) {
+                                        stateSelectedList.remove (i);
+                                        tvButton7.setBackgroundResource (R.drawable.state_button_unselected);
+                                        tvButton7.setTextColor (getResources ().getColor (R.color.app_text_color_dark));
+                                    }
+                                }
+                            } else {
+                                stateSelectedList.add (stateList.get (6));
+                                tvButton7.setBackgroundResource (R.drawable.state_button_selected);
+                                tvButton7.setTextColor (getResources ().getColor (R.color.text_color_white));
+                            }
+                        }
+                    });
+                
+                    tvButton8.setOnClickListener (new View.OnClickListener () {
+                        @Override
+                        public void onClick (View v) {
+                            if (stateSelectedList.contains (stateList.get (7))) {
+                                for (int i = 0; i < stateSelectedList.size (); i++) {
+                                    if (stateSelectedList.get (i).equalsIgnoreCase (stateList.get (7))) {
+                                        stateSelectedList.remove (i);
+                                        tvButton8.setBackgroundResource (R.drawable.state_button_unselected);
+                                        tvButton8.setTextColor (getResources ().getColor (R.color.app_text_color_dark));
+                                    }
+                                }
+                            } else {
+                                stateSelectedList.add (stateList.get (7));
+                                tvButton8.setBackgroundResource (R.drawable.state_button_selected);
+                                tvButton8.setTextColor (getResources ().getColor (R.color.text_color_white));
+                            }
+                        }
+                    });
+                
+                    tvButton9.setOnClickListener (new View.OnClickListener () {
+                        @Override
+                        public void onClick (View v) {
+                            if (stateSelectedList.contains (stateList.get (8))) {
+                                for (int i = 0; i < stateSelectedList.size (); i++) {
+                                    if (stateSelectedList.get (i).equalsIgnoreCase (stateList.get (8))) {
+                                        stateSelectedList.remove (i);
+                                        tvButton9.setBackgroundResource (R.drawable.state_button_unselected);
+                                        tvButton9.setTextColor (getResources ().getColor (R.color.app_text_color_dark));
+                                    }
+                                }
+                            } else {
+                                stateSelectedList.add (stateList.get (8));
+                                tvButton9.setBackgroundResource (R.drawable.state_button_selected);
+                                tvButton9.setTextColor (getResources ().getColor (R.color.text_color_white));
+                            }
+                        }
+                    });
+                
+                    tvButton10.setOnClickListener (new View.OnClickListener () {
+                        @Override
+                        public void onClick (View v) {
+                            if (stateSelectedList.contains (stateList.get (9))) {
+                                for (int i = 0; i < stateSelectedList.size (); i++) {
+                                    if (stateSelectedList.get (i).equalsIgnoreCase (stateList.get (9))) {
+                                        stateSelectedList.remove (i);
+                                        tvButton10.setBackgroundResource (R.drawable.state_button_unselected);
+                                        tvButton10.setTextColor (getResources ().getColor (R.color.app_text_color_dark));
+                                    }
+                                }
+                            } else {
+                                stateSelectedList.add (stateList.get (9));
+                                tvButton10.setBackgroundResource (R.drawable.state_button_selected);
+                                tvButton10.setTextColor (getResources ().getColor (R.color.text_color_white));
+                            }
+                        }
+                    });
+                    break;
+            }
+        }
     }
     
     private void initListener () {
@@ -354,7 +1586,7 @@ public class MyProfileActivity extends AppCompatActivity {
                 } else if (spinner.getText ().toString ().trim ().equalsIgnoreCase (spinnerItems[0])) {
                     Utils.showSnackBar (MyProfileActivity.this, clMain, s6.toString (), Snackbar.LENGTH_LONG, null, null);
                 } else {
-                    editProfileDetailSendToServer (
+                    sendProfileDetailsToServer (
                             etFullName.getText ().toString ().trim (),
                             etEmail.getText ().toString ().trim (),
                             etPhone.getText ().toString ().trim (),
@@ -403,7 +1635,7 @@ public class MyProfileActivity extends AppCompatActivity {
         });
     }
     
-    private void editProfileDetailSendToServer (final String name, final String email, final String mobile, final String homeType, final String state, final String budget) {
+    private void sendProfileDetailsToServer (final String name, final String email, final String mobile, final String homeType, final String state, final String budget) {
         if (NetworkConnection.isNetworkAvailable (MyProfileActivity.this)) {
             Utils.showProgressDialog (progressDialog, getResources ().getString (R.string.progress_dialog_text_please_wait), true);
             Utils.showLog (Log.INFO, "" + AppConfigTags.URL, AppConfigURL.URL_EDIT_PROFILE, true);
@@ -470,7 +1702,7 @@ public class MyProfileActivity extends AppCompatActivity {
                     Utils.showLog (Log.INFO, AppConfigTags.PARAMETERS_SENT_TO_THE_SERVER, "" + params, true);
                     return params;
                 }
-        
+    
                 @Override
                 public Map<String, String> getHeaders () throws AuthFailureError {
                     Map<String, String> params = new HashMap<> ();
@@ -480,71 +1712,6 @@ public class MyProfileActivity extends AppCompatActivity {
                 }
             };
             Utils.sendRequest (strRequest1, 60);
-        } else {
-            Utils.showSnackBar (this, clMain, getResources ().getString (R.string.snackbar_text_no_internet_connection_available), Snackbar.LENGTH_LONG, getResources ().getString (R.string.snackbar_action_go_to_settings), new View.OnClickListener () {
-                @Override
-                public void onClick (View v) {
-                    Intent dialogIntent = new Intent (Settings.ACTION_SETTINGS);
-                    dialogIntent.addFlags (Intent.FLAG_ACTIVITY_NEW_TASK);
-                    startActivity (dialogIntent);
-                }
-            });
-        }
-    }
-    
-    
-    private void getStateListFromServer () {
-        if (NetworkConnection.isNetworkAvailable (this)) {
-            Utils.showLog (Log.INFO, AppConfigTags.URL, AppConfigURL.URL_STATE, true);
-            StringRequest strRequest = new StringRequest (Request.Method.POST, AppConfigURL.URL_STATE,
-                    new Response.Listener<String> () {
-                        @Override
-                        public void onResponse (String response) {
-                            Utils.showLog (Log.INFO, AppConfigTags.SERVER_RESPONSE, response, true);
-                            if (response != null) {
-                                try {
-                                    JSONObject jsonObj = new JSONObject (response);
-                                    boolean error = jsonObj.getBoolean (AppConfigTags.ERROR);
-                                    String message = jsonObj.getString (AppConfigTags.MESSAGE);
-                                    if (! error) {
-                                    }
-                                } catch (Exception e) {
-                                    e.printStackTrace ();
-                                }
-                            } else {
-                                Utils.showLog (Log.WARN, AppConfigTags.SERVER_RESPONSE, AppConfigTags.DIDNT_RECEIVE_ANY_DATA_FROM_SERVER, true);
-                            }
-                        }
-                    },
-                    new Response.ErrorListener () {
-                        @Override
-                        public void onErrorResponse (VolleyError error) {
-                            Utils.showLog (Log.ERROR, AppConfigTags.VOLLEY_ERROR, error.toString (), true);
-                            NetworkResponse response = error.networkResponse;
-                            if (response != null && response.data != null) {
-                                Utils.showLog (Log.ERROR, AppConfigTags.ERROR, new String (response.data), true);
-                            }
-                        }
-                    }) {
-                
-                
-                @Override
-                protected Map<String, String> getParams () throws AuthFailureError {
-                    Map<String, String> params = new Hashtable<String, String> ();
-                    params.put (AppConfigTags.TYPE, AppConfigTags.STATES);
-                    
-                    Utils.showLog (Log.INFO, AppConfigTags.PARAMETERS_SENT_TO_THE_SERVER, "" + params, true);
-                    return params;
-                }
-                
-                @Override
-                public Map<String, String> getHeaders () throws AuthFailureError {
-                    Map<String, String> params = new HashMap<> ();
-                    Utils.showLog (Log.INFO, AppConfigTags.HEADERS_SENT_TO_THE_SERVER, "" + params, false);
-                    return params;
-                }
-            };
-            Utils.sendRequest (strRequest, 30);
         } else {
             Utils.showSnackBar (this, clMain, getResources ().getString (R.string.snackbar_text_no_internet_connection_available), Snackbar.LENGTH_LONG, getResources ().getString (R.string.snackbar_action_go_to_settings), new View.OnClickListener () {
                 @Override

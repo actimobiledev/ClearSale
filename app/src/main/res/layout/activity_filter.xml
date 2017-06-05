@@ -144,12 +144,68 @@
                     android:text="Bed"
                     android:textSize="@dimen/text_size_medium"
                     android:textStyle="bold"/>
+
+
+                <LinearLayout
+                    android:id="@+id/llBedroom"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:weightSum="4">
+                    <TextView
+                        android:id="@+id/tvBedAny"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_margin="@dimen/activity_margin_small"
+                        android:layout_weight="1"
+                        android:background="@drawable/state_button_unselected"
+                        android:gravity="center"
+                        android:padding="@dimen/activity_margin"
+                        android:text="ANY"/>
+                    <TextView
+                        android:id="@+id/tvBed2"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_margin="@dimen/activity_margin_small"
+                        android:layout_weight="1"
+                        android:background="@drawable/state_button_unselected"
+                        android:gravity="center"
+                        android:padding="@dimen/activity_margin"
+                        android:text="2-3"
+                    />
+
+
+                    <TextView
+                        android:id="@+id/tvBed3"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_margin="@dimen/activity_margin_small"
+                        android:layout_weight="1"
+                        android:background="@drawable/state_button_unselected"
+                        android:gravity="center"
+                        android:padding="@dimen/activity_margin"
+                        android:text="3-4"/>
+                    <TextView
+                        android:id="@+id/tvBed4"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_margin="@dimen/activity_margin_small"
+                        android:layout_weight="1"
+                        android:background="@drawable/state_button_unselected"
+                        android:gravity="center"
+                        android:padding="@dimen/activity_margin"
+                        android:text="4+"
+                    />
+                </LinearLayout>
+
+
                 <com.jaredrummler.materialspinner.MaterialSpinner
                     android:id="@+id/spinnerBed"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="@dimen/activity_margin_extra_small"
-                    android:background="@drawable/edit_text_background"/>
+                    android:background="@drawable/edit_text_background"
+                    android:visibility="gone"/>
 
                 <TextView
                     android:layout_width="match_parent"
@@ -159,12 +215,66 @@
                     android:textSize="@dimen/text_size_medium"
                     android:textStyle="bold"/>
 
+
+                <LinearLayout
+                    android:id="@+id/llState"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:weightSum="4">
+                    <TextView
+                        android:id="@+id/tvBathAny"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_margin="@dimen/activity_margin_small"
+                        android:layout_weight="1"
+                        android:background="@drawable/state_button_unselected"
+                        android:gravity="center"
+                        android:padding="@dimen/activity_margin"
+                        android:text="ANY"/>
+                    <TextView
+                        android:id="@+id/tvBath2"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_margin="@dimen/activity_margin_small"
+                        android:layout_weight="1"
+                        android:background="@drawable/state_button_unselected"
+                        android:gravity="center"
+                        android:padding="@dimen/activity_margin"
+                        android:text="2-3"/>
+
+
+                    <TextView
+                        android:id="@+id/tvBath3"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_margin="@dimen/activity_margin_small"
+                        android:layout_weight="1"
+                        android:background="@drawable/state_button_unselected"
+                        android:gravity="center"
+                        android:padding="@dimen/activity_margin"
+                        android:text="3-4"/>
+                    <TextView
+                        android:id="@+id/tvBath4"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_margin="@dimen/activity_margin_small"
+                        android:layout_weight="1"
+                        android:background="@drawable/state_button_unselected"
+                        android:gravity="center"
+                        android:padding="@dimen/activity_margin"
+                        android:text="4+"
+                    />
+                </LinearLayout>
+
+
                 <com.jaredrummler.materialspinner.MaterialSpinner
                     android:id="@+id/spinnerBath"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="@dimen/activity_margin_extra_small"
-                    android:background="@drawable/edit_text_background"/>
+                    android:background="@drawable/edit_text_background"
+                    android:visibility="gone"/>
 
                 <TextView
                     android:layout_width="match_parent"

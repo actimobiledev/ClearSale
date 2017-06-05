@@ -19,6 +19,7 @@ import com.actiknow.clearsale.adapter.PropertyAdapter;
 import com.actiknow.clearsale.model.Property;
 import com.actiknow.clearsale.utils.AppConfigTags;
 import com.actiknow.clearsale.utils.AppConfigURL;
+import com.actiknow.clearsale.utils.BuyerDetailsPref;
 import com.actiknow.clearsale.utils.Constants;
 import com.actiknow.clearsale.utils.NetworkConnection;
 import com.actiknow.clearsale.utils.Utils;
@@ -109,8 +110,8 @@ public class MyFavouriteActivity extends AppCompatActivity {
         */
     private void getAllProperties () {
         if (NetworkConnection.isNetworkAvailable (MyFavouriteActivity.this)) {
-            Utils.showLog (Log.INFO, "" + AppConfigTags.URL, AppConfigURL.URL_PROPERTY_LIST, true);
-            StringRequest strRequest1 = new StringRequest (Request.Method.POST, AppConfigURL.URL_PROPERTY_LIST,
+            Utils.showLog (Log.INFO, "" + AppConfigTags.URL, AppConfigURL.URL_FAVOURITE_PROPERTY_LIST, true);
+            StringRequest strRequest1 = new StringRequest (Request.Method.POST, AppConfigURL.URL_FAVOURITE_PROPERTY_LIST,
                     new com.android.volley.Response.Listener<String> () {
                         @Override
                         public void onResponse (String response) {
@@ -135,7 +136,8 @@ public class MyFavouriteActivity extends AppCompatActivity {
                                                     jsonObjectProperty.getString (AppConfigTags.PROPERTY_BUILT_YEAR),
                                                     jsonObjectProperty.getString (AppConfigTags.PROPERTY_ADDRESS),
                                                     jsonObjectProperty.getString (AppConfigTags.PROPERTY_CITY),
-                                                    jsonObjectProperty.getBoolean (AppConfigTags.PROPERTY_IS_OFFER));
+                                                    jsonObjectProperty.getBoolean (AppConfigTags.PROPERTY_IS_OFFER),
+                                                    jsonObjectProperty.getBoolean (AppConfigTags.PROPERTY_IS_FAVOURITE));
                                             
                                             
                                             JSONArray jsonArrayPropertyImages = jsonObjectProperty.getJSONArray (AppConfigTags.PROPERTY_IMAGES);
@@ -178,8 +180,10 @@ public class MyFavouriteActivity extends AppCompatActivity {
                     }) {
                 @Override
                 protected Map<String, String> getParams () throws AuthFailureError {
+                    BuyerDetailsPref buyerDetailsPref = BuyerDetailsPref.getInstance ();
                     Map<String, String> params = new Hashtable<String, String> ();
-                    params.put (AppConfigTags.TYPE, "property_list");
+                    params.put (AppConfigTags.TYPE, "favourite_property_list");
+                    params.put (AppConfigTags.BUYER_ID, String.valueOf (buyerDetailsPref.getIntPref (MyFavouriteActivity.this, BuyerDetailsPref.BUYER_ID)));
                     Utils.showLog (Log.INFO, AppConfigTags.PARAMETERS_SENT_TO_THE_SERVER, "" + params, true);
                     return params;
                 }

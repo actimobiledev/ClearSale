@@ -78,7 +78,6 @@
 
 
 
-    <string name="facebook_app_id">431008303943529</string>
 
 
 
@@ -191,7 +190,36 @@
     <string name="activity_filter_back_button">Cancel</string>
     <string name="activity_filter_title">Filters</string>
 
+
+    <string name="activity_property_images_back_button">Back</string>
+    <string name="activity_property_images_title"></string>
+
+    <string name="activity_property_detail_back_button">Back</string>
+    <string name="activity_property_detail_title"></string>
+
+
     <string name="activity_main_title">HomeTrust</string>
+
+
+    <string name="facebook_app_id">431008303943529</string>
+    <string name="fb_login_protocol_scheme">fb431008303943529</string>
+
+
+    <string name="activity_property_detail_text_best_offer">Your Best Offer :</string>
+    <string name="activity_property_detail_text_offer_detail">Offer Details :</string>
+    <string name="activity_property_detail_text_attended_access">I have attended access</string>
+    <string name="activity_property_detail_hint_usd">USD</string>
+    <string name="activity_property_detail_text_note">Note: High offer is the most important, but
+        not the only, factor in determining who will be purchasing the property. The company will,
+        at any time of the Company choosing, make the final selection of who will be buying the
+        property.
+    </string>
+    <string name="activity_property_detail_text_offer_detail2">Please send the price that makes it a
+        buy for you. This is a binding offer and if you are the accepted offer you must be prepared
+        to wire the $8,000 nonrefundable deposit and return the contract within 4 business hours and
+        you confirm you have had the opportunity for access and you accept the property as is where
+        is with possession and closing terms as described below.
+    </string>
 
 
 </resources>

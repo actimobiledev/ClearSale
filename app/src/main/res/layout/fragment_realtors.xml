@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 
-<android.support.v4.widget.NestedScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+<android.support.v4.widget.NestedScrollView
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -14,16 +15,24 @@
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="match_parent"
             android:orientation="vertical"
             android:padding="12dp">
 
+            <WebView
+                android:id="@+id/webView1"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"/>
+
+
             <TextView
+                android:id="@+id/tvRealtor"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="Are you a realtor? We love to work with agents, and we don’t want to steal your buyer relationships Please visit our unbranded website made explicitly for your buyers so they can see the property, pictures and the price INCLUDES your commission. There is no link to my company, all communication is directed back to you. Make the unbranded website link to on carrot insideragentdeals.com. Note the it is your responsibility to comment the commission amount you expect in your offer comments. Most of our buyers do not pay commission so you need to clarify that before your offer is accepted."
                 android:textColor="@color/text_color_black"
-                android:textSize="15sp" />
+                android:textSize="15sp"
+                android:visibility="gone"/>
 
 
         </LinearLayout>

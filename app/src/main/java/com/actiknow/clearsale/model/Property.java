@@ -28,7 +28,7 @@ public class Property {
         this.is_favourite = is_favourite;
     }
     
-    public Property (int id, int status, String price, String bedroom, String bathroom, String area, String year_built, String address1, String address2, boolean is_offer) {
+    public Property (int id, int status, String price, String bedroom, String bathroom, String area, String year_built, String address1, String address2, boolean is_offer, boolean is_favourite) {
         this.id = id;
         this.status = status;
         this.price = price;
@@ -39,6 +39,7 @@ public class Property {
         this.address1 = address1;
         this.address2 = address2;
         this.is_offer = is_offer;
+        this.is_favourite = is_favourite;
     }
     
     public int getId () {
