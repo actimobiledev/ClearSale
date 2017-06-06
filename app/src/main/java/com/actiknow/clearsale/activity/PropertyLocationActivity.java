@@ -88,7 +88,7 @@ public class PropertyLocationActivity extends AppCompatActivity implements Googl
                         .icon (BitmapDescriptorFactory.fromResource (R.drawable.ic_map_marker))
         );
         mAddress.setTag (0);
-        mMap.animateCamera (CameraUpdateFactory.newLatLngZoom (new LatLng (latitude, longitude), 14.0f));
+        mMap.animateCamera (CameraUpdateFactory.newLatLngZoom (new LatLng (latitude, longitude), 15.0f));
         
         
         // Set a listener for marker click.
