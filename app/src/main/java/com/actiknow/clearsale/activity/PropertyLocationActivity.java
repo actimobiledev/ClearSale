@@ -2,7 +2,6 @@ package com.actiknow.clearsale.activity;
 
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
-import android.widget.Toast;
 
 import com.actiknow.clearsale.R;
 import com.actiknow.clearsale.utils.PropertyDetailsPref;
@@ -18,11 +17,6 @@ import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.android.gms.maps.model.StreetViewPanoramaCamera;
-
-
-/**
- * Created by l on 23/03/2017.
- */
 
 public class PropertyLocationActivity extends AppCompatActivity implements GoogleMap.OnMarkerClickListener, OnMapReadyCallback, OnStreetViewPanoramaReadyCallback {
     SupportMapFragment mapFragment;
@@ -62,17 +56,16 @@ public class PropertyLocationActivity extends AppCompatActivity implements Googl
     
     @Override
     public boolean onMarkerClick (Marker marker) {
-        Integer clickCount = (Integer) marker.getTag ();
+//        Integer clickCount = (Integer) marker.getTag ();
         // Check if a click count was set, then display the click count.
-        if (clickCount != null) {
-            clickCount = clickCount + 1;
-            marker.setTag (clickCount);
-            Toast.makeText (this,
-                    marker.getTitle () +
-                            " has been clicked " + clickCount + " times.",
-                    Toast.LENGTH_SHORT).show ();
-        }
-        
+//        if (clickCount != null) {
+//            clickCount = clickCount + 1;
+//            marker.setTag (clickCount);
+//            Toast.makeText (this,
+//                    marker.getTitle () +
+//                            " has been clicked " + clickCount + " times.",
+//                    Toast.LENGTH_SHORT).show ();
+//        }
         return false;
     }
     
