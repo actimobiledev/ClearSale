@@ -3,6 +3,7 @@ package com.actiknow.clearsale.fragment;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.text.Html;
+import android.text.SpannableStringBuilder;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -10,7 +11,11 @@ import android.webkit.WebView;
 import android.widget.TextView;
 
 import com.actiknow.clearsale.R;
+import com.actiknow.clearsale.utils.Constants;
 import com.actiknow.clearsale.utils.PropertyDetailsPref;
+
+import org.jsoup.Jsoup;
+import org.jsoup.nodes.Document;
 
 
 /**
@@ -37,16 +42,18 @@ public class RealtorFragment extends Fragment {
         propertyDetailsPref = PropertyDetailsPref.getInstance ();
         tvRealtor = (TextView) rootView.findViewById (R.id.tvRealtor);
         webView = (WebView) rootView.findViewById (R.id.webView1);
-
-
     }
 
     private void initData() {
+        Document doc = Jsoup.parse (propertyDetailsPref.getStringPref (getActivity (), PropertyDetailsPref.PROPERTY_REALTOR));
+    
+        SpannableStringBuilder spannableStringBuilder = new SpannableStringBuilder ("<style>@font-face{font-family: myFont;src: url(file:///android_asset/" + Constants.font_name + ");}</style>" + propertyDetailsPref.getStringPref (getActivity (), PropertyDetailsPref.PROPERTY_REALTOR));
+        webView.loadDataWithBaseURL ("www.google.com", spannableStringBuilder.toString (), "text/html", "UTF-8", "");
+//        Log.e ("karman", "<style>@font-face{font-family: myFont;src: url(file:///android_asset/" + Constants.font_name + ".otf);}</style>" + propertyDetailsPref.getStringPref (getActivity (), PropertyDetailsPref.PROPERTY_REALTOR));
+    
         tvRealtor.setText (Html.fromHtml (propertyDetailsPref.getStringPref (getActivity (), PropertyDetailsPref.PROPERTY_REALTOR)));
-        webView.loadData (propertyDetailsPref.getStringPref (getActivity (), PropertyDetailsPref.PROPERTY_REALTOR), "text/html", "UTF-8");
     }
 
     private void initListener() {
-
     }
 }

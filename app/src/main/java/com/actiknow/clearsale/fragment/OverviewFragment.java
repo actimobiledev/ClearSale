@@ -4,6 +4,7 @@ import android.app.ProgressDialog;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.text.Html;
+import android.text.SpannableStringBuilder;
 import android.text.util.Linkify;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -30,6 +31,8 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 
 import org.json.JSONObject;
+import org.jsoup.Jsoup;
+import org.jsoup.nodes.Document;
 
 import java.util.HashMap;
 import java.util.Hashtable;
@@ -89,7 +92,16 @@ public class OverviewFragment extends Fragment {
         tvOverView.setText (Html.fromHtml (propertyDetailsPref.getStringPref (getActivity (), PropertyDetailsPref.PROPERTY_OVERVIEW)));
         tvOverView.setAutoLinkMask (Linkify.WEB_URLS);
         tvOverView.setLinksClickable (true);
-        webView.loadData (propertyDetailsPref.getStringPref (getActivity (), PropertyDetailsPref.PROPERTY_OVERVIEW), "text/html", "UTF-8");
+    
+    
+        Document doc = Jsoup.parse (propertyDetailsPref.getStringPref (getActivity (), PropertyDetailsPref.PROPERTY_OVERVIEW));
+    
+    
+        SpannableStringBuilder spannableStringBuilder = new SpannableStringBuilder ("<style>@font-face{font-family: myFont;src: url(file:///android_asset/" + Constants.font_name + ");}</style>" + propertyDetailsPref.getStringPref (getActivity (), PropertyDetailsPref.PROPERTY_OVERVIEW));
+        webView.loadDataWithBaseURL ("www.google.com", spannableStringBuilder.toString (), "text/html", "UTF-8", "");
+//        Log.e ("karman", "<style>@font-face{font-family: myFont;src: url(file:///android_asset/" + Constants.font_name + ".otf);}</style>" + propertyDetailsPref.getStringPref (getActivity (), PropertyDetailsPref.PROPERTY_OVERVIEW));
+    
+        
         WebSettings webSettings = webView.getSettings ();
         webSettings.setStandardFontFamily (Constants.font_name);
     
@@ -101,12 +113,9 @@ public class OverviewFragment extends Fragment {
         } else {
             llPropertyOffer.setVisibility (View.GONE);
         }
-
-
     }
 
     private void initListener() {
-    
         tvSubmit.setOnClickListener (new View.OnClickListener () {
             @Override
             public void onClick (View view) {
@@ -118,7 +127,6 @@ public class OverviewFragment extends Fragment {
                 sendBidCredentialsToServer (etOfferAmount.getText ().toString ().trim (), etOfferDescription.getText ().toString ().trim (), checked);
             }
         });
-
     }
     
     

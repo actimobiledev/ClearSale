@@ -80,6 +80,19 @@
                             android:src="@drawable/ic_overflow_menu"
                             android:visibility="gone"/>
 
+
+                        <ImageView
+                            android:id="@+id/ivMaps"
+                            android:layout_width="wrap_content"
+                            android:layout_height="match_parent"
+                            android:layout_centerVertical="true"
+                            android:layout_toEndOf="@+id/ivFilter"
+                            android:layout_toRightOf="@+id/ivFilter"
+                            android:padding="@dimen/activity_margin_small"
+                            android:src="@android:drawable/ic_dialog_map"
+                            android:visibility="visible"/>
+
+
                         <ImageView
                             android:id="@+id/ivFilter"
                             android:layout_width="wrap_content"
@@ -88,6 +101,7 @@
                             android:padding="@dimen/activity_margin_small"
                             android:src="@drawable/ic_filter"
                             android:visibility="visible"/>
+
 
                     </RelativeLayout>
                 </RelativeLayout>

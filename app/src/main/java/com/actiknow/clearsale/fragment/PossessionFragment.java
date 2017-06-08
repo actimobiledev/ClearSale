@@ -3,6 +3,7 @@ package com.actiknow.clearsale.fragment;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.text.Html;
+import android.text.SpannableStringBuilder;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -10,7 +11,11 @@ import android.webkit.WebView;
 import android.widget.TextView;
 
 import com.actiknow.clearsale.R;
+import com.actiknow.clearsale.utils.Constants;
 import com.actiknow.clearsale.utils.PropertyDetailsPref;
+
+import org.jsoup.Jsoup;
+import org.jsoup.nodes.Document;
 
 
 /**
@@ -43,8 +48,16 @@ public class PossessionFragment extends Fragment {
 
     private void initData() {
         propertyDetailsPref = PropertyDetailsPref.getInstance ();
+    
+    
+        Document doc = Jsoup.parse (propertyDetailsPref.getStringPref (getActivity (), PropertyDetailsPref.PROPERTY_ACCESS));
+    
+        SpannableStringBuilder spannableStringBuilder = new SpannableStringBuilder ("<style>@font-face{font-family: myFont;src: url(file:///android_asset/" + Constants.font_name + ");}</style>" + propertyDetailsPref.getStringPref (getActivity (), PropertyDetailsPref.PROPERTY_ACCESS));
+        webView.loadDataWithBaseURL ("www.google.com", spannableStringBuilder.toString (), "text/html", "UTF-8", "");
+//        Log.e ("karman", "<style>@font-face{font-family: myFont;src: url(file:///android_asset/" + Constants.font_name + ".otf);}</style>" + propertyDetailsPref.getStringPref (getActivity (), PropertyDetailsPref.PROPERTY_ACCESS));
+        
         tvPossession.setText (Html.fromHtml (propertyDetailsPref.getStringPref (getActivity (), PropertyDetailsPref.PROPERTY_ACCESS)));
-        webView.loadData (propertyDetailsPref.getStringPref (getActivity (), PropertyDetailsPref.PROPERTY_ACCESS), "text/html", "UTF-8");
+//        webView.loadData (propertyDetailsPref.getStringPref (getActivity (), PropertyDetailsPref.PROPERTY_ACCESS), "text/html", "UTF-8");
     }
 
     private void initListener() {

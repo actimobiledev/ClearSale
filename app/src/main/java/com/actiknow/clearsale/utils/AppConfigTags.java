@@ -46,6 +46,7 @@ public class AppConfigTags {
     public static String PROPERTY_IMAGES = "property_images";
     public static String PROPERTY_IMAGE = "property_image";
     public static String PROPERTIES = "properties";
+    public static String PROPERTY_LOCATION = "property_location";
     public static String IS_FAVOURITE = "is_favourite";
     
     
@@ -84,6 +85,10 @@ public class AppConfigTags {
     
     public static String PROPERTY_OVERVIEW = "property_overview";
     public static String PROPERTY_COMPS = "property_comps";
+    public static String PROPERTY_COMPS_ADDRESSES = "property_comps_addresses";
+    public static String PROPERTY_COMP_ADDRESS = "property_comp_address";
+    public static String PROPERTY_COMP_LATITUDE = "property_comp_latitude";
+    public static String PROPERTY_COMP_LONGITUDE = "property_comp_longitude";
     public static String PROPERTY_ACCESS = "property_access";
     public static String PROPERTY_REALTOR = "property_realtor";
     public static String PROPERTY_OFFER = "is_offer";
@@ -93,5 +98,22 @@ public class AppConfigTags {
     public static String PROPERTY_BID_COMMENTS = "bid_comments";
     public static String PROPERTY_BID_AUCTION_ID = "auction_id";
     public static String PROPERTY_BID_AUCTION_STATUS = "auction_status";
+    
+    
+    public static String CITIES = "cities";
+    public static String CITY_NAME = "city_name";
+    public static String CITY_ID = "city_id";
+    
+    public static String FILTER = "filter";
+    public static String FILTER_STATUS = "filter_status";
+    public static String FILTER_BEDROOMS = "filter_bedrooms";
+    public static String FILTER_BATHROOMS = "filter_bathrooms";
+    public static String FILTER_CITIES = "filter_cities";
+    public static String FILTER_PRICE_MIN = "filter_price_min";
+    public static String FILTER_PRICE_MAX = "filter_price_max";
+    public static String FILTER_LOCATION = "filter_location";
+    
+    
+    
     
 }

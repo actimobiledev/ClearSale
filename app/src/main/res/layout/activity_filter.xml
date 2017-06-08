@@ -52,6 +52,7 @@
                             android:src="@drawable/ic_back"
                             android:visibility="visible"/>
                         <TextView
+                            android:id="@+id/tvBack"
                             android:layout_width="wrap_content"
                             android:layout_height="match_parent"
                             android:layout_toEndOf="@+id/ivBack"
@@ -93,10 +94,22 @@
             <LinearLayout
                 android:id="@+id/range_views_container"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_height="match_parent"
                 android:layout_margin="@dimen/activity_margin"
                 android:orientation="vertical">
-
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:padding="@dimen/activity_margin_small"
+                    android:text="Status"
+                    android:textSize="@dimen/text_size_medium"
+                    android:textStyle="bold"/>
+                <com.jaredrummler.materialspinner.MaterialSpinner
+                    android:id="@+id/spinner"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/activity_margin_extra_small"
+                    android:background="@drawable/edit_text_background"/>
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -104,7 +117,6 @@
                     android:text="Location (mi)"
                     android:textSize="@dimen/text_size_medium"
                     android:textStyle="bold"/>
-
                 <me.bendik.simplerangeview.SimpleRangeView
                     android:id="@+id/rangeview_location"
                     xmlns:app="http://schemas.android.com/apk/res-auto"
@@ -116,7 +128,6 @@
                     app:showFixedLine="true"
                     app:start="0"
                     app:startFixed="0"/>
-
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -124,7 +135,6 @@
                     android:text="Range"
                     android:textSize="@dimen/text_size_medium"
                     android:textStyle="bold"/>
-
                 <me.bendik.simplerangeview.SimpleRangeView
                     android:id="@+id/fixed_rangeview"
                     xmlns:app="http://schemas.android.com/apk/res-auto"
@@ -136,7 +146,6 @@
                     app:showFixedLine="true"
                     app:start="0"
                     app:startFixed="0"/>
-
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -144,8 +153,6 @@
                     android:text="Bed"
                     android:textSize="@dimen/text_size_medium"
                     android:textStyle="bold"/>
-
-
                 <LinearLayout
                     android:id="@+id/llBedroom"
                     android:layout_width="match_parent"
@@ -197,16 +204,6 @@
                         android:text="4+"
                     />
                 </LinearLayout>
-
-
-                <com.jaredrummler.materialspinner.MaterialSpinner
-                    android:id="@+id/spinnerBed"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="@dimen/activity_margin_extra_small"
-                    android:background="@drawable/edit_text_background"
-                    android:visibility="gone"/>
-
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -214,8 +211,6 @@
                     android:text="Bath"
                     android:textSize="@dimen/text_size_medium"
                     android:textStyle="bold"/>
-
-
                 <LinearLayout
                     android:id="@+id/llState"
                     android:layout_width="match_parent"
@@ -266,30 +261,20 @@
                         android:text="4+"
                     />
                 </LinearLayout>
-
-
-                <com.jaredrummler.materialspinner.MaterialSpinner
-                    android:id="@+id/spinnerBath"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="@dimen/activity_margin_extra_small"
-                    android:background="@drawable/edit_text_background"
-                    android:visibility="gone"/>
-
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:padding="@dimen/activity_margin_small"
-                    android:text="Status"
+                    android:text="Cities"
                     android:textSize="@dimen/text_size_medium"
                     android:textStyle="bold"/>
-
-                <com.jaredrummler.materialspinner.MaterialSpinner
-                    android:id="@+id/spinner"
+                <LinearLayout
+                    android:id="@+id/llCities"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="@dimen/activity_margin_extra_small"
-                    android:background="@drawable/edit_text_background"/>
+                    android:layout_marginBottom="@dimen/activity_margin"
+                    android:orientation="vertical">
+                </LinearLayout>
             </LinearLayout>
         </ScrollView>
     </RelativeLayout>

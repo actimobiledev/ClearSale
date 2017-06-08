@@ -2,8 +2,11 @@ package com.actiknow.clearsale.utils;
 
 import android.content.Context;
 import android.content.res.TypedArray;
+import android.text.SpannableString;
 import android.text.SpannableStringBuilder;
+import android.text.style.ForegroundColorSpan;
 import android.util.AttributeSet;
+import android.view.MotionEvent;
 import android.view.View;
 
 import com.actiknow.clearsale.R;
@@ -13,8 +16,8 @@ import com.actiknow.clearsale.R;
  * Created by Admin on 08-05-2017.
  */
 public class ExpandableTextView extends android.support.v7.widget.AppCompatTextView {
-    private static final int DEFAULT_TRIM_LENGTH = 200;
-    private static final String ELLIPSIS = ".....";
+    private static final int DEFAULT_TRIM_LENGTH = 100;
+    private static final String ELLIPSIS = "  View More..";
     
     private CharSequence originalText;
     private CharSequence trimmedText;
@@ -32,13 +35,14 @@ public class ExpandableTextView extends android.support.v7.widget.AppCompatTextV
         TypedArray typedArray = context.obtainStyledAttributes (attrs, R.styleable.ExpandableTextView);
         this.trimLength = typedArray.getInt (R.styleable.ExpandableTextView_trimLength, DEFAULT_TRIM_LENGTH);
         typedArray.recycle ();
-        
-        setOnClickListener (new OnClickListener () {
+    
+        setOnTouchListener (new OnTouchListener () {
             @Override
-            public void onClick (View v) {
+            public boolean onTouch (View view, MotionEvent motionEvent) {
                 trim = ! trim;
                 setText ();
                 requestFocusFromTouch ();
+                return false;
             }
         });
     }
@@ -48,7 +52,7 @@ public class ExpandableTextView extends android.support.v7.widget.AppCompatTextV
     }
     
     private CharSequence getDisplayableText () {
-        return trim ? trimmedText : originalText;
+        return trim ? originalText : trimmedText;
     }
     
     @Override
@@ -60,8 +64,12 @@ public class ExpandableTextView extends android.support.v7.widget.AppCompatTextV
     }
     
     private CharSequence getTrimmedText (CharSequence text) {
+        SpannableStringBuilder builder = new SpannableStringBuilder ();
+        SpannableString str1 = new SpannableString (ELLIPSIS);
+        str1.setSpan (new ForegroundColorSpan (getResources ().getColor (R.color.colorPrimary)), 0, str1.length (), 0);
+        builder.append (str1);
         if (originalText != null && originalText.length () > trimLength) {
-            return new SpannableStringBuilder (originalText, 0, trimLength + 1).append (ELLIPSIS);
+            return new SpannableStringBuilder (originalText, 0, trimLength + 100).append (str1);
         } else {
             return originalText;
         }

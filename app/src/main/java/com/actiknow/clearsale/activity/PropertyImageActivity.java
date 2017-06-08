@@ -10,6 +10,7 @@ import android.view.View;
 import android.widget.RelativeLayout;
 
 import com.actiknow.clearsale.R;
+import com.actiknow.clearsale.utils.AppConfigTags;
 import com.actiknow.clearsale.utils.PropertyDetailsPref;
 import com.actiknow.clearsale.utils.Utils;
 import com.mzelzoghbi.zgallery.Constants;
@@ -17,6 +18,10 @@ import com.mzelzoghbi.zgallery.CustomViewPager;
 import com.mzelzoghbi.zgallery.OnImgClick;
 import com.mzelzoghbi.zgallery.adapters.HorizontalListAdapters;
 import com.mzelzoghbi.zgallery.adapters.ViewPagerAdapter;
+
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.util.ArrayList;
 
@@ -60,13 +65,23 @@ public class PropertyImageActivity extends AppCompatActivity {
     private void initData () {
         Utils.setTypefaceToAllViews (this, rlBack);
         propertyDetailsPref = PropertyDetailsPref.getInstance ();
-        int size = propertyDetailsPref.getIntPref (PropertyImageActivity.this, "size");
-    
-        for (int j = 0; j < size; j++) {
-            propertyImageList.add (propertyDetailsPref.getStringPref (PropertyImageActivity.this, propertyDetailsPref.PROPERTY_IMAGES + j));
+        try {
+            JSONArray jsonArray = new JSONArray (propertyDetailsPref.getStringPref (PropertyImageActivity.this, PropertyDetailsPref.PROPERTY_IMAGES));
+        
+            for (int j = 0; j < jsonArray.length (); j++) {
+                JSONObject jsonObjectImages = jsonArray.getJSONObject (j);
+                propertyImageList.add (jsonObjectImages.getString (AppConfigTags.PROPERTY_IMAGE));
+            }
+        } catch (JSONException e) {
+            e.printStackTrace ();
         }
-    
-    
+
+
+//        for (int j = 0; j < size; j++) {
+//            propertyImageList.add (propertyDetailsPref.getStringPref (PropertyImageActivity.this, propertyDetailsPref.PROPERTY_IMAGES + j));
+//        }
+        
+        
         //   propertyImageList.add("http://clearsale.com/theme/theme1/seller_files/exterior/property_327/dcca01ddf8b02fb5d2fe89d3c55eb5dcExterior%20pic.png");
         //  propertyImageList.add("http://clearsale.com/theme/theme1/seller_files/interior/property_327/d755cd303ff826ce587fb0e55e6bc1c6IMG_5034.jpg");
         // propertyImageList.add("http://clearsale.com/theme/theme1/seller_files/interior/property_327/63502fc15c1d04e5ad9f095d8bd03b2aIMG_5035.jpg");
@@ -115,7 +130,6 @@ public class PropertyImageActivity extends AppCompatActivity {
             public void onPageScrollStateChanged (int state) {
             }
         });
-    
         hAdapter.setSelectedItem (currentPos);
         mViewPager.setCurrentItem (currentPos);
     }

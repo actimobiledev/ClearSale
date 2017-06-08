@@ -2,8 +2,10 @@ package com.actiknow.clearsale.activity;
 
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 
 import com.actiknow.clearsale.R;
+import com.actiknow.clearsale.utils.AppConfigTags;
 import com.actiknow.clearsale.utils.PropertyDetailsPref;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
@@ -17,6 +19,10 @@ import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.android.gms.maps.model.StreetViewPanoramaCamera;
+
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
 
 public class PropertyLocationActivity extends AppCompatActivity implements GoogleMap.OnMarkerClickListener, OnMapReadyCallback, OnStreetViewPanoramaReadyCallback {
     SupportMapFragment mapFragment;
@@ -71,8 +77,27 @@ public class PropertyLocationActivity extends AppCompatActivity implements Googl
     
     @Override
     public void onMapReady (GoogleMap googleMap) {
-        
         mMap = googleMap;
+        try {
+            JSONArray jsonArrayPropertyComps = new JSONArray (propertyDetailsPref.getStringPref (PropertyLocationActivity.this, PropertyDetailsPref.PROPERTY_COMPS_ADDRESSES));
+        
+            Log.e ("karman", jsonArrayPropertyComps.toString ());
+            for (int j = 0; j < jsonArrayPropertyComps.length (); j++) {
+                JSONObject jsonObjectCompsAddressDetails = jsonArrayPropertyComps.getJSONObject (j);
+                mMap.addMarker (
+                        new MarkerOptions ().position (new LatLng (Double.parseDouble (jsonObjectCompsAddressDetails.getString (AppConfigTags.PROPERTY_COMP_LATITUDE)), Double.parseDouble (jsonObjectCompsAddressDetails.getString (AppConfigTags.PROPERTY_COMP_LONGITUDE))))
+                                .title (jsonObjectCompsAddressDetails.getString (AppConfigTags.PROPERTY_COMP_ADDRESS))
+                                .draggable (false)
+                                .icon (BitmapDescriptorFactory.fromResource (R.drawable.ic_map_comps_marker))
+                );
+            }
+        } catch (JSONException e) {
+            e.printStackTrace ();
+        }
+    
+    
+        mMap.animateCamera (CameraUpdateFactory.newLatLngZoom (new LatLng (latitude, longitude), 13.0f));
+        
         mAddress = mMap.addMarker (
                 new MarkerOptions ().position (new LatLng (latitude, longitude))
                         .title (propertyDetailsPref.getStringPref (PropertyLocationActivity.this, PropertyDetailsPref.PROPERTY_ADDRESS1)
@@ -82,12 +107,7 @@ public class PropertyLocationActivity extends AppCompatActivity implements Googl
         );
         mAddress.setTag (0);
         mMap.animateCamera (CameraUpdateFactory.newLatLngZoom (new LatLng (latitude, longitude), 15.0f));
-        
-        
-        // Set a listener for marker click.
         mMap.setOnMarkerClickListener (this);
-        
-        
     }
     
     

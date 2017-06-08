@@ -223,7 +223,8 @@ public class LoginActivity extends AppCompatActivity {
                     
                     @Override
                     public void onAuthError (LIAuthError error) {
-                        Utils.showSnackBar (LoginActivity.this, clMain, "Login Failed : " + error.toString (), Snackbar.LENGTH_LONG, null, null);
+                        Utils.showLog (Log.ERROR, "LinkedIn Error", error.toString (), true);
+                        Utils.showSnackBar (LoginActivity.this, clMain, "Login Failed", Snackbar.LENGTH_LONG, null, null);
                     }
                 }, true);
     }

@@ -3,6 +3,7 @@ package com.actiknow.clearsale.fragment;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.text.Html;
+import android.text.SpannableStringBuilder;
 import android.text.util.Linkify;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -46,7 +47,14 @@ public class CompsFragment extends Fragment {
         tvComps.setText (Html.fromHtml (propertyDetailsPref.getStringPref (getActivity (), PropertyDetailsPref.PROPERTY_COMPS)));
         tvComps.setAutoLinkMask (Linkify.WEB_URLS);
         tvComps.setLinksClickable (true);
-        webView.loadData (propertyDetailsPref.getStringPref (getActivity (), PropertyDetailsPref.PROPERTY_COMPS), "text/html", "UTF-8");
+    
+    
+        SpannableStringBuilder spannableStringBuilder = new SpannableStringBuilder ("<style>@font-face{font-family: myFont;src: url(file:///android_asset/" + Constants.font_name + ");}</style>" + propertyDetailsPref.getStringPref (getActivity (), PropertyDetailsPref.PROPERTY_COMPS));
+        webView.loadDataWithBaseURL ("www.google.com", spannableStringBuilder.toString (), "text/html", "UTF-8", "");
+//        Log.e ("karman", "<style>@font-face{font-family: myFont;src: url(file:///android_asset/" + Constants.font_name + ".otf);}</style>" + propertyDetailsPref.getStringPref (getActivity (), PropertyDetailsPref.PROPERTY_COMPS));
+
+
+//        webView.loadData (propertyDetailsPref.getStringPref (getActivity (), PropertyDetailsPref.PROPERTY_COMPS), "text/html", "UTF-8");
         WebSettings webSettings = webView.getSettings ();
         webSettings.setStandardFontFamily (Constants.font_name);
 

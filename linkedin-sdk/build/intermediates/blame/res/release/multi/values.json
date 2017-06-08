@@ -11,14 +11,7 @@
                     "endOffset": 112
                 },
                 "from": {
-                    "file": "D:\\Karman\\AndroidStudioProjects\\ClearSale\\linkedin-sdk\\src\\main\\res\\values\\strings.xml",
-                    "position": {
-                        "startLine": 4,
-                        "startColumn": 4,
-                        "startOffset": 295,
-                        "endColumn": 61,
-                        "endOffset": 352
-                    }
+                    "file": "D:\\Karman\\AndroidStudioProjects\\ClearSale\\linkedin-sdk\\src\\main\\res\\values\\strings.xml"
                 }
             },
             {
@@ -30,14 +23,7 @@
                     "endOffset": 178
                 },
                 "from": {
-                    "file": "D:\\Karman\\AndroidStudioProjects\\ClearSale\\linkedin-sdk\\src\\main\\res\\values\\strings.xml",
-                    "position": {
-                        "startLine": 3,
-                        "startColumn": 4,
-                        "startOffset": 229,
-                        "endColumn": 65,
-                        "endOffset": 290
-                    }
+                    "file": "D:\\Karman\\AndroidStudioProjects\\ClearSale\\linkedin-sdk\\src\\main\\res\\values\\strings.xml"
                 }
             },
             {
@@ -45,8 +31,9 @@
                     "startLine": 4,
                     "startColumn": 4,
                     "startOffset": 183,
-                    "endColumn": 138,
-                    "endOffset": 317
+                    "endLine": 6,
+                    "endColumn": 13,
+                    "endOffset": 330
                 },
                 "from": {
                     "file": "D:\\Karman\\AndroidStudioProjects\\ClearSale\\linkedin-sdk\\src\\main\\res\\values\\strings.xml",
@@ -54,28 +41,22 @@
                         "startLine": 2,
                         "startColumn": 4,
                         "startOffset": 90,
-                        "endColumn": 138,
-                        "endOffset": 224
+                        "endLine": 4,
+                        "endColumn": 13,
+                        "endOffset": 237
                     }
                 }
             },
             {
                 "to": {
-                    "startLine": 5,
+                    "startLine": 7,
                     "startColumn": 4,
-                    "startOffset": 322,
+                    "startOffset": 335,
                     "endColumn": 73,
-                    "endOffset": 391
+                    "endOffset": 404
                 },
                 "from": {
-                    "file": "D:\\Karman\\AndroidStudioProjects\\ClearSale\\linkedin-sdk\\src\\main\\res\\values\\strings.xml",
-                    "position": {
-                        "startLine": 1,
-                        "startColumn": 4,
-                        "startOffset": 16,
-                        "endColumn": 73,
-                        "endOffset": 85
-                    }
+                    "file": "D:\\Karman\\AndroidStudioProjects\\ClearSale\\linkedin-sdk\\src\\main\\res\\values\\strings.xml"
                 }
             }
         ]

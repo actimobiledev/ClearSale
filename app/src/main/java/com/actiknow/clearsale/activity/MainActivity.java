@@ -1,17 +1,25 @@
 package com.actiknow.clearsale.activity;
 
+import android.Manifest;
+import android.annotation.TargetApi;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.IntentSender;
+import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.graphics.drawable.Drawable;
 import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
 import android.provider.Settings;
 import android.support.annotation.DrawableRes;
 import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 import android.support.design.widget.CoordinatorLayout;
 import android.support.design.widget.Snackbar;
 import android.support.v4.widget.SwipeRefreshLayout;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
@@ -29,6 +37,8 @@ import com.actiknow.clearsale.utils.AppConfigTags;
 import com.actiknow.clearsale.utils.AppConfigURL;
 import com.actiknow.clearsale.utils.BuyerDetailsPref;
 import com.actiknow.clearsale.utils.Constants;
+import com.actiknow.clearsale.utils.FilterDetailsPref;
+import com.actiknow.clearsale.utils.GPSTracker;
 import com.actiknow.clearsale.utils.NetworkConnection;
 import com.actiknow.clearsale.utils.SetTypeFace;
 import com.actiknow.clearsale.utils.Utils;
@@ -41,6 +51,18 @@ import com.android.volley.toolbox.StringRequest;
 import com.bumptech.glide.Glide;
 import com.facebook.FacebookSdk;
 import com.facebook.login.LoginManager;
+import com.google.android.gms.appindexing.AppIndex;
+import com.google.android.gms.common.ConnectionResult;
+import com.google.android.gms.common.api.GoogleApiClient;
+import com.google.android.gms.common.api.PendingResult;
+import com.google.android.gms.common.api.ResultCallback;
+import com.google.android.gms.common.api.Status;
+import com.google.android.gms.location.LocationRequest;
+import com.google.android.gms.location.LocationServices;
+import com.google.android.gms.location.LocationSettingsRequest;
+import com.google.android.gms.location.LocationSettingsResult;
+import com.google.android.gms.location.LocationSettingsStates;
+import com.google.android.gms.location.LocationSettingsStatusCodes;
 import com.linkedin.platform.LISessionManager;
 import com.mikepenz.fontawesome_typeface_library.FontAwesome;
 import com.mikepenz.iconics.IconicsDrawable;
@@ -69,6 +91,14 @@ import java.util.List;
 import java.util.Map;
 
 public class MainActivity extends AppCompatActivity {
+    
+    public static int PERMISSION_REQUEST_CODE = 11;
+    final int CURRENT_LOCATION_REQUEST_CODE = 1;
+    GoogleApiClient client;
+    Double currentLatitude = 0.0;
+    Double currentLongitude = 0.0;
+    
+    
     Bundle savedInstanceState;
     Toolbar toolbar;
     RecyclerView rvPropertyList;
@@ -76,8 +106,10 @@ public class MainActivity extends AppCompatActivity {
     PropertyAdapter propertyAdapter;
     List<Property> propertyList = new ArrayList<> ();
     BuyerDetailsPref buyerDetailsPref;
+    FilterDetailsPref filterDetailsPref;
     CoordinatorLayout clMain;
     ImageView ivFilter;
+    ImageView ivMaps;
     ImageView ivOverflow;
     Menu menu2;
     ImageView ivNavigation;
@@ -92,10 +124,9 @@ public class MainActivity extends AppCompatActivity {
         initData ();
         initListener ();
         initDrawer ();
-//        setUpNavigationDrawer ();
-//        getAllProperties ();
         isLogin ();
         getAllProperties ();
+        checkPermissions ();
         this.savedInstanceState = savedInstanceState;
     }
     
@@ -119,11 +150,15 @@ public class MainActivity extends AppCompatActivity {
         ivFilter = (ImageView) findViewById (R.id.ivFilter);
         ivOverflow = (ImageView) findViewById (R.id.ivOverflow);
         ivNavigation = (ImageView) findViewById (R.id.ivNavigation);
+        ivMaps = (ImageView) findViewById (R.id.ivMaps);
     }
     
     private void initData () {
+        client = new GoogleApiClient.Builder (this).addApi (AppIndex.API).build ();
+    
         FacebookSdk.sdkInitialize (this.getApplicationContext ());
         buyerDetailsPref = BuyerDetailsPref.getInstance ();
+        filterDetailsPref = FilterDetailsPref.getInstance ();
         swipeRefreshLayout.setRefreshing (true);
         propertyList.clear ();
         propertyAdapter = new PropertyAdapter (this, propertyList);
@@ -132,6 +167,12 @@ public class MainActivity extends AppCompatActivity {
         rvPropertyList.setLayoutManager (new LinearLayoutManager (this, LinearLayoutManager.VERTICAL, false));
         rvPropertyList.setItemAnimator (new DefaultItemAnimator ());
         Utils.setTypefaceToAllViews (this, clMain);
+    
+        if (filterDetailsPref.getBooleanPref (this, FilterDetailsPref.FILTER_APPLIED)) {
+            ivFilter.setImageDrawable (getResources ().getDrawable (R.drawable.ic_filter_checked));
+        } else {
+            ivFilter.setImageDrawable (getResources ().getDrawable (R.drawable.ic_filter));
+        }
     }
     
     private void initListener () {
@@ -171,7 +212,130 @@ public class MainActivity extends AppCompatActivity {
                 result.openDrawer ();
             }
         });
+    
+        ivMaps.setOnClickListener (new View.OnClickListener () {
+            @Override
+            public void onClick (View v) {
+                Intent intent = new Intent (MainActivity.this, AllPropertyLocationActivity.class);
+                startActivity (intent);
+            }
+        });
     }
+    
+    
+    private void initLocation (final int request_code) {
+        GoogleApiClient googleApiClient;
+        googleApiClient = new GoogleApiClient.Builder (this)
+                .addApi (LocationServices.API)
+                .addConnectionCallbacks (new GoogleApiClient.ConnectionCallbacks () {
+                    @Override
+                    public void onConnected (@Nullable Bundle bundle) {
+                    }
+                    
+                    @Override
+                    public void onConnectionSuspended (int i) {
+                    }
+                })
+                .addOnConnectionFailedListener (new GoogleApiClient.OnConnectionFailedListener () {
+                    @Override
+                    public void onConnectionFailed (@NonNull ConnectionResult connectionResult) {
+                    }
+                }).build ();
+        googleApiClient.connect ();
+        
+        LocationRequest locationRequest2 = LocationRequest.create ();
+        locationRequest2.setPriority (LocationRequest.PRIORITY_HIGH_ACCURACY);
+        locationRequest2.setInterval (30 * 1000);
+        locationRequest2.setFastestInterval (5 * 1000);
+        LocationSettingsRequest.Builder builder2 = new LocationSettingsRequest.Builder ().addLocationRequest (locationRequest2);
+        builder2.setAlwaysShow (true); //this is the key ingredient
+        
+        PendingResult<LocationSettingsResult> result2 =
+                LocationServices.SettingsApi.checkLocationSettings (googleApiClient, builder2.build ());
+        result2.setResultCallback (new ResultCallback<LocationSettingsResult> () {
+            @Override
+            public void onResult (LocationSettingsResult result) {
+                final Status status = result.getStatus ();
+                final LocationSettingsStates state = result.getLocationSettingsStates ();
+                switch (status.getStatusCode ()) {
+                    case LocationSettingsStatusCodes.SUCCESS:
+                        // All location settings are satisfied. The client can initialize location requests here.
+                        switch (request_code) {
+                            case CURRENT_LOCATION_REQUEST_CODE:
+                                GPSTracker gps = new GPSTracker (MainActivity.this);
+                                if (gps.canGetLocation ()) {
+                                    currentLatitude = gps.getLatitude ();
+                                    currentLongitude = gps.getLongitude ();
+                                    Log.e ("latitude", String.valueOf (currentLatitude));
+                                    Log.e ("currentLongitude", String.valueOf (currentLongitude));
+                                }
+                                break;
+                        }
+                        break;
+                    case LocationSettingsStatusCodes.RESOLUTION_REQUIRED:
+                        // Location settings are not satisfied. But could be fixed by showing the user a dialog.
+                        try {
+                            status.startResolutionForResult (MainActivity.this, request_code);
+                        } catch (IntentSender.SendIntentException e) {
+                        }
+                        break;
+                    case LocationSettingsStatusCodes.SETTINGS_CHANGE_UNAVAILABLE:
+                        // Location settings are not satisfied. However, we have no way to fix the settings so we won't show the dialog.
+                        break;
+                }
+            }
+        });
+    }
+    
+    
+    public void checkPermissions () {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+            if (checkSelfPermission (Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED ||
+                    checkSelfPermission (Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+                
+                requestPermissions (new String[] {Manifest.permission.ACCESS_FINE_LOCATION, Manifest.permission.RECEIVE_SMS,
+                                Manifest.permission.VIBRATE, Manifest.permission.READ_SMS, Manifest.permission.CALL_PHONE, Manifest.permission.READ_PHONE_STATE},
+                        MainActivity.PERMISSION_REQUEST_CODE);
+            }
+        }
+    }
+    
+    @Override
+    @TargetApi(23)
+    public void onRequestPermissionsResult (int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+        super.onRequestPermissionsResult (requestCode, permissions, grantResults);
+        if (requestCode == PERMISSION_REQUEST_CODE) {
+            for (int i = 0, len = permissions.length; i < len; i++) {
+                String permission = permissions[i];
+                if (grantResults[i] == PackageManager.PERMISSION_DENIED) {
+                    boolean showRationale = shouldShowRequestPermissionRationale (permission);
+                    if (! showRationale) {
+                        AlertDialog.Builder builder = new AlertDialog.Builder (MainActivity.this);
+                        builder.setMessage ("Permission are required please enable them on the App Setting page")
+                                .setCancelable (false)
+                                .setPositiveButton ("OK", new DialogInterface.OnClickListener () {
+                                    public void onClick (DialogInterface dialog, int id) {
+                                        dialog.dismiss ();
+                                        Intent intent = new Intent (Settings.ACTION_APPLICATION_DETAILS_SETTINGS,
+                                                Uri.fromParts ("package", getPackageName (), null));
+                                        startActivity (intent);
+                                    }
+                                });
+                        AlertDialog alert = builder.create ();
+                        alert.show ();
+                    } else if (Manifest.permission.ACCESS_FINE_LOCATION.equals (permission)) {
+                    } else if (Manifest.permission.ACCESS_COARSE_LOCATION.equals (permission)) {
+                    }
+                }
+            }
+        }
+        
+        
+        if (grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+        }
+    }
+    
+
     
     /*
     private void getAllProperties () {
@@ -221,6 +385,20 @@ public class MainActivity extends AppCompatActivity {
                                     boolean error = jsonObj.getBoolean (AppConfigTags.ERROR);
                                     String message = jsonObj.getString (AppConfigTags.MESSAGE);
                                     if (! error) {
+                                        JSONArray jsonArrayCities = jsonObj.getJSONArray (AppConfigTags.CITIES);
+                                        filterDetailsPref.putStringPref (MainActivity.this, FilterDetailsPref.FILTER_CITIES_JSON, jsonArrayCities.toString ());
+                                        String cities = "";
+                                        for (int j = 0; j < jsonArrayCities.length (); j++) {
+                                            JSONObject jsonObject = jsonArrayCities.getJSONObject (j);
+                                            if (j == jsonArrayCities.length () - 1) {
+                                                cities = cities + jsonObject.getInt (AppConfigTags.CITY_ID);
+                                            } else {
+                                                cities = cities + jsonObject.getInt (AppConfigTags.CITY_ID) + ",";
+                                            }
+        
+                                        }
+                                        
+                                        
                                         JSONArray jsonArrayProperty = jsonObj.getJSONArray (AppConfigTags.PROPERTIES);
                                         for (int i = 0; i < jsonArrayProperty.length (); i++) {
                                             JSONObject jsonObjectProperty = jsonArrayProperty.getJSONObject (i);
@@ -237,7 +415,6 @@ public class MainActivity extends AppCompatActivity {
                                                     jsonObjectProperty.getBoolean (AppConfigTags.PROPERTY_IS_OFFER),
                                                     jsonObjectProperty.getBoolean (AppConfigTags.PROPERTY_IS_FAVOURITE));
                                             
-                                            
                                             JSONArray jsonArrayPropertyImages = jsonObjectProperty.getJSONArray (AppConfigTags.PROPERTY_IMAGES);
                                             ArrayList<String> propertyImages = new ArrayList<> ();
                                             
@@ -247,17 +424,12 @@ public class MainActivity extends AppCompatActivity {
                                                 property.setImageList (propertyImages);
                                             }
                                             propertyList.add (i, property);
-                                            
-                                            //  propertyList.add(property);
-                                            
-                                            
                                         }
                                         
                                         propertyAdapter.notifyDataSetChanged ();
                                         if (jsonArrayProperty.length () > 0) {
                                             swipeRefreshLayout.setRefreshing (false);
                                         }
-                                        
                                     } else {
                                         Utils.showSnackBar (MainActivity.this, clMain, message, Snackbar.LENGTH_LONG, null, null);
                                     }
@@ -285,6 +457,16 @@ public class MainActivity extends AppCompatActivity {
                     Map<String, String> params = new Hashtable<String, String> ();
                     params.put (AppConfigTags.TYPE, "property_list");
                     params.put (AppConfigTags.BUYER_ID, String.valueOf (buyerDetailsPref.getIntPref (MainActivity.this, BuyerDetailsPref.BUYER_ID)));
+                    params.put (AppConfigTags.FILTER, String.valueOf (filterDetailsPref.getBooleanPref (MainActivity.this, FilterDetailsPref.FILTER_APPLIED)));
+                    if (filterDetailsPref.getBooleanPref (MainActivity.this, FilterDetailsPref.FILTER_APPLIED)) {
+                        params.put (AppConfigTags.FILTER_BEDROOMS, filterDetailsPref.getStringPref (MainActivity.this, FilterDetailsPref.FILTER_BEDROOMS));
+                        params.put (AppConfigTags.FILTER_BATHROOMS, filterDetailsPref.getStringPref (MainActivity.this, FilterDetailsPref.FILTER_BATHROOMS));
+                        params.put (AppConfigTags.FILTER_STATUS, filterDetailsPref.getStringPref (MainActivity.this, FilterDetailsPref.FILTER_STATUS));
+                        params.put (AppConfigTags.FILTER_CITIES, filterDetailsPref.getStringPref (MainActivity.this, FilterDetailsPref.FILTER_CITIES));
+                        params.put (AppConfigTags.FILTER_PRICE_MIN, filterDetailsPref.getStringPref (MainActivity.this, FilterDetailsPref.FILTER_PRICE_MIN));
+                        params.put (AppConfigTags.FILTER_PRICE_MAX, filterDetailsPref.getStringPref (MainActivity.this, FilterDetailsPref.FILTER_PRICE_MAX));
+                        params.put (AppConfigTags.FILTER_LOCATION, filterDetailsPref.getStringPref (MainActivity.this, FilterDetailsPref.FILTER_LOCATION));
+                    }
                     Utils.showLog (Log.INFO, AppConfigTags.PARAMETERS_SENT_TO_THE_SERVER, "" + params, true);
                     return params;
                 }
@@ -563,5 +745,18 @@ public class MainActivity extends AppCompatActivity {
             finish ();
             overridePendingTransition (R.anim.slide_in_left, R.anim.slide_out_right);
         }
+    }
+    
+    @Override
+    public void onDestroy () {
+        super.onDestroy ();
+//        filterDetailsPref.putBooleanPref (MainActivity.this, FilterDetailsPref.FILTER_APPLIED, false);
+//        filterDetailsPref.putStringPref (MainActivity.this, FilterDetailsPref.FILTER_BATHROOMS, "");
+//        filterDetailsPref.putStringPref (MainActivity.this, FilterDetailsPref.FILTER_BEDROOMS, "");
+//        filterDetailsPref.putStringPref (MainActivity.this, FilterDetailsPref.FILTER_CITIES, "");
+//        filterDetailsPref.putStringPref (MainActivity.this, FilterDetailsPref.FILTER_LOCATION, "");
+//        filterDetailsPref.putStringPref (MainActivity.this, FilterDetailsPref.FILTER_PRICE_MIN, "");
+//        filterDetailsPref.putStringPref (MainActivity.this, FilterDetailsPref.FILTER_PRICE_MAX, "");
+//        filterDetailsPref.putStringPref (MainActivity.this, FilterDetailsPref.FILTER_STATUS, "");
     }
 }

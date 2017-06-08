@@ -18,10 +18,12 @@ public class PropertyDetailsPref {
     public static String PROPERTY_AREA = "property_area";
     public static String PROPERTY_OVERVIEW = "property_overview";
     public static String PROPERTY_COMPS = "property_comps";
+    public static String PROPERTY_COMPS_ADDRESSES = "property_comps_addresses";
     public static String PROPERTY_ACCESS = "property_access";
     public static String PROPERTY_REALTOR = "property_realtor";
     public static String PROPERTY_OFFER = "property_offer";
-    public static String PROPERTY_IMAGES = "property_image";
+    public static String PROPERTY_IMAGES = "property_images";
+    public static String PROPERTY_IMAGE_COUNT = "property_image_count";
     public static String PROPERTY_AUCTION_ID = "auction_id";
     public static String PROPERTY_AUCTION_STATUS = "auction_status";
     

@@ -4,7 +4,6 @@ package com.actiknow.clearsale.activity;
 import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Bundle;
-import android.os.Handler;
 import android.provider.Settings;
 import android.support.design.widget.CollapsingToolbarLayout;
 import android.support.design.widget.CoordinatorLayout;
@@ -113,7 +112,7 @@ public class PropertyDetailActivity extends AppCompatActivity {
         tabLayout.setupWithViewPager (viewPager);
         collapsingToolbarLayout.setTitleEnabled (false);
 //        appBar.setExpanded(true);
-        setupViewPager (viewPager);
+    
         Utils.setTypefaceToAllViews (this, rlBack);
     }
     
@@ -196,9 +195,7 @@ public class PropertyDetailActivity extends AppCompatActivity {
         slider.addOnPageChangeListener (new ViewPagerEx.OnPageChangeListener () {
             @Override
             public void onPageScrolled (int position, float positionOffset, int positionOffsetPixels) {
-//                Log.e ("karman page " + property.getId (), "state " + position);
-//                holder.rlSliderIndicator.setVisibility (View.VISIBLE);
-//                holder.tvSliderPosition.setText (position + " of " + property.getImageList ().size ());
+//                tvSliderPosition.setText (position  + bannerList.size ());
             }
             
             @Override
@@ -208,31 +205,28 @@ public class PropertyDetailActivity extends AppCompatActivity {
             
             @Override
             public void onPageScrollStateChanged (int state) {
-                final Handler handler = new Handler ();
-                Runnable finalizer = null;
-                switch (state) {
-                    case 0:
-                        finalizer = new Runnable () {
-                            public void run () {
-                                rlSliderIndicator.setVisibility (View.GONE);
-//                                rlFooter.setVisibility (View.VISIBLE);
-                            }
-                        };
-                        handler.postDelayed (finalizer, 1500);
-                        break;
-                    case 1:
+//                final Handler handler = new Handler ();
+//                Runnable finalizer = null;
+//                switch (state) {
+//                    case 0:
+//                        finalizer = new Runnable () {
+//                            public void run () {
+//                                rlSliderIndicator.setVisibility (View.GONE);
+//                            }
+//                        };
+//                        handler.postDelayed (finalizer, 1500);
+//                        break;
+//                    case 1:
 //                        handler.removeCallbacks (finalizer);
-//                        holder.rlFooter.setVisibility (View.GONE);
-                        rlSliderIndicator.setVisibility (View.VISIBLE);
-                        break;
-                    case 2:
-                        break;
-                }
-//                if (property.getId () == 1){
-//                    Log.e ("karman " + property.getId (), "state " + state);
+//                        rlSliderIndicator.setVisibility (View.VISIBLE);
+//                        break;
+//                    case 2:
+//                        break;
 //                }
             }
         });
+    
+        tvSliderPosition.setVisibility (View.VISIBLE);
     }
     
     private void getPropertyDetails () {
@@ -267,22 +261,23 @@ public class PropertyDetailActivity extends AppCompatActivity {
                                         propertyDetailsPref.putStringPref (PropertyDetailActivity.this, PropertyDetailsPref.PROPERTY_ACCESS, jsonObj.getString (AppConfigTags.PROPERTY_ACCESS));
                                         propertyDetailsPref.putStringPref (PropertyDetailActivity.this, PropertyDetailsPref.PROPERTY_REALTOR, jsonObj.getString (AppConfigTags.PROPERTY_REALTOR));
                                         propertyDetailsPref.putStringPref (PropertyDetailActivity.this, PropertyDetailsPref.PROPERTY_COMPS, jsonObj.getString (AppConfigTags.PROPERTY_COMPS));
+    
+                                        propertyDetailsPref.putStringPref (PropertyDetailActivity.this, PropertyDetailsPref.PROPERTY_COMPS_ADDRESSES, jsonObj.getJSONArray (AppConfigTags.PROPERTY_COMPS_ADDRESSES).toString ());
+ 
                                         propertyDetailsPref.putIntPref (PropertyDetailActivity.this, PropertyDetailsPref.PROPERTY_AUCTION_ID, jsonObj.getInt (AppConfigTags.PROPERTY_BID_AUCTION_ID));
                                         propertyDetailsPref.putIntPref (PropertyDetailActivity.this, PropertyDetailsPref.PROPERTY_AUCTION_STATUS, jsonObj.getInt (AppConfigTags.PROPERTY_BID_AUCTION_STATUS));
                                         
                                         
                                         JSONArray jsonArrayPropertyImages = jsonObj.getJSONArray (AppConfigTags.PROPERTY_IMAGES);
+                                        propertyDetailsPref.putStringPref (PropertyDetailActivity.this, PropertyDetailsPref.PROPERTY_IMAGES, jsonArrayPropertyImages.toString ());
+                                        propertyDetailsPref.putIntPref (PropertyDetailActivity.this, PropertyDetailsPref.PROPERTY_IMAGE_COUNT, jsonArrayPropertyImages.length ());
+
                                         for (int j = 0; j < jsonArrayPropertyImages.length (); j++) {
                                             JSONObject jsonObjectImages = jsonArrayPropertyImages.getJSONObject (j);
                                             bannerList.add (jsonObjectImages.getString (AppConfigTags.PROPERTY_IMAGE));
-    
-                                            propertyDetailsPref.putStringPref (PropertyDetailActivity.this, propertyDetailsPref.PROPERTY_IMAGES + j, jsonObjectImages.getString (AppConfigTags.PROPERTY_IMAGE));
-                                            propertyDetailsPref.putIntPref (PropertyDetailActivity.this, "size", jsonArrayPropertyImages.length ());
-    
-    
+//                                            propertyDetailsPref.putStringPref (PropertyDetailActivity.this, PropertyDetailsPref.PROPERTY_IMAGES + j, jsonObjectImages.getString (AppConfigTags.PROPERTY_IMAGE));
                                         }
                                         initSlider ();
-    
     
                                         //    String address1 = jsonObj.getString (AppConfigTags.PROPERTY_ADDRESS);
                                         //  String city=jsonObj.getString(AppConfigTags.PROPERTY_CITY_NAME);
@@ -298,6 +293,7 @@ public class PropertyDetailActivity extends AppCompatActivity {
                                         // realtor = jsonObj.getString (AppConfigTags.PROPERTY_REALTOR);
                                         // offer = jsonObj.getString (AppConfigTags.PROPERTY_OFFER);
     
+                                        setupViewPager (viewPager);
                                     }
                                     progressDialog.dismiss ();
                                 } catch (Exception e) {
