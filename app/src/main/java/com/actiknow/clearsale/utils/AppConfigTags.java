@@ -87,6 +87,7 @@ public class AppConfigTags {
     public static String PROFILE_HOME_TYPE = "profile_home_type";
     
     
+    public static String PROPERTY_ARV = "property_arv";
     public static String PROPERTY_OVERVIEW = "property_overview";
     public static String PROPERTY_COMPS = "property_comps";
     public static String PROPERTY_COMPS_ADDRESSES = "property_comps_addresses";

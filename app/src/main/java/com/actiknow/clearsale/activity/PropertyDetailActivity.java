@@ -256,6 +256,7 @@ public class PropertyDetailActivity extends AppCompatActivity {
                                         propertyDetailsPref.putStringPref (PropertyDetailActivity.this, PropertyDetailsPref.PROPERTY_BEDROOM, jsonObj.getString (AppConfigTags.PROPERTY_BEDROOMS));
                                         propertyDetailsPref.putStringPref (PropertyDetailActivity.this, PropertyDetailsPref.PROPERTY_BATHROOM, jsonObj.getString (AppConfigTags.PROPERTY_BATHROOMS));
                                         propertyDetailsPref.putStringPref (PropertyDetailActivity.this, PropertyDetailsPref.PROPERTY_AREA, jsonObj.getString (AppConfigTags.PROPERTY_AREA));
+                                        propertyDetailsPref.putStringPref (PropertyDetailActivity.this, PropertyDetailsPref.PROPERTY_ARV, jsonObj.getString (AppConfigTags.PROPERTY_ARV));
                                         propertyDetailsPref.putStringPref (PropertyDetailActivity.this, PropertyDetailsPref.PROPERTY_OVERVIEW, jsonObj.getString (AppConfigTags.PROPERTY_OVERVIEW));
                                         propertyDetailsPref.putStringPref (PropertyDetailActivity.this, PropertyDetailsPref.PROPERTY_OFFER, jsonObj.getString (AppConfigTags.PROPERTY_OFFER));
                                         propertyDetailsPref.putStringPref (PropertyDetailActivity.this, PropertyDetailsPref.PROPERTY_ACCESS, jsonObj.getString (AppConfigTags.PROPERTY_ACCESS));
@@ -336,8 +337,6 @@ public class PropertyDetailActivity extends AppCompatActivity {
             };
             Utils.sendRequest (strRequest1, 60);
         } else {
-            
-            
             Utils.showSnackBar (this, clMain, getResources ().getString (R.string.snackbar_text_no_internet_connection_available), Snackbar.LENGTH_LONG, getResources ().getString (R.string.snackbar_action_go_to_settings), new View.OnClickListener () {
                 @Override
                 public void onClick (View v) {

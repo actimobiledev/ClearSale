@@ -36,6 +36,8 @@ import java.util.HashMap;
 import java.util.Hashtable;
 import java.util.Map;
 
+import static com.actiknow.clearsale.R.id.map;
+
 public class AllPropertyLocationActivity extends AppCompatActivity implements GoogleMap.OnMarkerClickListener, OnMapReadyCallback {
     SupportMapFragment mapFragment;
     
@@ -56,7 +58,7 @@ public class AllPropertyLocationActivity extends AppCompatActivity implements Go
     
     private void initView () {
         clMain = (CoordinatorLayout) findViewById (R.id.clMain);
-        mapFragment = (SupportMapFragment) getSupportFragmentManager ().findFragmentById (R.id.map);
+        mapFragment = (SupportMapFragment) getSupportFragmentManager ().findFragmentById (map);
         mapFragment.getMapAsync (this);
     }
     
@@ -86,7 +88,7 @@ public class AllPropertyLocationActivity extends AppCompatActivity implements Go
     @Override
     public void onMapReady (GoogleMap googleMap) {
         mMap = googleMap;
-        
+        mMap.getUiSettings ().setZoomControlsEnabled (true);
         mMap.setOnInfoWindowClickListener (new GoogleMap.OnInfoWindowClickListener () {
             @Override
             public void onInfoWindowClick (Marker arg0) {
@@ -125,26 +127,30 @@ public class AllPropertyLocationActivity extends AppCompatActivity implements Go
                                                             .icon (BitmapDescriptorFactory.fromResource (R.drawable.ic_map_marker))
                                             ).setTag (jsonObjectAllProperty.getInt (AppConfigTags.PROPERTY_ID));
                                             mMap.setOnMarkerClickListener (AllPropertyLocationActivity.this);
-                                            mMap.animateCamera (CameraUpdateFactory.newLatLngZoom (new LatLng (jsonObjectAllProperty.getDouble (AppConfigTags.PROPERTY_LATITUDE), jsonObjectAllProperty.getDouble (AppConfigTags.PROPERTY_LONGITUDE)), 12.0f));
+                                            mMap.animateCamera (CameraUpdateFactory.newLatLngZoom (new LatLng (jsonObjectAllProperty.getDouble (AppConfigTags.PROPERTY_LATITUDE), jsonObjectAllProperty.getDouble (AppConfigTags.PROPERTY_LONGITUDE)), 8.0f));
                                         }
+                                        progressDialog.dismiss ();
                                     } else {
                                         Utils.showSnackBar (AllPropertyLocationActivity.this, clMain, message, Snackbar.LENGTH_LONG, null, null);
+                                        progressDialog.dismiss ();
                                     }
                                 } catch (Exception e) {
                                     Utils.showSnackBar (AllPropertyLocationActivity.this, clMain, getResources ().getString (R.string.snackbar_text_exception_occurred), Snackbar.LENGTH_LONG, getResources ().getString (R.string.snackbar_action_dismiss), null);
+                                    progressDialog.dismiss ();
                                     e.printStackTrace ();
                                 }
                             } else {
                                 Utils.showSnackBar (AllPropertyLocationActivity.this, clMain, getResources ().getString (R.string.snackbar_text_error_occurred), Snackbar.LENGTH_LONG, getResources ().getString (R.string.snackbar_action_dismiss), null);
                                 Utils.showLog (Log.WARN, AppConfigTags.SERVER_RESPONSE, AppConfigTags.DIDNT_RECEIVE_ANY_DATA_FROM_SERVER, true);
+                                progressDialog.dismiss ();
                             }
-                            
                         }
                     },
                     new com.android.volley.Response.ErrorListener () {
                         @Override
                         public void onErrorResponse (VolleyError error) {
-                            
+                            progressDialog.dismiss ();
+    
                             Utils.showLog (Log.ERROR, AppConfigTags.VOLLEY_ERROR, error.toString (), true);
                             Utils.showSnackBar (AllPropertyLocationActivity.this, clMain, getResources ().getString (R.string.snackbar_text_error_occurred), Snackbar.LENGTH_LONG, getResources ().getString (R.string.snackbar_action_dismiss), null);
                         }
@@ -167,7 +173,8 @@ public class AllPropertyLocationActivity extends AppCompatActivity implements Go
             };
             Utils.sendRequest (strRequest1, 60);
         } else {
-            
+            progressDialog.dismiss ();
+    
             Utils.showSnackBar (this, clMain, getResources ().getString (R.string.snackbar_text_no_internet_connection_available), Snackbar.LENGTH_LONG, getResources ().getString (R.string.snackbar_action_go_to_settings), new View.OnClickListener () {
                 @Override
                 public void onClick (View v) {

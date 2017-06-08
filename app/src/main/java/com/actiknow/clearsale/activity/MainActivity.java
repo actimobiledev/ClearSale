@@ -292,9 +292,7 @@ public class MainActivity extends AppCompatActivity {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
             if (checkSelfPermission (Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED ||
                     checkSelfPermission (Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
-                
-                requestPermissions (new String[] {Manifest.permission.ACCESS_FINE_LOCATION, Manifest.permission.RECEIVE_SMS,
-                                Manifest.permission.VIBRATE, Manifest.permission.READ_SMS, Manifest.permission.CALL_PHONE, Manifest.permission.READ_PHONE_STATE},
+                requestPermissions (new String[] {Manifest.permission.ACCESS_FINE_LOCATION, Manifest.permission.ACCESS_COARSE_LOCATION},
                         MainActivity.PERMISSION_REQUEST_CODE);
             }
         }

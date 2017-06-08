@@ -16,6 +16,7 @@ public class PropertyDetailsPref {
     public static String PROPERTY_BEDROOM = "property_bedroom";
     public static String PROPERTY_BATHROOM = "property_bathroom";
     public static String PROPERTY_AREA = "property_area";
+    public static String PROPERTY_ARV = "property_arv";
     public static String PROPERTY_OVERVIEW = "property_overview";
     public static String PROPERTY_COMPS = "property_comps";
     public static String PROPERTY_COMPS_ADDRESSES = "property_comps_addresses";
