@@ -33,8 +33,8 @@ public class AppConfigTags {
     public static String PROPERTY_ADDRESS2 = "property_city";
     public static String PROPERTY_CITY = "property_city";
     public static String PROPERTY_STATE = "property_state";
-    public static String PROPERTY_LATITUDE = "latitude";
-    public static String PROPERTY_LONGITUDE = "longitude";
+    public static String PROPERTY_LATITUDE = "property_latitude";
+    public static String PROPERTY_LONGITUDE = "property_longitude";
     public static String PROPERTY_PRICE = "property_price";
     public static String PROPERTY_BUILT_YEAR = "property_built_year";
     public static String PROPERTY_BEDROOMS = "property_bedrooms";
@@ -46,8 +46,12 @@ public class AppConfigTags {
     public static String PROPERTY_IMAGES = "property_images";
     public static String PROPERTY_IMAGE = "property_image";
     public static String PROPERTIES = "properties";
-    public static String PROPERTY_LOCATION = "property_location";
+    public static String PROPERTY_LOCATIONS = "property_locations";
     public static String IS_FAVOURITE = "is_favourite";
+    
+    
+    public static String LATITUDE = "latitude";
+    public static String LONGITUDE = "longitude";
     
     
     public static String BUYER_ID = "buyer_id";

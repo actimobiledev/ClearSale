@@ -1,5 +1,6 @@
 package com.actiknow.clearsale.activity;
 
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.provider.Settings;
@@ -8,7 +9,6 @@ import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
-import android.widget.Toast;
 
 import com.actiknow.clearsale.R;
 import com.actiknow.clearsale.utils.AppConfigTags;
@@ -36,13 +36,11 @@ import java.util.HashMap;
 import java.util.Hashtable;
 import java.util.Map;
 
-import static com.actiknow.clearsale.utils.Constants.latitude;
-import static com.actiknow.clearsale.utils.Constants.longitude;
-
 public class AllPropertyLocationActivity extends AppCompatActivity implements GoogleMap.OnMarkerClickListener, OnMapReadyCallback {
     SupportMapFragment mapFragment;
     
     CoordinatorLayout clMain;
+    ProgressDialog progressDialog;
     private GoogleMap mMap;
     
     @Override
@@ -63,6 +61,7 @@ public class AllPropertyLocationActivity extends AppCompatActivity implements Go
     }
     
     private void initData () {
+        progressDialog = new ProgressDialog (this);
     }
     
     private void initListener () {
@@ -92,13 +91,17 @@ public class AllPropertyLocationActivity extends AppCompatActivity implements Go
             @Override
             public void onInfoWindowClick (Marker arg0) {
                 int property_id = (int) arg0.getTag ();
-                Toast.makeText (AllPropertyLocationActivity.this, "property id " + property_id, Toast.LENGTH_SHORT).show ();
+                Intent intent = new Intent (AllPropertyLocationActivity.this, PropertyDetailActivity.class);
+                intent.putExtra (AppConfigTags.PROPERTY_ID, property_id);
+                startActivity (intent);
+                overridePendingTransition (R.anim.slide_in_right, R.anim.slide_out_left);
             }
         });
     }
     
     private void getAllProperty () {
         if (NetworkConnection.isNetworkAvailable (this)) {
+            Utils.showProgressDialog (progressDialog, getResources ().getString (R.string.progress_dialog_text_please_wait), true);
             Utils.showLog (Log.INFO, "" + AppConfigTags.URL, AppConfigURL.URL_PROPERTY_MAP, true);
             StringRequest strRequest1 = new StringRequest (Request.Method.POST, AppConfigURL.URL_PROPERTY_MAP,
                     new com.android.volley.Response.Listener<String> () {
@@ -112,7 +115,7 @@ public class AllPropertyLocationActivity extends AppCompatActivity implements Go
                                     boolean error = jsonObj.getBoolean (AppConfigTags.ERROR);
                                     String message = jsonObj.getString (AppConfigTags.MESSAGE);
                                     if (! error) {
-                                        JSONArray jsonArrayAllProperty = jsonObj.getJSONArray (AppConfigTags.PROPERTY_LOCATION);
+                                        JSONArray jsonArrayAllProperty = jsonObj.getJSONArray (AppConfigTags.PROPERTY_LOCATIONS);
                                         for (int i = 0; i < jsonArrayAllProperty.length (); i++) {
                                             JSONObject jsonObjectAllProperty = jsonArrayAllProperty.getJSONObject (i);
                                             mMap.addMarker (
@@ -122,7 +125,7 @@ public class AllPropertyLocationActivity extends AppCompatActivity implements Go
                                                             .icon (BitmapDescriptorFactory.fromResource (R.drawable.ic_map_marker))
                                             ).setTag (jsonObjectAllProperty.getInt (AppConfigTags.PROPERTY_ID));
                                             mMap.setOnMarkerClickListener (AllPropertyLocationActivity.this);
-                                            mMap.animateCamera (CameraUpdateFactory.newLatLngZoom (new LatLng (latitude, longitude), 12.0f));
+                                            mMap.animateCamera (CameraUpdateFactory.newLatLngZoom (new LatLng (jsonObjectAllProperty.getDouble (AppConfigTags.PROPERTY_LATITUDE), jsonObjectAllProperty.getDouble (AppConfigTags.PROPERTY_LONGITUDE)), 12.0f));
                                         }
                                     } else {
                                         Utils.showSnackBar (AllPropertyLocationActivity.this, clMain, message, Snackbar.LENGTH_LONG, null, null);
@@ -149,7 +152,7 @@ public class AllPropertyLocationActivity extends AppCompatActivity implements Go
                 @Override
                 protected Map<String, String> getParams () throws AuthFailureError {
                     Map<String, String> params = new Hashtable<String, String> ();
-                    params.put (AppConfigTags.TYPE, AppConfigTags.PROPERTY_LOCATION);
+                    params.put (AppConfigTags.TYPE, AppConfigTags.PROPERTY_LOCATIONS);
                     Utils.showLog (Log.INFO, AppConfigTags.PARAMETERS_SENT_TO_THE_SERVER, "" + params, true);
                     return params;
                 }
