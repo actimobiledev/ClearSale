@@ -372,8 +372,6 @@
                             android:layout_margin="@dimen/activity_margin_small"
                             android:layout_marginLeft="@dimen/activity_margin_extra_small"
                             android:layout_marginRight="@dimen/activity_margin_extra_small"/>
-
-
                     </LinearLayout>
                     <LinearLayout
                         android:layout_width="match_parent"
@@ -382,7 +380,8 @@
                         android:layout_marginRight="@dimen/activity_margin"
                         android:layout_marginTop="@dimen/activity_margin"
                         android:background="@drawable/edit_text_background"
-                        android:orientation="vertical">
+                        android:orientation="vertical"
+                        android:visibility="gone">
 
                         <TextView
                             android:layout_width="match_parent"
@@ -428,13 +427,8 @@
                             android:buttonTint="@color/colorPrimary"
                             android:padding="@dimen/edittext_padding"
                             android:text="$500,000 +"/>
-
-
                     </LinearLayout>
-
-
                 </LinearLayout>
-
             </ScrollView>
         </RelativeLayout>
 

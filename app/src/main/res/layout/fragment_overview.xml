@@ -1,195 +1,380 @@
 <?xml version="1.0" encoding="utf-8"?>
 
-<android.support.v4.widget.NestedScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+<android.support.v4.widget.NestedScrollView
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
+    xmlns:card_view="http://schemas.android.com/tools"
+    android:layout_width="match_parent" android:layout_height="match_parent"
     app:layout_behavior="@string/appbar_scrolling_view_behavior">
 
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
-
-        <LinearLayout
-            android:id="@+id/llPropertyOffer"
+        <android.support.v7.widget.CardView
+            android:id="@+id/cardview1"
+            xmlns:android="http://schemas.android.com/apk/res/android"
+            xmlns:card_view="http://schemas.android.com/apk/res-auto"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="@dimen/activity_margin"
-            android:layout_marginRight="@dimen/activity_margin"
-            android:orientation="vertical">
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/activity_margin"
-                android:text="@string/activity_property_detail_text_best_offer"
-                android:textSize="@dimen/text_size_medium"
-                android:textStyle="bold"/>
-
-
-            <EditText
-                android:id="@+id/etOfferUsd"
+            android:layout_marginLeft="@dimen/activity_margin_small"
+            android:layout_marginRight="@dimen/activity_margin_small"
+            android:layout_marginTop="@dimen/activity_margin_small"
+            card_view:cardCornerRadius="@dimen/cardview_default_radius"
+            card_view:cardElevation="@dimen/cardview_default_elevation">
+            <RelativeLayout
+                android:id="@+id/rlFooter"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:background="@drawable/edit_text_background"
-                android:hint="@string/activity_property_detail_hint_usd"
-                android:inputType="number"
-                android:lines="1"
-                android:padding="@dimen/edittext_padding"
-                android:textColorHint="@color/hint_text_color"
-                android:textSize="@dimen/text_size_medium"/>
+                android:layout_alignBottom="@+id/slider"
+                android:layout_alignParentLeft="true"
+                android:layout_alignParentStart="true"
+                android:layout_gravity="center_vertical">
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentLeft="true"
+                    android:layout_alignParentStart="true"
+                    android:layout_centerVertical="true"
+                    android:layout_margin="@dimen/activity_margin_small"
+                    android:orientation="vertical">
+                    <TextView
+                        android:id="@+id/tvPropertyRate"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="$9000"
+                        android:textColor="@color/app_text_color_dark"
+                        android:textSize="@dimen/text_size_medium"
+                        android:textStyle="bold"
+                        android:visibility="visible"/>
+                    <TextView
+                        android:id="@+id/tvBuildYear"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="year built 1992"
+                        android:textColor="@color/app_text_color_light"
+                        android:textSize="@dimen/text_size_medium"
+                        android:visibility="gone"/>
+                    <TextView
+                        android:id="@+id/tvAddress1"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Actiknow"
+                        android:textColor="@color/app_text_color_light"
+                        android:textSize="@dimen/text_size_small"/>
+                    <TextView
+                        android:id="@+id/tvAddress2"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Dwarka Sector 8"
+                        android:textColor="@color/app_text_color_light"
+                        android:textSize="@dimen/text_size_extra_small"/>
+                </LinearLayout>
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentEnd="true"
+                    android:layout_alignParentRight="true"
+                    android:layout_gravity="center"
+                    android:layout_margin="@dimen/activity_margin_small"
+                    android:orientation="horizontal">
+
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:orientation="vertical">
+
+                        <TextView
+                            android:id="@+id/tvBedroom"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center"
+                            android:gravity="center"
+                            android:text="6"
+                            android:textColor="@color/app_text_color_dark"
+                            android:textSize="@dimen/text_size_medium"
+                            android:textStyle="bold"/>
+                        <TextView
+                            android:id="@+id/tv1"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center"
+                            android:gravity="center"
+                            android:text="Beds"
+                            android:textColor="@color/app_text_color_light"
+                            android:textSize="@dimen/text_size_small"/>
+                    </LinearLayout>
+                    <TextView
+                        android:layout_width="1dp"
+                        android:layout_height="match_parent"
+                        android:layout_margin="@dimen/activity_margin_extra_small"
+                        android:background="@color/text_color_grey_dark"
+                        android:gravity="center">
+
+                    </TextView>
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:orientation="vertical">
+                        <TextView
+                            android:id="@+id/tvBathroom"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center"
+                            android:gravity="center"
+                            android:text="2"
+                            android:textColor="@color/app_text_color_dark"
+                            android:textSize="@dimen/text_size_medium"
+                            android:textStyle="bold"/>
+                        <TextView
+                            android:id="@+id/tv2"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center"
+                            android:gravity="center"
+                            android:text="Baths"
+                            android:textColor="@color/app_text_color_light"
+                            android:textSize="@dimen/text_size_small"/>
+                    </LinearLayout>
+                    <TextView
+                        android:layout_width="1dp"
+                        android:layout_height="match_parent"
+                        android:layout_margin="@dimen/activity_margin_extra_small"
+                        android:background="@color/text_color_grey_dark">
+                    </TextView>
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:orientation="vertical">
+                        <TextView
+                            android:id="@+id/tvSqFeet"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center"
+                            android:gravity="center"
+                            android:text="7137"
+                            android:textColor="@color/app_text_color_dark"
+                            android:textSize="@dimen/text_size_medium"
+                            android:textStyle="bold"/>
+                        <TextView
+                            android:id="@+id/tv3"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center"
+                            android:gravity="center"
+                            android:text="SF"
+                            android:textColor="@color/app_text_color_light"
+                            android:textSize="@dimen/text_size_small"/>
+                    </LinearLayout>
+                </LinearLayout>
+            </RelativeLayout>
+        </android.support.v7.widget.CardView>
 
 
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:paddingTop="@dimen/edittext_padding"
-
-                android:text="@string/activity_property_detail_text_offer_detail"
-                android:textSize="@dimen/text_size_medium"
-                android:textStyle="bold"/>
-
-
-            <EditText
-                android:id="@+id/etOfferDetail"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:background="@drawable/edit_text_background"
-                android:gravity="top"
-                android:inputType="textMultiLine"
-                android:lines="3"
-                android:padding="@dimen/edittext_padding"
-                android:textColorHint="@color/hint_text_color"
-                android:textSize="@dimen/text_size_medium"/>
-
-
-            <com.actiknow.clearsale.utils.ExpandableTextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:paddingTop="@dimen/edittext_padding"
-                android:text="@string/activity_property_detail_text_offer_detail2"/>
-
-
-            <CheckBox
-                android:id="@+id/cbAttendedAccess"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/activity_margin"
-                android:text="@string/activity_property_detail_text_attended_access"
-                android:textSize="@dimen/text_size_medium"/>
-
-
-            <com.actiknow.clearsale.utils.ExpandableTextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:paddingTop="@dimen/edittext_padding"
-                android:text="@string/activity_property_detail_text_note"/>
-
-
-            <TextView
-                android:id="@+id/tvSubmit"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/activity_margin"
-                android:background="@drawable/rounded_button"
-                android:elevation="@dimen/button_elevation"
-                android:gravity="center"
-                android:padding="@dimen/button_padding"
-                android:text="@string/activity_contact_button_submit"
-                android:textColor="@color/text_color_white"
-                android:textSize="@dimen/text_size_extra_large"
-                android:textStyle="bold"/>
-
-
-        </LinearLayout>
+        <TextView
+            android:id="@+id/tv4"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/cardview1"
+            android:layout_marginTop="@dimen/activity_margin_small"
+            android:padding="@dimen/activity_margin_small"
+            android:text="PLACE AN OFFER"
+            android:textColor="@color/app_text_color_dark"
+            android:textSize="@dimen/text_size_medium"
+            android:textStyle="bold"/>
 
 
         <android.support.v7.widget.CardView
+            android:id="@+id/cardview2"
             xmlns:android="http://schemas.android.com/apk/res/android"
+            xmlns:card_view="http://schemas.android.com/apk/res-auto"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_below="@+id/llPropertyOffer"
-            android:layout_margin="10dp">
+            android:layout_below="@+id/tv4"
+            android:layout_marginLeft="@dimen/activity_margin_small"
+            android:layout_marginRight="@dimen/activity_margin_small"
+            card_view:cardCornerRadius="@dimen/cardview_default_radius"
+            card_view:cardElevation="@dimen/cardview_default_elevation">
 
             <LinearLayout
+                android:id="@+id/llPropertyOffer"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:orientation="vertical"
-                android:padding="12dp">
-
-
-                <WebView
-                    android:id="@+id/webView1"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"/>
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/cardview1"
+                android:layout_margin="@dimen/activity_margin_small"
+                android:orientation="vertical">
 
 
                 <TextView
-                    android:id="@+id/tvOverView"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/activity_property_detail_text_best_offer"
+                    android:textColor="@color/app_text_color_light"
+                    android:textSize="@dimen/text_size_medium"
+                    android:textStyle="bold"/>
+
+
+                <EditText
+                    android:id="@+id/etOfferUsd"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:textColor="@color/text_color_black"
-                    android:textSize="@dimen/text_size_small"
-                    android:visibility="visible"/>
+                    android:background="@drawable/edit_text_background"
+                    android:hint="@string/activity_property_detail_hint_usd"
+                    android:inputType="number"
+                    android:lines="1"
+                    android:padding="@dimen/edittext_padding"
+                    android:textColorHint="@color/hint_text_color"
+                    android:textSize="@dimen/text_size_medium"/>
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/activity_margin_extra_small"
+                    android:text="@string/activity_property_detail_text_offer_detail"
+                    android:textColor="@color/app_text_color_light"
+                    android:textSize="@dimen/text_size_medium"
+                    android:textStyle="bold"/>
+                <EditText
+                    android:id="@+id/etOfferDetail"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/edit_text_background"
+                    android:gravity="top"
+                    android:inputType="textMultiLine"
+                    android:lines="1"
+                    android:padding="@dimen/edittext_padding"
+                    android:textColorHint="@color/hint_text_color"
+                    android:textSize="@dimen/text_size_medium"/>
+
+                <com.actiknow.clearsale.utils.ExpandableTextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/activity_margin_extra_small"
+                    android:text="@string/activity_property_detail_text_offer_detail2"
+                    android:textColor="@color/app_text_color_light"/>
+
+                <CheckBox
+                    android:id="@+id/cbAttendedAccess"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/activity_margin_extra_small"
+                    android:text="@string/activity_property_detail_text_attended_access"
+                    android:textColor="@color/app_text_color_light"
+                    android:textSize="@dimen/text_size_small"/>
+
+                <com.actiknow.clearsale.utils.ExpandableTextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/activity_margin_extra_small"
+                    android:text="@string/activity_property_detail_text_note"
+                    android:textColor="@color/app_text_color_light"/>
+
 
                 <TextView
+                    android:id="@+id/tvSubmit"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="20dp"
-                    android:text="There are two recent sales (Feb 2017) for $270,000; both of these condos have the same layout and same beds/baths as our subject and fixed with clean flip remodels. We have placed the flip budget at $25,000. Our subject has nice cabinetry in the kitchen and bathrooms that are usable for flip. The kitchen can be complete with new counter-tops, hardware, appliances, light fixtures and back-splash if you wish. There are ceiling fans in good condition and hardwood flooring in the entryway and kitchen you may or may not choose to keep. "
-                    android:textColor="@color/text_color_black"
-                    android:textSize="15sp"
-                    android:visibility="gone"/>
-
-                <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="20dp"
-                    android:text="The HOA on this building is $371 per month. With this HOA fee and market rent on these condos at around $1500 per month, this project does look better as a fix and sell. Close is April 19. The property is already vacant. This date can possibly be moved sooner. Please let us know if you would like to request a faster close. "
-                    android:textColor="@color/text_color_black"
-                    android:textSize="15sp"
-                    android:visibility="gone"/>
-
-                <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="20dp"
-                    android:text="ARV Estimate:  $270,000   "
-                    android:textColor="@color/text_color_black"
-                    android:textSize="15sp"
-                    android:visibility="gone"/>
-
-                <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="10dp"
-                    android:text="Fix Estimate:  Rental $3500   Flip $25,000"
-                    android:textColor="@color/text_color_black"
-                    android:textSize="15sp"
-                    android:visibility="gone"/>
-
-                <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="10dp"
-                    android:text="Your Buy Price:  $189,995"
-                    android:textColor="@color/text_color_black"
-                    android:textSize="18sp"
-                    android:textStyle="bold"
-                    android:visibility="gone"/>
-
-                <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="20dp"
-                    android:paddingBottom="10dp"
-                    android:text="If you are an agent, your buyers price including 2.8% commission: $195,314"
-                    android:textColor="@color/text_color_black"
-                    android:textSize="12sp"
-                    android:visibility="gone"/>
-
+                    android:layout_marginTop="@dimen/activity_margin_small"
+                    android:background="@drawable/rounded_button"
+                    android:elevation="@dimen/button_elevation"
+                    android:gravity="center"
+                    android:padding="@dimen/button_padding"
+                    android:text="@string/activity_contact_button_submit"
+                    android:textColor="@color/text_color_white"
+                    android:textSize="@dimen/text_size_extra_large"
+                    android:textStyle="bold"/>
             </LinearLayout>
+        </android.support.v7.widget.CardView>
+        <!--
+                <android.support.v7.widget.CardView
+                    xmlns:android="http://schemas.android.com/apk/res/android"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/activity_margin_small"
+                    android:layout_marginRight="@dimen/activity_margin_small"
+                    android:layout_marginLeft="@dimen/activity_margin_small"
+                    card_view:cardCornerRadius="@dimen/cardview_default_radius"
+                    card_view:cardElevation="@dimen/cardview_default_elevation"
+                    android:layout_below="@+id/cardview2">
 
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:orientation="vertical"
+                        android:layout_margin="@dimen/activity_margin_small">
+
+                        <WebView
+                            android:id="@+id/webView1"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"/>
+
+                        <TextView
+                            android:id="@+id/tvOverView"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:textSize="@dimen/text_size_small"
+                            android:textColor="@color/app_text_color_light"
+                            android:visibility="gone"/>
+                    </LinearLayout>
+                </android.support.v7.widget.CardView>
+        -->
+
+
+        <TextView
+            android:id="@+id/tv5"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/cardview2"
+            android:layout_marginTop="@dimen/activity_margin_small"
+            android:padding="@dimen/activity_margin_small"
+            android:text="DESCRIPTION"
+            android:textColor="@color/app_text_color_dark"
+            android:textSize="@dimen/text_size_medium"
+            android:textStyle="bold"/>
+
+        <android.support.v7.widget.CardView
+            android:id="@+id/cardview3"
+            xmlns:android="http://schemas.android.com/apk/res/android"
+            android:layout_width="match_parent"
+            android:layout_height="200dp"
+            android:layout_below="@+id/tv5"
+            android:layout_marginBottom="@dimen/activity_margin_small"
+            android:layout_marginLeft="@dimen/activity_margin_small"
+            android:layout_marginRight="@dimen/activity_margin_small">
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:animateLayoutChanges="true"
+                android:orientation="vertical">
+                <LinearLayout
+                    android:id="@+id/llWebView"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_margin="@dimen/activity_margin_small"
+                    android:orientation="vertical">
+                    <WebView
+                        android:id="@+id/webView1"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"/>
+                    <TextView
+                        android:id="@+id/tvOverView"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:textColor="@color/app_text_color_light"
+                        android:textSize="@dimen/text_size_small"
+                        android:visibility="gone"/>
+                </LinearLayout>
+                <Button
+                    android:id="@+id/btShowMore"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentBottom="true"
+                    android:background="@color/text_color_white"
+                    android:gravity="center"
+                    android:text="SHOW MORE"
+                    android:textColor="@color/colorPrimaryDark"
+                    android:textSize="@dimen/text_size_small"
+                    android:textStyle="bold"/>
+            </RelativeLayout>
         </android.support.v7.widget.CardView>
 
     </RelativeLayout>

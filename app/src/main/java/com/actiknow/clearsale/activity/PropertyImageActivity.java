@@ -3,10 +3,12 @@ package com.actiknow.clearsale.activity;
 import android.os.Bundle;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
+import android.widget.ImageView;
 import android.widget.RelativeLayout;
 
 import com.actiknow.clearsale.R;
@@ -16,8 +18,10 @@ import com.actiknow.clearsale.utils.Utils;
 import com.mzelzoghbi.zgallery.Constants;
 import com.mzelzoghbi.zgallery.CustomViewPager;
 import com.mzelzoghbi.zgallery.OnImgClick;
+import com.mzelzoghbi.zgallery.adapters.GridImagesAdapter;
 import com.mzelzoghbi.zgallery.adapters.HorizontalListAdapters;
 import com.mzelzoghbi.zgallery.adapters.ViewPagerAdapter;
+import com.mzelzoghbi.zgallery.adapters.listeners.GridClickListener;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -29,12 +33,14 @@ import java.util.ArrayList;
  * Created by l on 31/05/2017.
  */
 
-public class PropertyImageActivity extends AppCompatActivity {
-    
+public class PropertyImageActivity extends AppCompatActivity implements GridClickListener {
+    boolean grid_view = false;
     RelativeLayout mainLayout;
     CustomViewPager mViewPager;
     ViewPagerAdapter adapter;
-    RecyclerView imagesHorizontalList;
+    GridImagesAdapter gridImagesAdapter;
+    
+    RecyclerView rvHorizontalImages;
     LinearLayoutManager mLayoutManager;
     HorizontalListAdapters hAdapter;
     RelativeLayout rlBack;
@@ -43,6 +49,8 @@ public class PropertyImageActivity extends AppCompatActivity {
     Toolbar mToolbar;
     
     PropertyDetailsPref propertyDetailsPref;
+    ImageView ivGridView;
+    RecyclerView rvGridImages;
     private int currentPos;
     
     @Override
@@ -55,9 +63,11 @@ public class PropertyImageActivity extends AppCompatActivity {
     }
     
     private void initView () {
+        rvGridImages = (RecyclerView) findViewById (R.id.rvGridImages);
+        ivGridView = (ImageView) findViewById (R.id.ivGridView);
         mainLayout = (RelativeLayout) findViewById (R.id.mainLayout);
         mViewPager = (CustomViewPager) findViewById (R.id.pager);
-        imagesHorizontalList = (RecyclerView) findViewById (R.id.imagesHorizontalList);
+        rvHorizontalImages = (RecyclerView) findViewById (R.id.imagesHorizontalList);
         rlBack = (RelativeLayout) findViewById (R.id.rlBack);
         mToolbar = (Toolbar) findViewById (R.id.toolbar);
     }
@@ -75,26 +85,6 @@ public class PropertyImageActivity extends AppCompatActivity {
         } catch (JSONException e) {
             e.printStackTrace ();
         }
-
-
-//        for (int j = 0; j < size; j++) {
-//            propertyImageList.add (propertyDetailsPref.getStringPref (PropertyImageActivity.this, propertyDetailsPref.PROPERTY_IMAGES + j));
-//        }
-        
-        
-        //   propertyImageList.add("http://clearsale.com/theme/theme1/seller_files/exterior/property_327/dcca01ddf8b02fb5d2fe89d3c55eb5dcExterior%20pic.png");
-        //  propertyImageList.add("http://clearsale.com/theme/theme1/seller_files/interior/property_327/d755cd303ff826ce587fb0e55e6bc1c6IMG_5034.jpg");
-        // propertyImageList.add("http://clearsale.com/theme/theme1/seller_files/interior/property_327/63502fc15c1d04e5ad9f095d8bd03b2aIMG_5035.jpg");
-        // propertyImageList.add("http://clearsale.com/theme/theme1/seller_files/interior/property_327/1a6c485de807e99fbb7b11a8f06e354fIMG_5036.jpg");
-        //  propertyImageList.add("http://clearsale.com/theme/theme1/seller_files/interior/property_327/d913733c109e622efea54bf04c778d1bIMG_5038.jpg");
-        //  propertyImageList.add("http://clearsale.com/theme/theme1/seller_files/interior/property_327/1d525c19d5c659f9d39a1abb941baf75IMG_5039.jpg");
-        //  propertyImageList.add("http://clearsale.com/theme/theme1/seller_files/interior/property_327/8bafdd842b1558edd07efd4b58b69ecfIMG_5040.jpg");
-        //  propertyImageList.add("http://clearsale.com/theme/theme1/seller_files/interior/property_327/6465f55d083394753d7656fbea7b5df6IMG_5041.jpg");
-        //  propertyImageList.add("http://clearsale.com/theme/theme1/seller_files/interior/property_327/23a5f19eee30dfcc0f7ddd7b4116986cIMG_5042.jpg");
-        //  propertyImageList.add("http://clearsale.com/theme/theme1/seller_files/interior/property_327/b41719c7631a3d7bc0c2d246cd2fb5daIMG_5043.jpg");
-        // propertyImageList.add("http://clearsale.com/theme/theme1/seller_files/interior/property_327/1ee4363f712ced227c0b154029e5cfb8IMG_5048.jpg");
-        // propertyImageList.add("http://clearsale.com/theme/theme1/seller_files/interior/property_327/3fd6c0348b2f1443715d0ee4139632c8IMG_5053.jpg");
-        
         
         currentPos = getIntent ().getIntExtra (Constants.IntentPassingParams.SELECTED_IMG_POS, 0);
         //  bgColor = (ZColor) getIntent().getSerializableExtra(Constants.IntentPassingParams.BG_COLOR);
@@ -102,7 +92,7 @@ public class PropertyImageActivity extends AppCompatActivity {
         
         mLayoutManager = new LinearLayoutManager (this, LinearLayoutManager.HORIZONTAL, false);
         // pager adapter
-        adapter = new ViewPagerAdapter (this, propertyImageList, mToolbar, imagesHorizontalList);
+        adapter = new ViewPagerAdapter (this, propertyImageList, mToolbar, rvHorizontalImages);
         mViewPager.setAdapter (adapter);
         // horizontal list adaapter
         hAdapter = new HorizontalListAdapters (this, propertyImageList, new OnImgClick () {
@@ -111,8 +101,8 @@ public class PropertyImageActivity extends AppCompatActivity {
                 mViewPager.setCurrentItem (pos, true);
             }
         });
-        imagesHorizontalList.setLayoutManager (mLayoutManager);
-        imagesHorizontalList.setAdapter (hAdapter);
+        rvHorizontalImages.setLayoutManager (mLayoutManager);
+        rvHorizontalImages.setAdapter (hAdapter);
         hAdapter.notifyDataSetChanged ();
         
         mViewPager.addOnPageChangeListener (new ViewPager.OnPageChangeListener () {
@@ -122,7 +112,7 @@ public class PropertyImageActivity extends AppCompatActivity {
     
             @Override
             public void onPageSelected (int position) {
-                imagesHorizontalList.smoothScrollToPosition (position);
+                rvHorizontalImages.smoothScrollToPosition (position);
                 hAdapter.setSelectedItem (position);
             }
     
@@ -132,9 +122,31 @@ public class PropertyImageActivity extends AppCompatActivity {
         });
         hAdapter.setSelectedItem (currentPos);
         mViewPager.setCurrentItem (currentPos);
+    
+    
+        gridImagesAdapter = new GridImagesAdapter (this, propertyImageList, getIntent ().getIntExtra (Constants.IntentPassingParams.IMG_PLACEHOLDER, - 1));
+        rvGridImages.setLayoutManager (new GridLayoutManager (this, 3));
+        rvGridImages.setAdapter (gridImagesAdapter);
+    
     }
     
     private void initListener () {
+        ivGridView.setOnClickListener (new View.OnClickListener () {
+            @Override
+            public void onClick (View v) {
+                if (grid_view) {
+                    grid_view = false;
+                    rvGridImages.setVisibility (View.GONE);
+                    rvHorizontalImages.setVisibility (View.VISIBLE);
+                    mViewPager.setVisibility (View.VISIBLE);
+                } else {
+                    grid_view = true;
+                    mViewPager.setVisibility (View.GONE);
+                    rvHorizontalImages.setVisibility (View.GONE);
+                    rvGridImages.setVisibility (View.VISIBLE);
+                }
+            }
+        });
         rlBack.setOnClickListener (new View.OnClickListener () {
             @Override
             public void onClick (View v) {
@@ -148,5 +160,16 @@ public class PropertyImageActivity extends AppCompatActivity {
     public void onBackPressed () {
         finish ();
         overridePendingTransition (R.anim.slide_in_left, R.anim.slide_out_right);
+    }
+    
+    @Override
+    public void onClick (int pos) {
+        currentPos = pos;
+        hAdapter.setSelectedItem (pos);
+        mViewPager.setCurrentItem (pos);
+        grid_view = false;
+        rvGridImages.setVisibility (View.GONE);
+        rvHorizontalImages.setVisibility (View.VISIBLE);
+        mViewPager.setVisibility (View.VISIBLE);
     }
 }

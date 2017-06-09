@@ -110,7 +110,7 @@ public class PropertyAdapter extends RecyclerView.Adapter<PropertyAdapter.ViewHo
         holder.tvAcceptingOffer.setTypeface (SetTypeFace.getTypeface (activity));
         holder.tvAddress1.setTypeface (SetTypeFace.getTypeface (activity));
         holder.tvAddress2.setTypeface (SetTypeFace.getTypeface (activity));
-        holder.tvPropertyRate.setTypeface (SetTypeFace.getTypeface (activity));
+        holder.tvPropertyPrice.setTypeface (SetTypeFace.getTypeface (activity));
         holder.tvBuiltYear.setTypeface (SetTypeFace.getTypeface (activity));
         holder.tvBeds.setTypeface (SetTypeFace.getTypeface (activity));
         holder.tvBaths.setTypeface (SetTypeFace.getTypeface (activity));
@@ -120,6 +120,7 @@ public class PropertyAdapter extends RecyclerView.Adapter<PropertyAdapter.ViewHo
         holder.tv3.setTypeface (SetTypeFace.getTypeface (activity));
         holder.tvSliderPosition.setTypeface (SetTypeFace.getTypeface (activity));
     
+        holder.tvPropertyPrice.setText (property.getPrice ());
         holder.tvAddress1.setText (property.getAddress1 ());
         holder.tvAddress2.setText (property.getAddress2 ());
         holder.tvBeds.setText (property.getBedroom ());
@@ -134,7 +135,7 @@ public class PropertyAdapter extends RecyclerView.Adapter<PropertyAdapter.ViewHo
             CustomImageSlider slider = new CustomImageSlider (activity);
             slider
                     .image (image)
-                    .setScaleType (BaseSliderView.ScaleType.Fit)
+                    .setScaleType (BaseSliderView.ScaleType.CenterCrop)
                     .setOnSliderClickListener (new BaseSliderView.OnSliderClickListener () {
                         @Override
                         public void onSliderClick (BaseSliderView slider) {
@@ -167,6 +168,7 @@ public class PropertyAdapter extends RecyclerView.Adapter<PropertyAdapter.ViewHo
         holder.slider.getPagerIndicator ().setVisibility (View.GONE);
         holder.slider.setPresetTransformer (SliderLayout.Transformer.Default);
         holder.slider.setCustomAnimation (new DescriptionAnimation ());
+        holder.slider.setDuration (15000);
         holder.slider.addOnPageChangeListener (new ViewPagerEx.OnPageChangeListener () {
             @Override
             public void onPageScrolled (int position, float positionOffset, int positionOffsetPixels) {
@@ -333,7 +335,7 @@ public class PropertyAdapter extends RecyclerView.Adapter<PropertyAdapter.ViewHo
         TextView tvAcceptingOffer;
         TextView tvAddress1;
         TextView tvAddress2;
-        TextView tvPropertyRate;
+        TextView tvPropertyPrice;
         TextView tvBuiltYear;
         TextView tvBeds;
         TextView tvBaths;
@@ -368,7 +370,7 @@ public class PropertyAdapter extends RecyclerView.Adapter<PropertyAdapter.ViewHo
             tvBeds = (TextView) view.findViewById (R.id.tvBedroom);
             tvBaths = (TextView) view.findViewById (R.id.tvBathroom);
             tvSqFeet = (TextView) view.findViewById (R.id.tvSqFeet);
-            tvPropertyRate = (TextView) view.findViewById (R.id.tvPropertyRate);
+            tvPropertyPrice = (TextView) view.findViewById (R.id.tvPropertyPrice);
             tvBuiltYear = (TextView) view.findViewById (R.id.tvBuildYear);
     
     

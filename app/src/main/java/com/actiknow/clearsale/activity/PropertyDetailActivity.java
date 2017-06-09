@@ -5,6 +5,7 @@ import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.provider.Settings;
+import android.support.annotation.NonNull;
 import android.support.design.widget.CollapsingToolbarLayout;
 import android.support.design.widget.CoordinatorLayout;
 import android.support.design.widget.FloatingActionButton;
@@ -14,19 +15,22 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
+import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.text.SpannableStringBuilder;
 import android.util.Log;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
+import android.webkit.WebView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.actiknow.clearsale.R;
 import com.actiknow.clearsale.fragment.CompsFragment;
 import com.actiknow.clearsale.fragment.OverviewFragment;
-import com.actiknow.clearsale.fragment.PlaceAndOfferFragment;
-import com.actiknow.clearsale.fragment.PossessionFragment;
-import com.actiknow.clearsale.fragment.RealtorFragment;
 import com.actiknow.clearsale.utils.AppConfigTags;
 import com.actiknow.clearsale.utils.AppConfigURL;
 import com.actiknow.clearsale.utils.BuyerDetailsPref;
@@ -34,7 +38,10 @@ import com.actiknow.clearsale.utils.Constants;
 import com.actiknow.clearsale.utils.CustomImageSlider;
 import com.actiknow.clearsale.utils.NetworkConnection;
 import com.actiknow.clearsale.utils.PropertyDetailsPref;
+import com.actiknow.clearsale.utils.SetTypeFace;
 import com.actiknow.clearsale.utils.Utils;
+import com.afollestad.materialdialogs.DialogAction;
+import com.afollestad.materialdialogs.MaterialDialog;
 import com.android.volley.AuthFailureError;
 import com.android.volley.Request;
 import com.android.volley.VolleyError;
@@ -62,6 +69,7 @@ public class PropertyDetailActivity extends AppCompatActivity {
     List<String> bannerList = new ArrayList<> ();
     Toolbar toolbar;
     CoordinatorLayout clMain;
+    TextView tv4;
     int property_id;
     ProgressDialog progressDialog;
     RelativeLayout rlSliderIndicator;
@@ -70,6 +78,7 @@ public class PropertyDetailActivity extends AppCompatActivity {
     BuyerDetailsPref buyerDetailsPref;
     RelativeLayout rlBack;
     FloatingActionButton fabMaps;
+    RelativeLayout rlMain;
     private SliderLayout slider;
     private CollapsingToolbarLayout collapsingToolbarLayout = null;
     private TabLayout tabLayout;
@@ -83,6 +92,7 @@ public class PropertyDetailActivity extends AppCompatActivity {
         initData ();
         initListener ();
         getExtras ();
+        setUpNavigationDrawer ();
         getPropertyDetails ();
     }
     
@@ -92,6 +102,7 @@ public class PropertyDetailActivity extends AppCompatActivity {
     }
     
     private void initView () {
+        rlMain = (RelativeLayout) findViewById (R.id.rlMain);
         rlBack = (RelativeLayout) findViewById (R.id.rlBack);
         clMain = (CoordinatorLayout) findViewById (R.id.clMain);
         slider = (SliderLayout) findViewById (R.id.slider);
@@ -110,6 +121,7 @@ public class PropertyDetailActivity extends AppCompatActivity {
         buyerDetailsPref = BuyerDetailsPref.getInstance ();
         progressDialog = new ProgressDialog (this);
         tabLayout.setupWithViewPager (viewPager);
+        tabLayout.setTabGravity (TabLayout.GRAVITY_FILL);
         collapsingToolbarLayout.setTitleEnabled (false);
 //        appBar.setExpanded(true);
     
@@ -159,7 +171,7 @@ public class PropertyDetailActivity extends AppCompatActivity {
             CustomImageSlider slider2 = new CustomImageSlider (this);
             slider2
                     .image (image)
-                    .setScaleType (BaseSliderView.ScaleType.Fit)
+                    .setScaleType (BaseSliderView.ScaleType.CenterCrop)
                     .setOnSliderClickListener (new BaseSliderView.OnSliderClickListener () {
                         @Override
                         public void onSliderClick (BaseSliderView slider) {
@@ -264,7 +276,7 @@ public class PropertyDetailActivity extends AppCompatActivity {
                                         propertyDetailsPref.putStringPref (PropertyDetailActivity.this, PropertyDetailsPref.PROPERTY_COMPS, jsonObj.getString (AppConfigTags.PROPERTY_COMPS));
     
                                         propertyDetailsPref.putStringPref (PropertyDetailActivity.this, PropertyDetailsPref.PROPERTY_COMPS_ADDRESSES, jsonObj.getJSONArray (AppConfigTags.PROPERTY_COMPS_ADDRESSES).toString ());
- 
+    
                                         propertyDetailsPref.putIntPref (PropertyDetailActivity.this, PropertyDetailsPref.PROPERTY_AUCTION_ID, jsonObj.getInt (AppConfigTags.PROPERTY_BID_AUCTION_ID));
                                         propertyDetailsPref.putIntPref (PropertyDetailActivity.this, PropertyDetailsPref.PROPERTY_AUCTION_STATUS, jsonObj.getInt (AppConfigTags.PROPERTY_BID_AUCTION_STATUS));
                                         
@@ -272,7 +284,7 @@ public class PropertyDetailActivity extends AppCompatActivity {
                                         JSONArray jsonArrayPropertyImages = jsonObj.getJSONArray (AppConfigTags.PROPERTY_IMAGES);
                                         propertyDetailsPref.putStringPref (PropertyDetailActivity.this, PropertyDetailsPref.PROPERTY_IMAGES, jsonArrayPropertyImages.toString ());
                                         propertyDetailsPref.putIntPref (PropertyDetailActivity.this, PropertyDetailsPref.PROPERTY_IMAGE_COUNT, jsonArrayPropertyImages.length ());
-
+    
                                         for (int j = 0; j < jsonArrayPropertyImages.length (); j++) {
                                             JSONObject jsonObjectImages = jsonArrayPropertyImages.getJSONObject (j);
                                             bannerList.add (jsonObjectImages.getString (AppConfigTags.PROPERTY_IMAGE));
@@ -296,25 +308,30 @@ public class PropertyDetailActivity extends AppCompatActivity {
     
                                         setupViewPager (viewPager);
                                     }
+                                    clMain.setVisibility (View.VISIBLE);
                                     progressDialog.dismiss ();
                                 } catch (Exception e) {
                                     progressDialog.dismiss ();
+                                    clMain.setVisibility (View.VISIBLE);
                                     Utils.showSnackBar (PropertyDetailActivity.this, clMain, getResources ().getString (R.string.snackbar_text_exception_occurred), Snackbar.LENGTH_LONG, getResources ().getString (R.string.snackbar_action_dismiss), null);
                                     e.printStackTrace ();
                                 }
                             } else {
-                                // Utils.showSnackBar(getActivity(), clMain, getResources().getString(R.string.snackbar_text_error_occurred), Snackbar.LENGTH_LONG, getResources().getString(R.string.snackbar_action_dismiss), null);
+                                clMain.setVisibility (View.VISIBLE);
+                                Utils.showSnackBar (PropertyDetailActivity.this, clMain, getResources ().getString (R.string.snackbar_text_error_occurred), Snackbar.LENGTH_LONG, getResources ().getString (R.string.snackbar_action_dismiss), null);
                                 Utils.showLog (Log.WARN, AppConfigTags.SERVER_RESPONSE, AppConfigTags.DIDNT_RECEIVE_ANY_DATA_FROM_SERVER, true);
                             }
-                            //  progressDialog.dismiss();
+                            clMain.setVisibility (View.VISIBLE);
+                            progressDialog.dismiss ();
                         }
                     },
                     new com.android.volley.Response.ErrorListener () {
                         @Override
                         public void onErrorResponse (VolleyError error) {
-                            //  progressDialog.dismiss();
+                            progressDialog.dismiss ();
+                            clMain.setVisibility (View.VISIBLE);
                             Utils.showLog (Log.ERROR, AppConfigTags.VOLLEY_ERROR, error.toString (), true);
-                            // Utils.showSnackBar(getActivity(), clMain, getResources().getString(R.string.snackbar_text_error_occurred), Snackbar.LENGTH_LONG, getResources().getString(R.string.snackbar_action_dismiss), null);
+                            Utils.showSnackBar (PropertyDetailActivity.this, clMain, getResources ().getString (R.string.snackbar_text_error_occurred), Snackbar.LENGTH_LONG, getResources ().getString (R.string.snackbar_action_dismiss), null);
                         }
                     }) {
                 @Override
@@ -337,6 +354,7 @@ public class PropertyDetailActivity extends AppCompatActivity {
             };
             Utils.sendRequest (strRequest1, 60);
         } else {
+//            clMain.setVisibility (View.VISIBLE);
             Utils.showSnackBar (this, clMain, getResources ().getString (R.string.snackbar_text_no_internet_connection_available), Snackbar.LENGTH_LONG, getResources ().getString (R.string.snackbar_action_go_to_settings), new View.OnClickListener () {
                 @Override
                 public void onClick (View v) {
@@ -345,7 +363,6 @@ public class PropertyDetailActivity extends AppCompatActivity {
                     startActivity (dialogIntent);
                 }
             });
-            
         }
     }
     
@@ -353,9 +370,6 @@ public class PropertyDetailActivity extends AppCompatActivity {
         ViewPagerAdapter adapter = new ViewPagerAdapter (getSupportFragmentManager ());
         adapter.addFragment (new OverviewFragment (), "OVERVIEW");
         adapter.addFragment (new CompsFragment (), "COMPS");
-        adapter.addFragment (new PossessionFragment (), "ACCESS/POSSESSION");
-        adapter.addFragment (new RealtorFragment (), "ARE YOU REALTORS");
-        adapter.addFragment (new PlaceAndOfferFragment (), "PLACE AND OFFER");
         viewPager.setAdapter (adapter);
     }
     
@@ -381,6 +395,71 @@ public class PropertyDetailActivity extends AppCompatActivity {
         propertyDetailsPref.putIntPref (PropertyDetailActivity.this, PropertyDetailsPref.PROPERTY_AUCTION_STATUS, 0);
         finish ();
         overridePendingTransition (R.anim.slide_in_left, R.anim.slide_out_right);
+    }
+    
+    public boolean onCreateOptionsMenu (Menu menu) {
+        MenuInflater menuInflater = getMenuInflater ();
+        menuInflater.inflate (R.menu.property_detail_menu, menu);
+        return true;
+    }
+    
+    private void setUpNavigationDrawer () {
+        toolbar = (Toolbar) findViewById (R.id.toolbar1);
+        setSupportActionBar (toolbar);
+        ActionBar actionBar = getSupportActionBar ();
+        toolbar.inflateMenu (R.menu.property_detail_menu);
+        
+        toolbar.setOnMenuItemClickListener (new Toolbar.OnMenuItemClickListener () {
+            @Override
+            public boolean onMenuItemClick (MenuItem menuItem) {
+                MaterialDialog dialog = new MaterialDialog.Builder (PropertyDetailActivity.this)
+                        .limitIconToDefaultSize ()
+                        .title ("")
+                        .onPositive (new MaterialDialog.SingleButtonCallback () {
+                            @Override
+                            public void onClick (@NonNull MaterialDialog dialog, @NonNull DialogAction which) {
+                                dialog.dismiss ();
+                            }
+                        })
+                        .positiveText ("OK")
+                        .positiveColor (getResources ().getColor (R.color.app_text_color_dark))
+                        .customView (R.layout.dialog_webview, false)
+                        .typeface (SetTypeFace.getTypeface (PropertyDetailActivity.this), SetTypeFace.getTypeface (PropertyDetailActivity.this))
+                        .build ();
+                final WebView webView = (WebView) dialog.findViewById (R.id.webview);
+                
+                switch (menuItem.getItemId ()) {
+                    case R.id.action_are_you_realtors:
+                        dialog.setTitle ("Are you Realtor");
+                        SpannableStringBuilder spannableStringBuilder = new SpannableStringBuilder ("<style>@font-face{font-family: myFont;src: url(file:///android_asset/" + Constants.font_name + ");}</style>" + propertyDetailsPref.getStringPref (PropertyDetailActivity.this, PropertyDetailsPref.PROPERTY_REALTOR));
+                        webView.loadDataWithBaseURL ("www.google.com", spannableStringBuilder.toString (), "text/html", "UTF-8", "");
+                        dialog.show ();
+                        return true;
+                    case R.id.action_place_and_offer:
+                        dialog.setTitle ("Place an Offer");
+                        SpannableStringBuilder spannableStringBuilder2 = new SpannableStringBuilder ("<style>@font-face{font-family: myFont;src: url(file:///android_asset/" + Constants.font_name + ");}</style>" + propertyDetailsPref.getStringPref (PropertyDetailActivity.this, PropertyDetailsPref.PROPERTY_OFFER));
+                        webView.loadDataWithBaseURL ("www.google.com", spannableStringBuilder2.toString (), "text/html", "UTF-8", "");
+                        dialog.show ();
+                        return true;
+                    case R.id.action_access_possession:
+                        dialog.setTitle ("Access / Possession");
+                        SpannableStringBuilder spannableStringBuilder3 = new SpannableStringBuilder ("<style>@font-face{font-family: myFont;src: url(file:///android_asset/" + Constants.font_name + ");}</style>" + propertyDetailsPref.getStringPref (PropertyDetailActivity.this, PropertyDetailsPref.PROPERTY_ACCESS));
+                        webView.loadDataWithBaseURL ("www.google.com", spannableStringBuilder3.toString (), "text/html", "UTF-8", "");
+                        dialog.show ();
+                        return true;
+                    
+                }
+                return false;
+            }
+        });
+        
+        try {
+            assert actionBar != null;
+            actionBar.setDisplayHomeAsUpEnabled (false);
+            actionBar.setHomeButtonEnabled (false);
+            actionBar.setDisplayShowTitleEnabled (false);
+        } catch (Exception ignored) {
+        }
     }
     
     class ViewPagerAdapter extends FragmentPagerAdapter {
@@ -411,6 +490,7 @@ public class PropertyDetailActivity extends AppCompatActivity {
             return mFragmentTitleList.get (position);
         }
     }
+    
 }
 
 

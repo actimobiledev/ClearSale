@@ -13,6 +13,7 @@ import android.view.View;
 import com.actiknow.clearsale.R;
 import com.actiknow.clearsale.utils.AppConfigTags;
 import com.actiknow.clearsale.utils.AppConfigURL;
+import com.actiknow.clearsale.utils.BuyerDetailsPref;
 import com.actiknow.clearsale.utils.Constants;
 import com.actiknow.clearsale.utils.NetworkConnection;
 import com.actiknow.clearsale.utils.Utils;
@@ -43,6 +44,7 @@ public class AllPropertyLocationActivity extends AppCompatActivity implements Go
     
     CoordinatorLayout clMain;
     ProgressDialog progressDialog;
+    BuyerDetailsPref buyerDetailsPref;
     private GoogleMap mMap;
     
     @Override
@@ -63,6 +65,7 @@ public class AllPropertyLocationActivity extends AppCompatActivity implements Go
     }
     
     private void initData () {
+        buyerDetailsPref = BuyerDetailsPref.getInstance ();
         progressDialog = new ProgressDialog (this);
     }
     
@@ -159,6 +162,7 @@ public class AllPropertyLocationActivity extends AppCompatActivity implements Go
                 protected Map<String, String> getParams () throws AuthFailureError {
                     Map<String, String> params = new Hashtable<String, String> ();
                     params.put (AppConfigTags.TYPE, AppConfigTags.PROPERTY_LOCATIONS);
+                    params.put (AppConfigTags.BUYER_ID, String.valueOf (buyerDetailsPref.getIntPref (AllPropertyLocationActivity.this, BuyerDetailsPref.BUYER_ID)));
                     Utils.showLog (Log.INFO, AppConfigTags.PARAMETERS_SENT_TO_THE_SERVER, "" + params, true);
                     return params;
                 }

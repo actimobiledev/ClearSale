@@ -30,6 +30,7 @@
 
     <dimen name="top_bottom_margin">5dp</dimen>
     <dimen name="floating_hint_margin">5dp</dimen>
+    <dimen name="text_size_extreme_small">10sp</dimen>
     <dimen name="text_size_extra_small">12sp</dimen>
     <dimen name="text_size_small">14sp</dimen>
     <dimen name="text_size_medium">16sp</dimen>

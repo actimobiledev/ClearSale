@@ -6,7 +6,8 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:layout_below="@+id/appBar"
-    android:background="@color/text_color_black"
+    android:animateLayoutChanges="true"
+    android:background="@color/text_color_grey_light"
     android:orientation="vertical">
 
     <com.mzelzoghbi.zgallery.CustomViewPager
@@ -15,10 +16,24 @@
         android:layout_height="match_parent"
         android:layout_alignParentTop="true"
         android:layout_centerInParent="true"
-        android:background="@color/primary"
+        android:background="@color/text_color_grey_light"
         android:fitsSystemWindows="true"
         android:foregroundGravity="center"/>
 
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/imagesHorizontalList"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_centerVertical="true"
+        android:background="@drawable/property_footer_bg"
+        android:overScrollMode="never"
+        android:visibility="visible"/>
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/rvGridImages"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:visibility="gone"/>
     <android.support.v7.widget.Toolbar
         android:id="@+id/toolbar"
         style="@style/Widget.MyApp.TransparentActionBar"
@@ -64,6 +79,21 @@
                     android:textColor="@color/text_color_white"
                     android:textSize="@dimen/text_size_small"/>
             </RelativeLayout>
+
+            <RelativeLayout
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_alignParentEnd="true"
+                android:layout_alignParentRight="true">
+                <ImageView
+                    android:id="@+id/ivGridView"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:layout_centerVertical="true"
+                    android:padding="@dimen/activity_margin_small"
+                    android:src="@drawable/ic_grid"
+                    android:visibility="visible"/>
+            </RelativeLayout>
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -75,15 +105,6 @@
                 android:textStyle="bold"/>
         </RelativeLayout>
     </android.support.v7.widget.Toolbar>
-
-    <android.support.v7.widget.RecyclerView
-        android:id="@+id/imagesHorizontalList"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
-        android:layout_centerVertical="true"
-        android:background="@drawable/property_footer_bg"
-        android:overScrollMode="never"/>
 </RelativeLayout>
 
 

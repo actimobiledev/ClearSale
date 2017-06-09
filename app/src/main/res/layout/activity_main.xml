@@ -11,7 +11,6 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:animateLayoutChanges="true">
-
         <android.support.design.widget.AppBarLayout
             android:id="@+id/appBar"
             android:layout_width="match_parent"
@@ -79,8 +78,6 @@
                             android:padding="@dimen/activity_margin_small"
                             android:src="@drawable/ic_overflow_menu"
                             android:visibility="gone"/>
-
-
                         <ImageView
                             android:id="@+id/ivMaps"
                             android:layout_width="wrap_content"
@@ -91,8 +88,6 @@
                             android:padding="@dimen/activity_margin_small"
                             android:src="@android:drawable/ic_dialog_map"
                             android:visibility="visible"/>
-
-
                         <ImageView
                             android:id="@+id/ivFilter"
                             android:layout_width="wrap_content"
@@ -101,14 +96,10 @@
                             android:padding="@dimen/activity_margin_small"
                             android:src="@drawable/ic_filter"
                             android:visibility="visible"/>
-
-
                     </RelativeLayout>
                 </RelativeLayout>
             </android.support.v7.widget.Toolbar>
         </android.support.design.widget.AppBarLayout>
-
-
         <android.support.v4.widget.SwipeRefreshLayout
             android:id="@+id/swipe_refresh_layout"
             android:layout_width="wrap_content"
@@ -119,7 +110,8 @@
                 android:id="@+id/rvPropertyList"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:layout_below="@+id/appBar"/>
+                android:layout_below="@+id/appBar"
+                android:paddingBottom="4dp"/>
 
         </android.support.v4.widget.SwipeRefreshLayout>
 

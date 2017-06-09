@@ -1,0 +1,17 @@
+<menu
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:context=".activity.MainActivity">
+    <item android:id="@+id/action_access_possession"
+          android:orderInCategory="100"
+          android:title="Access/Possession"/>
+    <item android:id="@+id/action_are_you_realtors"
+          android:orderInCategory="100"
+          android:title="Are you Realtor"/>
+
+    <item android:id="@+id/action_place_and_offer"
+          android:orderInCategory="100"
+          android:title="Place an Offer"/>
+
+
+</menu>

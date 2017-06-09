@@ -291,8 +291,9 @@ public class MainActivity extends AppCompatActivity {
     public void checkPermissions () {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
             if (checkSelfPermission (Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED ||
-                    checkSelfPermission (Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
-                requestPermissions (new String[] {Manifest.permission.ACCESS_FINE_LOCATION, Manifest.permission.ACCESS_COARSE_LOCATION},
+                    checkSelfPermission (Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED ||
+                    checkSelfPermission (Manifest.permission.READ_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {
+                requestPermissions (new String[] {Manifest.permission.ACCESS_FINE_LOCATION, Manifest.permission.ACCESS_COARSE_LOCATION, Manifest.permission.READ_EXTERNAL_STORAGE},
                         MainActivity.PERMISSION_REQUEST_CODE);
             }
         }
@@ -323,6 +324,7 @@ public class MainActivity extends AppCompatActivity {
                         alert.show ();
                     } else if (Manifest.permission.ACCESS_FINE_LOCATION.equals (permission)) {
                     } else if (Manifest.permission.ACCESS_COARSE_LOCATION.equals (permission)) {
+                    } else if (Manifest.permission.READ_EXTERNAL_STORAGE.equals (permission)) {
                     }
                 }
             }
@@ -333,7 +335,6 @@ public class MainActivity extends AppCompatActivity {
         }
     }
     
-
     
     /*
     private void getAllProperties () {
@@ -393,7 +394,7 @@ public class MainActivity extends AppCompatActivity {
                                             } else {
                                                 cities = cities + jsonObject.getInt (AppConfigTags.CITY_ID) + ",";
                                             }
-        
+    
                                         }
                                         
                                         
@@ -497,72 +498,72 @@ public class MainActivity extends AppCompatActivity {
             public Object withName (String name) {
                 return null;
             }
-        
+    
             @Override
             public StringHolder getName () {
                 return null;
             }
-        
+    
             @Override
             public Object withEmail (String email) {
                 return null;
             }
-        
+    
             @Override
             public StringHolder getEmail () {
                 return null;
             }
-        
+    
             @Override
             public Object withIcon (Drawable icon) {
                 return null;
             }
-        
+    
             @Override
             public Object withIcon (Bitmap bitmap) {
                 return null;
             }
-        
+    
             @Override
             public Object withIcon (@DrawableRes int iconRes) {
                 return null;
             }
-        
+    
             @Override
             public Object withIcon (String url) {
                 return null;
             }
-        
+    
             @Override
             public Object withIcon (Uri uri) {
                 return null;
             }
-        
+    
             @Override
             public Object withIcon (IIcon icon) {
                 return null;
             }
-        
+    
             @Override
             public ImageHolder getIcon () {
                 return null;
             }
-        
+    
             @Override
             public Object withSelectable (boolean selectable) {
                 return null;
             }
-        
+    
             @Override
             public boolean isSelectable () {
                 return false;
             }
-        
+    
             @Override
             public Object withIdentifier (long identifier) {
                 return null;
             }
-        
+    
             @Override
             public long getIdentifier () {
                 return 0;
