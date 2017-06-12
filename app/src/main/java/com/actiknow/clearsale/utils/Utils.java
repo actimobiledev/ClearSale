@@ -2,8 +2,11 @@ package com.actiknow.clearsale.utils;
 
 import android.app.Activity;
 import android.app.ActivityManager;
+import android.app.NotificationManager;
 import android.app.ProgressDialog;
 import android.content.ActivityNotFoundException;
+import android.content.ComponentName;
+import android.content.ContentResolver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.ApplicationInfo;
@@ -13,9 +16,14 @@ import android.content.pm.Signature;
 import android.content.res.Resources;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.graphics.Canvas;
+import android.graphics.Paint;
 import android.graphics.Typeface;
 import android.graphics.drawable.ColorDrawable;
+import android.media.Ringtone;
+import android.media.RingtoneManager;
 import android.net.Uri;
+import android.os.Build;
 import android.provider.Settings;
 import android.support.annotation.Nullable;
 import android.support.design.widget.CoordinatorLayout;
@@ -523,8 +531,23 @@ public class Utils {
         }
         return number_status;
     }
-
-
+    
+    public static Bitmap textAsBitmap (Context context, String messageText, float textSize, int textColor) {
+        Paint paint = new Paint (Paint.ANTI_ALIAS_FLAG);
+        paint.setTextSize (Utils.pxFromDp (context, textSize));
+        paint.setTypeface (SetTypeFace.getTypeface (context));
+        paint.setColor (textColor);
+        paint.setTextAlign (Paint.Align.LEFT);
+        float baseline = - paint.ascent (); // ascent() is negative
+        int width = (int) (paint.measureText (messageText) + 0.5f); // round
+        int height = (int) (baseline + paint.descent () + 0.5f);
+        Bitmap image = Bitmap.createBitmap (width, height, Bitmap.Config.ARGB_8888);
+        Canvas canvas = new Canvas (image);
+        canvas.drawText (messageText, 0, baseline, paint);
+        return image;
+    }
+    
+    
     public static boolean isValidEmail1 (String emailInput) {
         String EMAIL_PATTERN = "^[_A-Za-z0-9-\\+]+(\\.[_A-Za-z0-9-]+)*@"
                 + "[A-Za-z0-9-]+(\\.[A-Za-z0-9]+)*(\\.[A-Za-z]{2,})$";
@@ -533,4 +556,75 @@ public class Utils {
         Matcher matcher = pattern.matcher (emailInput);
         return matcher.matches ();
     }
+    
+    
+    public static boolean isAppIsInBackground (Context context) {
+        boolean isInBackground = true;
+        ActivityManager am = (ActivityManager) context.getSystemService (Context.ACTIVITY_SERVICE);
+        if (Build.VERSION.SDK_INT > Build.VERSION_CODES.KITKAT_WATCH) {
+            List<ActivityManager.RunningAppProcessInfo> runningProcesses = am.getRunningAppProcesses ();
+            for (ActivityManager.RunningAppProcessInfo processInfo : runningProcesses) {
+                if (processInfo.importance == ActivityManager.RunningAppProcessInfo.IMPORTANCE_FOREGROUND) {
+                    for (String activeProcess : processInfo.pkgList) {
+                        if (activeProcess.equals (context.getPackageName ())) {
+                            isInBackground = false;
+                        }
+                    }
+                }
+            }
+        } else {
+            List<ActivityManager.RunningTaskInfo> taskInfo = am.getRunningTasks (1);
+            ComponentName componentInfo = taskInfo.get (0).topActivity;
+            if (componentInfo.getPackageName ().equals (context.getPackageName ())) {
+                isInBackground = false;
+            }
+        }
+        return isInBackground;
+    }
+    
+    // Clears notification tray messages
+    public static void clearNotifications (Context context) {
+        NotificationManager notificationManager = (NotificationManager) context.getSystemService (Context.NOTIFICATION_SERVICE);
+        notificationManager.cancelAll ();
+    }
+    
+    public static long getTimeMilliSec (String timeStamp) {
+        SimpleDateFormat format = new SimpleDateFormat ("yyyy-MM-dd HH:mm:ss");
+        try {
+            Date date = format.parse (timeStamp);
+            return date.getTime ();
+        } catch (ParseException e) {
+            e.printStackTrace ();
+        }
+        return 0;
+    }
+    
+    @Nullable
+    public static Bitmap getBitmapFromURL (String strURL) {
+        try {
+            URL url = new URL (strURL);
+            HttpURLConnection connection = (HttpURLConnection) url.openConnection ();
+            connection.setDoInput (true);
+            connection.connect ();
+            InputStream input = connection.getInputStream ();
+            Bitmap myBitmap = BitmapFactory.decodeStream (input);
+            return myBitmap;
+        } catch (IOException e) {
+            e.printStackTrace ();
+            return null;
+        }
+    }
+    
+    public static void playNotificationSound (Context mContext) {
+        try {
+            Uri alarmSound = Uri.parse (ContentResolver.SCHEME_ANDROID_RESOURCE
+                    + "://" + mContext.getPackageName () + "/raw/notification");
+            Ringtone r = RingtoneManager.getRingtone (mContext, alarmSound);
+            r.play ();
+        } catch (Exception e) {
+            e.printStackTrace ();
+        }
+    }
+    
+    
 }

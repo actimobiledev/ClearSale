@@ -1,8 +1,8 @@
 package com.actiknow.clearsale.utils;
 
 public class AppConfigURL {
-    //    public static String BASE_URL = "https://project-clearsale-cammy92.c9users.io/";
-    public static String BASE_URL = "http://clearsale.com/";
+    public static String BASE_URL = "https://project-clearsale-cammy92.c9users.io/";
+//    public static String BASE_URL = "http://clearsale.com/";
     
     public static String URL_SIGN_UP = BASE_URL + "csvbuyer/buyers/app_sign_up";
     public static String URL_SIGN_IN = BASE_URL + "csvbuyer/buyers/app_sign_in";
