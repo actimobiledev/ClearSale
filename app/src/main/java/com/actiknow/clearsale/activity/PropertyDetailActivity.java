@@ -113,7 +113,6 @@ public class PropertyDetailActivity extends AppCompatActivity {
         rlSliderIndicator = (RelativeLayout) findViewById (R.id.rlSliderIndicator);
         tvSliderPosition = (TextView) findViewById (R.id.tvSliderPosition);
         fabMaps = (FloatingActionButton) findViewById (R.id.fabMap);
-        
     }
     
     private void initData () {
@@ -169,6 +168,7 @@ public class PropertyDetailActivity extends AppCompatActivity {
         for (int i = 0; i < bannerList.size (); i++) {
             String image = bannerList.get (i);
             CustomImageSlider slider2 = new CustomImageSlider (this);
+            final int k = i;
             slider2
                     .image (image)
                     .setScaleType (BaseSliderView.ScaleType.CenterCrop)
@@ -176,6 +176,7 @@ public class PropertyDetailActivity extends AppCompatActivity {
                         @Override
                         public void onSliderClick (BaseSliderView slider) {
                             Intent intent = new Intent (PropertyDetailActivity.this, PropertyImageActivity.class);
+                            intent.putExtra ("position", k);
                             startActivity (intent);
                         }
                     });
@@ -490,9 +491,4 @@ public class PropertyDetailActivity extends AppCompatActivity {
             return mFragmentTitleList.get (position);
         }
     }
-    
 }
-
-
-
-
